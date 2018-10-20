@@ -122,13 +122,13 @@ public class ChessBoard {
         board.initialize();
         System.out.println(board);
         try{
-            board.move("c2", "c4");
+            //board.move("c2", "c4");
         }catch(IllegalMoveException e){
             System.out.println(e.getStackTrace());
         }catch(IllegalPositionException e){
             System.out.println(e.getStackTrace());
         }
-        System.out.println(board);
+        //System.out.println(board);
     }
 
 }
