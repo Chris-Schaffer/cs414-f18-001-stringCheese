@@ -1,5 +1,7 @@
 package edu.colostate.cs.cs414.StringCheese.src;
 
+import java.util.ArrayList;
+
 public class ChessBoard {
     private ChessPiece[][] board;
 
@@ -13,18 +15,24 @@ public class ChessBoard {
         // newly constructed pieces in the right position.
         // a = 0, b = 1, ..., h = 7
         placePiece( new Rook(this, ChessPiece.Color.White), "a1");
+        placePiece( new Knight(this, ChessPiece.Color.White), "b1");
         placePiece( new Bishop(this, ChessPiece.Color.White), "c1");
+        placePiece( new Queen(this, ChessPiece.Color.White), "d1");
         placePiece( new King(this, ChessPiece.Color.White), "e1");
         placePiece( new Bishop(this, ChessPiece.Color.White), "f1");
+        placePiece( new Knight(this, ChessPiece.Color.White), "g1");
         placePiece( new Rook(this, ChessPiece.Color.White), "h1");
         for(char i = 'a'; i < 'i'; i++){
             placePiece( new Pawn(this, ChessPiece.Color.White), Character.toString(i) + Integer.toString(2));
             placePiece( new Pawn(this, ChessPiece.Color.Black), Character.toString(i) + Integer.toString(7));
         }
         placePiece( new Rook(this, ChessPiece.Color.Black), "a8");
+        placePiece( new Knight(this, ChessPiece.Color.Black), "b8");
         placePiece( new Bishop(this, ChessPiece.Color.Black), "c8");
+        placePiece( new Queen(this, ChessPiece.Color.Black), "d8");
         placePiece( new King(this, ChessPiece.Color.Black), "e8");
         placePiece( new Bishop(this, ChessPiece.Color.Black), "f8");
+        placePiece( new Knight(this, ChessPiece.Color.Black), "g8");
         placePiece( new Rook(this, ChessPiece.Color.Black), "h8");
 
     }
@@ -34,35 +42,25 @@ public class ChessBoard {
         // string (e.g., e8) as described above. The first letter is in lowercase (a..h) and the second letter is a
         // digit (1..8). If the position is illegal because the string contains illegal characters or represents a
         // position outside the board, the exception is thrown.
-
-        if(position.charAt(0) < 'a' || position.charAt(0) > 'h' ||
-           position.charAt(1) < '1' || position.charAt(1) > '8')
-            throw new IllegalPositionException();
-        int row = getRow(position);
-        int col = getCol(position);
-        return board[row][col];
+        checkVaildPosition(position);
+        return board[getRow(position)][getCol(position)];
     }
 
     // This method tries to place the given piece at a given position, and returns true if successful, and false if
-    // there is already a piece of the same player in the given position or the position was illegal for any of the
-    // two reasons mentioned in the description of getPiece. If an opponent's piece exists, that piece is captured.
+    // the position was illegal.
     // If successful, this method should call an appropriate method in the ChessPiece class (i.e., setPosition) to
     // set the piece's position.
+    // This method is used for initialization as well as debugging a specific board setup
     public boolean placePiece(ChessPiece piece, String newPosition) {
         if(newPosition.length() != 2) return false;
         try {
-            String oldPosition = piece.getPosition();
-            int oldRow = getRow(oldPosition);
-            int oldCol = getCol(oldPosition);
-            if(getPiece(newPosition) == null || getPiece(newPosition).getColor() != piece.getColor()) {
+            //piece is not currently on board i.e. initializing board
+            if(piece.getPosition() == null){
                 piece.setPosition(newPosition);    //check out setPosition
                 int row = getRow(newPosition);
                 int col = getCol(newPosition);
                 board[row][col] = piece;
-                board[oldRow][oldCol] = null;
                 return true;
-                //FIXME how do I account for a piece that is captured and removed from the board. I need to update that
-                //FIXME old piece instance row/col variables to be -1? Or I probably just don't care
             }
             else {
                 return false;
@@ -71,22 +69,25 @@ public class ChessBoard {
             return false;
         }
     }
- 
-    private int getRow(String position) {
-        return position.charAt(0) - 'a';
-    }
 
-    private int getCol(String position){
-        return Character.getNumericValue(position.charAt(1)) - 1;
-    }
+    public void move(String fromPosition, String toPosition) throws IllegalMoveException, IllegalPositionException {
+        // This method checks if moving the piece from the fromPosition to toPosition is a legal move. If the move is legal,
+        // it executes the move changing the value of the board as needed. Otherwise, the stated exception is thrown.
+        checkVaildPosition(fromPosition);
+        checkVaildPosition(toPosition);
+        //check if piece is null
+        ChessPiece piece = getPiece(fromPosition);
+        if (piece == null) return;
 
-    public void move(String fromPosition, String toPosition) throws IllegalMoveException {
-        // This method checks if moving the piece from the fromPosition to toPosition is a legal move. Legality is
-        // defined based on the rules described above in Section 2.1. If the move is legal, it executes the move,
-        // changing the value of the board as needed. Otherwise, the stated exception is thrown.
-
-
-
+        ChessPiece capturedPiece = getPiece(toPosition);
+        if (capturedPiece == null || capturedPiece.getColor() != piece.getColor()) {
+            ArrayList<String> legalMoves = piece.legalMoves();
+            if (legalMoves.contains(toPosition)) {
+                board[getRow(toPosition)][getCol(toPosition)] = piece;
+                board[getRow(fromPosition)][getCol(fromPosition)] = null;
+                piece.setPosition(toPosition);
+            }
+        }
     }
 
     public String toString() {
@@ -101,13 +102,37 @@ public class ChessBoard {
         // call ChessPiece toString(), just for debugging
     }
 
+
+    private int getRow(String position) {
+        return position.charAt(0) - 'a';
+    }
+
+    private int getCol(String position){
+        return Character.getNumericValue(position.charAt(1)) - 1;
+    }
+
+    //Checks that position is a location on the board
+    private void checkVaildPosition(String position) throws IllegalPositionException{
+        if(position.charAt(0) < 'a' || position.charAt(0) > 'h' ||
+                position.charAt(1) < '1' || position.charAt(1) > '8')
+            throw new IllegalPositionException();
+    }
+
+
     public static void main(String[] args) {
         ChessBoard board = new ChessBoard();
         board.initialize();
         System.out.println(board);
-        //board.move("c2", "c4");
+        /*
+        try{
+            board.move("c2", "c4");
+        }catch(IllegalMoveException e){
+            System.out.println(e.getStackTrace());
+        }catch(IllegalPositionException e){
+            System.out.println(e.getStackTrace());
+        }
+        */
         //System.out.println(board);
     }
-
 }
 
