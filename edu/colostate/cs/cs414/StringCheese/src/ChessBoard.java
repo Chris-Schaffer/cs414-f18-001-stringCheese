@@ -50,7 +50,7 @@ public class ChessBoard {
             if(piece == null){
                 return moves;
             }
-            moves = piece.getValidMoves();
+            moves = piece.legalMoves();
             return moves;
         } catch (IllegalPositionException e) {
             return moves;

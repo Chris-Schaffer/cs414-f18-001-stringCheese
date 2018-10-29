@@ -240,7 +240,10 @@ public abstract class ChessPiece {
         return Character.getNumericValue(position.charAt(1)) - 1;
     }
 
-    public abstract HashSet<String> getValidMoves();
+
+
+
+    abstract public HashSet<String> legalMoves();
     abstract public String toString();
 
 }
