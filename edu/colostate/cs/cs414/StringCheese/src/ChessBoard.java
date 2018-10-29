@@ -10,8 +10,8 @@ public class ChessBoard {
 
     public ChessBoard() {
         board = new ChessPiece[8][8];
-        innerRing = new ArrayList<>(Arrays.asList("a1", "a2", "a3", "a4", "a5", "a6", "a7", "b7", "c7", "d7", "e7", "f7", "g7", "g6", "g5", "g4", "g3", "g2", "g1", "f1", "e1", "d1", "c1", "b1"));
-        outerRing = new ArrayList<>(Arrays.asList("b2", "b3", "b4", "b5", "b6", "c6", "d6", "e6", "f6", "f5", "f4", "f3", "f2", "e2", "d2", "c2"));
+        outerRing = new ArrayList<>(Arrays.asList("a1", "a2", "a3", "a4", "a5", "a6", "a7", "b7", "c7", "d7", "e7", "f7", "g7", "g6", "g5", "g4", "g3", "g2", "g1", "f1", "e1", "d1", "c1", "b1"));
+        innerRing = new ArrayList<>(Arrays.asList("b2", "b3", "b4", "b5", "b6", "c6", "d6", "e6", "f6", "f5", "f4", "f3", "f2", "e2", "d2", "c2"));
 
         //outer ring clockwise a1, a2, a3, a4, a5, a6, a7, b7, c7, d7, e7, f7, g7, g6, g5, g4, g3, g2, g1, f1, e1, d1, c1, b1, a1
         //inner ring clockwise b2, b3, b4, b5, b6, c6, d6, e6, f6, f5, f4, f3, f2, e2, d2, c2, b2
@@ -96,6 +96,7 @@ public class ChessBoard {
 
     //Checks that position is a location on the board
     private void checkValidPosition(String position) throws IllegalPositionException{
+        if(position.length() != 2) throw new IllegalPositionException("Position " + position + " invalid");
         if(position.charAt(0) < 'a' || position.charAt(0) > 'h' ||
                 position.charAt(1) < '1' || position.charAt(1) > '8')
             throw new IllegalPositionException("");
@@ -121,7 +122,7 @@ public class ChessBoard {
         }
     }
 	
-	 public HashSet<String> getNextStraightClockwise(String position) throws IllegalPositionException {
+	 public HashSet<String> getNextForward(String position) throws IllegalPositionException {
         int index;
         String newPos;
         if(innerRing.contains(position)){
@@ -155,7 +156,7 @@ public class ChessBoard {
         }
     }
 
-    public HashSet<String> getBackwardStraight(String position) throws IllegalPositionException {
+    public HashSet<String> getPrevBackward(String position) throws IllegalPositionException {
         int index;
         String newPos;
         if(innerRing.contains(position)){
@@ -211,7 +212,7 @@ public class ChessBoard {
 
      */
 
-    public HashSet<String> getNextDiagonalClockwise(String position) {
+    public HashSet<String> getNextDiagonals(String position) {
         HashSet<String> legalMoves = new HashSet<>();
         char letter = position.charAt(0);
         int row = getRow(position);
@@ -255,7 +256,7 @@ public class ChessBoard {
         return legalMoves;
     }
 
-    public HashSet<String> getBackwardDiagonals(String position) {
+    public HashSet<String> getPrevDiagonals(String position) {
         HashSet<String> legalMoves = new HashSet<>();
         char letter = position.charAt(0);
         int row = getRow(position);
@@ -301,43 +302,58 @@ public class ChessBoard {
     }
 
     //returns adjacent tiles on opposite ring
-    public HashSet<String> getSideways(String position) {
-        /*
-        //if on innerRing corners add straight on outer ring
-        {
-            if (position.equals("b2") && (board[getRow("a2")][getCol("a2")] != null && board[getRow("a2")][getCol("a2")].color != board[oldRow][oldCol].color)) {
-                moves.add("a2");
+    public HashSet<String> getSideways(String position) throws IllegalPositionException {
+        HashSet<String> legalMoves = new HashSet<>();
+        char letter = position.charAt(0);
+        int row = getRow(position);
+        int col = getCol(position);
+        int index, offset = 0;
+        int oldCol, oldRow;
+        //if not on corner then add opposite number or corner
+        //if 2 <= row < 6 || 'c' <= col < 'f'
+
+        //if on inner Ring finding outerRing
+        if(innerRing.contains(position)){
+            index = innerRing.indexOf(position);
+            if(index < 5) offset = 1;
+            else if(index <= 7 ) offset = 3;
+            else if(index <= 11 ) offset = 5;
+            else offset = 7;
+            oldRow = getRow(outerRing.get(index+offset));
+            oldCol = getCol(outerRing.get(index+offset));
+            if(board[row][col] != null && board[row][col].color == board[oldRow][oldCol].color){
+                return legalMoves;
+            }else{
+                legalMoves.add(outerRing.get(index+offset));
             }
-            if (position.equals("b6") && (board[getRow("b7")][getCol("b7")] != null && board[getRow("b7")][getCol("b7")].color != board[oldRow][oldCol].color)) {
-                moves.add("b7");
+            return legalMoves;
+        }
+
+
+        //if index is inbetween
+        else if(outerRing.contains(position)) {
+            index=outerRing.indexOf(position);
+            if(index >= 1 && index <= 5) offset = 1;
+            else if(index > 6 && index <= 11) offset = 3;
+            else if(index > 13 && index <= 17) offset = 5;
+            else if(index == 0 || index == 6 || index == 12 || index == 18){
+
+            }else{
+                offset = 7;
             }
-            if (position.equals("f6") && (board[getRow("g6")][getCol("g6")] != null && board[getRow("g6")][getCol("g6")].color != board[oldRow][oldCol].color)) {
-                moves.add("g6");
+            oldRow = getRow(innerRing.get(index-offset));
+            oldCol = getCol(innerRing.get(index-offset));
+            if(board[row][col] != null && board[row][col].color == board[oldRow][oldCol].color){
+                return legalMoves;
+            }else{
+                legalMoves.add(innerRing.get(index+offset));
             }
-            if (position.equals("f2") && (board[getRow("f1")][getCol("f1")] != null && board[getRow("f1")][getCol("f1")].color != board[oldRow][oldCol].color)) {
-                moves.add("f1");
-            }
+            return legalMoves;
+        }
+        else{
+            throw new IllegalPositionException("Position " + position + " not valid");
         }
 
-
-        //add straight on opposite ring
-        if(position.equals("a2") && (board[getRow("b2")][getCol("b2")] != null && board[getRow("b2")][getCol("b2")].color != board[oldRow][oldCol].color)) {
-            moves.add("b2");
-        }
-        if(position.equals("b7") && (board[getRow("b6")][getCol("b6")] != null && board[getRow("b6")][getCol("b6")].color != board[oldRow][oldCol].color)) {
-            moves.add("b6");
-        }
-        if(position.equals("g6") && (board[getRow("f6")][getCol("f6")] != null && board[getRow("f6")][getCol("f6")].color != board[oldRow][oldCol].color)) {
-            moves.add("f6");
-        }
-        if(position.equals("f1") && (board[getRow("f2")][getCol("f2")] != null && board[getRow("f2")][getCol("f2")].color != board[oldRow][oldCol].color)) {
-            moves.add("f2");
-        }
-        */
-
-
-
-        return new HashSet<String>();
     }
 
 
