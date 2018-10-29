@@ -7,11 +7,6 @@ public class Bishop extends ChessPiece {
 
     private HashSet<String> legalMoves;
 
-    @Override
-    public HashSet<String> getValidMoves() {
-        return null;
-    }
-
     public Bishop(ChessBoard board, Color color) {
         super(board, color);
         legalMoves = new HashSet<String>();
