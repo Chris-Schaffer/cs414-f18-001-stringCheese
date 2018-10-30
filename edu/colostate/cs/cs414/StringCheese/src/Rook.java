@@ -1,6 +1,9 @@
 package edu.colostate.cs.cs414.StringCheese.src;
 
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Rook extends ChessPiece {
 
