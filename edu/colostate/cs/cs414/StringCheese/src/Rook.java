@@ -256,6 +256,7 @@ public class Rook extends ChessPiece {
                     } catch (IllegalPositionException ex) {
                         Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    j++;
                 }
                 
             }
@@ -273,6 +274,7 @@ public class Rook extends ChessPiece {
                     } catch (IllegalPositionException ex) {
                         Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    j++;
                 }
             }
             if(index>=8 && index<11)
@@ -290,6 +292,7 @@ public class Rook extends ChessPiece {
                     } catch (IllegalPositionException ex) {
                         Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    j++;
                 }
                 
             }
@@ -307,6 +310,7 @@ public class Rook extends ChessPiece {
                     } catch (IllegalPositionException ex) {
                         Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    j++;
                 }
             }
             return legalMoves;
