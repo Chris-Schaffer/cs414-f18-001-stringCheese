@@ -11,7 +11,15 @@ public class King extends ChessPiece {
         legalMoves = new HashSet<String>();
     }
 
-    public HashSet<String> legalMoves() {
+    public HashSet<String> legalMoves() throws IllegalPositionException {
+        legalMoves.clear();
+        legalMoves.addAll(getNextDiagonals(position));
+        legalMoves.addAll(getNextForward(position));
+        legalMoves.addAll(getPrevBackward(position));
+        legalMoves.addAll(getPrevDiagonals(position));
+        legalMoves.addAll(getSideways(position));
+
+       /*
         //FIXME currently doesn't check if the move places the king into check
         //FIXME currently considers the middle squares missing in Rollerball as valid squares
         //currently adds move if the square is empty or if occupied by other color
@@ -29,7 +37,7 @@ public class King extends ChessPiece {
                     }
                 }
             }
-        }
+        }*/
         return legalMoves;
 }
 
