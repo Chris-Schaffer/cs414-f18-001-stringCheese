@@ -13,11 +13,30 @@ public class Bishop extends ChessPiece {
     }
 
     public HashSet<String> legalMoves(){
+
         String position = getPosition();
 
+        HashSet<String> moves = new HashSet<>();
+        boolean hasBounced = false;
+        boolean hasMoved = false;
+        String prevPosition = "";
+        return getNextMovesRecurse(position,prevPosition,hasBounced,moves);
+    }
 
+    private HashSet<String> getNextMovesRecurse(String position, String prevPosition, boolean hasBounced,HashSet<String> moves){
+        HashSet<String> nextMoves = getNextDiagonals(position);
 
-        return legalMoves;
+        //base case if it has moved and has bounced then there are no legal moves left
+        if(nextMoves.size() == 1 && hasBounced && prevPosition.equals("")){
+            return moves;
+        }
+
+        //bishop has moved but not bounced, add next move set bounced to true
+        else if(nextMoves.size() == 1 && !hasBounced && prevPosition.equals("")){
+
+        }
+
+        return null;
     }
 
     public String toString(){

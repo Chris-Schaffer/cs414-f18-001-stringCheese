@@ -42,14 +42,14 @@ public abstract class ChessPiece {
         if(innerRing.contains(position)){
             index = innerRing.indexOf(position);
             //circular array, so next of .size() is index 0
-            if(index+1 > innerRing.size()){
+            if(index+1 >= innerRing.size()){
                 newPos = innerRing.get(0);
             }else {
                 newPos = innerRing.get(index + 1);
             }
         }else if(outerRing.contains(position)){
             index = outerRing.indexOf(position);
-            if(index+1 > outerRing.size()){
+            if(index+1 >= outerRing.size()){
                 newPos = outerRing.get(0);
             }else {
                 newPos = outerRing.get(index + 1);
@@ -100,27 +100,27 @@ public abstract class ChessPiece {
     public HashSet<String> getNextDiagonals(String position) {
         HashSet<String> legalMoves = new HashSet<>();
         char letter = position.charAt(0);
-        int row = getRow(position);
+        int row = Character.getNumericValue(position.charAt(1));
         //if ( row <=2 and col > b ) move left i.e. decrease col by 1 and row can be 1 or 2. with exception if c2 then also b3
-        if(row <=1 && letter > 'b'){
+        if(row <=2 && letter > 'b'){
             letter -= 1;
-            if(row == 1) legalMoves.add(Character.toString(letter).concat(Integer.toString(0)));
+            if(row == 1) legalMoves.add(Character.toString(letter).concat(Integer.toString(2)));
             else legalMoves.add(Character.toString(letter).concat(Integer.toString(1)));
         }
         //if ( col <=b and row < 5 ) move up i.e. increase row by 1 and col can be a or b. with exception if b5 then also c6
-        if(letter <= 'b' && row < 5){
+       else if(letter <= 'b' && row < 6){
             //don't need?
             if(letter == 'a') legalMoves.add(Character.toString('b').concat(Integer.toString(row+1)));
             else legalMoves.add(Character.toString('a').concat(Integer.toString(row+1)));
         }
         //if ( row >=5 and col < f ) move right i.e. increase col by 1 and row can be 6 or 7. with exception if e6 then also f5
-        if(row >=5 && letter < 'f'){
+        else if(row >=6 && letter < 'f'){
             letter += 1;
-            if(row == 5) legalMoves.add(Character.toString(letter).concat(Integer.toString(6)));
-            else legalMoves.add(Character.toString(letter).concat(Integer.toString(5)));
+            if(row == 6) legalMoves.add(Character.toString(letter).concat(Integer.toString(7)));
+            else legalMoves.add(Character.toString(letter).concat(Integer.toString(6)));
         }
         //if ( col >=f and row > 1 ) move down i.e. decrease row by 1 and col can be f or g. with exception f3 can move e2
-        if(row >1 && letter >= 'f'){
+        else if(row >1 && letter >= 'f'){
             if(letter == 'f')  legalMoves.add(Character.toString('g').concat(Integer.toString(row-1)));
             else legalMoves.add(Character.toString('f').concat(Integer.toString(row-1)));
         }
@@ -144,26 +144,26 @@ public abstract class ChessPiece {
     public HashSet<String> getPrevDiagonals(String position) {
         HashSet<String> legalMoves = new HashSet<>();
         char letter = position.charAt(0);
-        int row = getRow(position);
+        int row = Character.getNumericValue(position.charAt(1));
         //if ( row <=2 and col > b ) move left i.e. decrease col by 1 and row can be 1 or 2. with exception if c2 then also b3
-        if(row <=1 && letter < 'f'){
+        if(row <=2 && letter < 'f'){
             letter += 1;
-            if(row == 1) legalMoves.add(Character.toString(letter).concat(Integer.toString(0)));
-            else legalMoves.add(Character.toString(letter).concat(Integer.toString(1)));
+            if(row == 2) legalMoves.add(Character.toString(letter).concat(Integer.toString(1)));
+            else legalMoves.add(Character.toString(letter).concat(Integer.toString(2)));
         }
         //if ( col <=b and row < 5 ) move up i.e. increase row by 1 and col can be a or b. with exception if b5 then also c6
-        if(letter <= 'b' && row > 2 ){
+        else if(letter <= 'b' && row > 2 ){
             if(letter == 'a') legalMoves.add(Character.toString('b').concat(Integer.toString(row-1)));
             else legalMoves.add(Character.toString('a').concat(Integer.toString(row-1)));
         }
         //if ( row >=5 and col < f ) move right i.e. increase col by 1 and row can be 6 or 7. with exception if e6 then also f5
-        if(row >=5 && letter > 'b'){
+        else if(row >=5 && letter > 'b'){
             letter -= 1;
             if(row == 5) legalMoves.add(Character.toString(letter).concat(Integer.toString(6)));
             else legalMoves.add(Character.toString(letter).concat(Integer.toString(5)));
         }
         //if ( col >=f and row > 1 ) move down i.e. decrease row by 1 and col can be f or g. with exception f3 can move e2
-        if(row <= 4 && letter >= 'f'){
+        else if(row <= 4 && letter >= 'f'){
             if(letter == 'f')  legalMoves.add(Character.toString('g').concat(Integer.toString(row+1)));
             else legalMoves.add(Character.toString('f').concat(Integer.toString(row+1)));
         }
@@ -243,7 +243,7 @@ public abstract class ChessPiece {
 
 
 
-    abstract public HashSet<String> legalMoves();
+    abstract public HashSet<String> legalMoves() throws IllegalPositionException;
     abstract public String toString();
 
 }

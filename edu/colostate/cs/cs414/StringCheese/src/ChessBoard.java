@@ -7,11 +7,15 @@ import java.util.HashSet;
 public class ChessBoard {
     private ChessPiece[][] board;
     public ArrayList<String> innerRing, outerRing;
+    private ChessPiece selectedPiece;
+    private HashSet<String> selectedPieceMoves;
 
     public ChessBoard() {
-        board = new ChessPiece[8][8];
+        board = new ChessPiece[7][7];
         outerRing = new ArrayList<>(Arrays.asList("a1", "a2", "a3", "a4", "a5", "a6", "a7", "b7", "c7", "d7", "e7", "f7", "g7", "g6", "g5", "g4", "g3", "g2", "g1", "f1", "e1", "d1", "c1", "b1"));
         innerRing = new ArrayList<>(Arrays.asList("b2", "b3", "b4", "b5", "b6", "c6", "d6", "e6", "f6", "f5", "f4", "f3", "f2", "e2", "d2", "c2"));
+        selectedPiece = null;
+        selectedPieceMoves = new HashSet<>();
     }
 
     public void initialize() {
@@ -51,6 +55,9 @@ public class ChessBoard {
                 return moves;
             }
             moves = piece.legalMoves();
+
+            selectedPiece = piece;
+            selectedPieceMoves = moves;
             return moves;
         } catch (IllegalPositionException e) {
             return moves;
@@ -82,38 +89,30 @@ public class ChessBoard {
     }
  
     private int getRow(String position) {
-        return position.charAt(0) - 'a';
+        return board[0].length - Character.getNumericValue(position.charAt(1));
     }
 
     private int getCol(String position){
-        return Character.getNumericValue(position.charAt(1)) - 1;
+        return position.charAt(0) - 'a';
+
     }
 
     //Checks that position is a location on the board
     private void checkValidPosition(String position) throws IllegalPositionException{
         if(position.length() != 2) throw new IllegalPositionException("Position " + position + " invalid");
-        if(position.charAt(0) < 'a' || position.charAt(0) > 'h' ||
-                position.charAt(1) < '1' || position.charAt(1) > '8')
+        if(position.charAt(0) < 'a' || position.charAt(0) > 'g' ||
+                position.charAt(1) < '1' || position.charAt(1) > '7')
             throw new IllegalPositionException("Position " + position + " is invalid");
     }
     
-    public void move(String fromPosition, String toPosition) throws IllegalPositionException, IllegalMoveException {
-        // This method checks if moving the piece from the fromPosition to toPosition is a legal move. If the move is legal,
-        // it executes the move changing the value of the board as needed. Otherwise, the stated exception is thrown.
-        checkValidPosition(fromPosition);
-        checkValidPosition(toPosition);
-        ChessPiece piece = getPiece(fromPosition);
-        if (piece == null) throw new IllegalMoveException("No piece found at " + fromPosition);
-        ChessPiece capturedPiece = getPiece(toPosition);
-        if (capturedPiece == null || capturedPiece.getColor() != piece.getColor()) {
-            HashSet<String> legalMoves = piece.legalMoves();
-            if (legalMoves.contains(toPosition)) {
+    public void move(String fromPosition, String toPosition) throws IllegalPositionException {
+        if(selectedPiece.getPosition().equals(fromPosition)){
+            if(selectedPieceMoves.contains(toPosition)){
+                ChessPiece piece = getPiece(fromPosition);
+                piece.setPosition(toPosition);
                 board[getRow(toPosition)][getCol(toPosition)] = piece;
                 board[getRow(fromPosition)][getCol(fromPosition)] = null;
-                piece.setPosition(toPosition);
             }
-        }else{
-            throw new IllegalMoveException("Cannot move to position " + toPosition);
         }
     }
 
@@ -126,14 +125,8 @@ public class ChessBoard {
         int row = 0;
         int col = 0;
         for( row = 0; row < 7; row++){
-            if(row == 0){
-                s+= 7 + " ";
-            }
-            else{
-                s+= (7-row) + " ";
-            }
             for(col = 0; col < 7; col++){
-            	if(board[col][row] == null){
+            	if(board[row][col] == null){
             	    if(row >= 2 && col >= 2 && row <= 4 && col <=4){
                         s += "X" + " | ";
                     }
@@ -142,7 +135,7 @@ public class ChessBoard {
                     }
             	}
 				else {
-					s += board[col][row] + " | ";
+					s += board[row][col] + " | ";
 				}
             	}
             s += '\n';
