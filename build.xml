@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="rollerballchess" default="all">
+<project name="cs414-f18-001-stringcheese" default="all">
   
   
   <property file="build.properties"/>
@@ -32,13 +32,13 @@
     <exclude name="**/vssver2.scc/**"/>
   </patternset>
   <patternset id="library.patterns">
-    <include name="*.war"/>
-    <include name="*.swc"/>
-    <include name="*.zip"/>
     <include name="*.egg"/>
-    <include name="*.ane"/>
     <include name="*.jar"/>
     <include name="*.ear"/>
+    <include name="*.swc"/>
+    <include name="*.war"/>
+    <include name="*.ane"/>
+    <include name="*.zip"/>
   </patternset>
   <patternset id="compiler.resources">
     <exclude name="**/?*.java"/>
@@ -51,6 +51,12 @@
     <exclude name="**/?*.clj"/>
     <exclude name="**/?*.aj"/>
   </patternset>
+  
+  
+  <!-- Global Libraries -->
+  
+  
+  <!-- Application Server Libraries -->
   <!-- Register Custom Compiler Taskdefs -->
   <property name="javac2.home" value="${idea.home}/lib"/>
   <path id="javac2.classpath">
@@ -67,116 +73,108 @@
   <!-- Modules -->
   
   
-  <!-- Module RollerBallChess -->
+  <!-- Module cs414-f18-001-stringCheese -->
   
-  <dirname property="module.rollerballchess.basedir" file="${ant.file}"/>
+  <dirname property="module.cs414-f18-001-stringcheese.basedir" file="${ant.file}"/>
   
   
   
-  <property name="compiler.args.rollerballchess" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  <property name="compiler.args.cs414-f18-001-stringcheese" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
   
-  <property name="rollerballchess.output.dir" value="${module.rollerballchess.basedir}/out/production/RollerBallChess"/>
-  <property name="rollerballchess.testoutput.dir" value="${module.rollerballchess.basedir}/out/test/RollerBallChess"/>
+  <property name="cs414-f18-001-stringcheese.output.dir" value="${module.cs414-f18-001-stringcheese.basedir}/out/production/cs414-f18-001-stringCheese"/>
+  <property name="cs414-f18-001-stringcheese.testoutput.dir" value="${module.cs414-f18-001-stringcheese.basedir}/out/test/cs414-f18-001-stringCheese"/>
   
-  <path id="rollerballchess.module.bootclasspath">
+  <path id="cs414-f18-001-stringcheese.module.bootclasspath">
     <!-- Paths to be included in compilation bootclasspath -->
   </path>
   
-  <path id="rollerballchess.module.production.classpath">
-    <pathelement location="${path.variable.maven_repository}/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-api/5.0.0/junit-jupiter-api-5.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-commons/1.0.0/junit-platform-commons-1.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/opentest4j/opentest4j/1.0.0/opentest4j-1.0.0.jar"/>
+  <path id="cs414-f18-001-stringcheese.module.production.classpath">
+    <pathelement location="${idea.home}/plugins/junit/lib/junit-jupiter-api-5.0.0.jar"/>
+    <pathelement location="${idea.home}/plugins/junit/lib/opentest4j-1.0.0.jar"/>
   </path>
   
-  <path id="rollerballchess.runtime.production.module.classpath">
-    <pathelement location="${rollerballchess.output.dir}"/>
-    <pathelement location="${path.variable.maven_repository}/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-api/5.0.0/junit-jupiter-api-5.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-commons/1.0.0/junit-platform-commons-1.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/opentest4j/opentest4j/1.0.0/opentest4j-1.0.0.jar"/>
+  <path id="cs414-f18-001-stringcheese.runtime.production.module.classpath">
+    <pathelement location="${cs414-f18-001-stringcheese.output.dir}"/>
+    <pathelement location="${idea.home}/plugins/junit/lib/junit-jupiter-api-5.0.0.jar"/>
+    <pathelement location="${idea.home}/plugins/junit/lib/opentest4j-1.0.0.jar"/>
   </path>
   
-  <path id="rollerballchess.module.classpath">
-    <pathelement location="${rollerballchess.output.dir}"/>
-    <pathelement location="${path.variable.maven_repository}/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-api/5.0.0/junit-jupiter-api-5.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-commons/1.0.0/junit-platform-commons-1.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/opentest4j/opentest4j/1.0.0/opentest4j-1.0.0.jar"/>
+  <path id="cs414-f18-001-stringcheese.module.classpath">
+    <pathelement location="${cs414-f18-001-stringcheese.output.dir}"/>
+    <pathelement location="${idea.home}/plugins/junit/lib/junit-jupiter-api-5.0.0.jar"/>
+    <pathelement location="${idea.home}/plugins/junit/lib/opentest4j-1.0.0.jar"/>
   </path>
   
-  <path id="rollerballchess.runtime.module.classpath">
-    <pathelement location="${rollerballchess.testoutput.dir}"/>
-    <pathelement location="${rollerballchess.output.dir}"/>
-    <pathelement location="${path.variable.maven_repository}/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-api/5.0.0/junit-jupiter-api-5.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-commons/1.0.0/junit-platform-commons-1.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/opentest4j/opentest4j/1.0.0/opentest4j-1.0.0.jar"/>
+  <path id="cs414-f18-001-stringcheese.runtime.module.classpath">
+    <pathelement location="${cs414-f18-001-stringcheese.testoutput.dir}"/>
+    <pathelement location="${cs414-f18-001-stringcheese.output.dir}"/>
+    <pathelement location="${idea.home}/plugins/junit/lib/junit-jupiter-api-5.0.0.jar"/>
+    <pathelement location="${idea.home}/plugins/junit/lib/opentest4j-1.0.0.jar"/>
   </path>
   
   
-  <patternset id="excluded.from.module.rollerballchess">
+  <patternset id="excluded.from.module.cs414-f18-001-stringcheese">
     <patternset refid="ignored.files"/>
     <exclude name="out/**"/>
     <exclude name="out/production/**"/>
-    <exclude name="out/production/RollerBallChess/**"/>
-    <exclude name="out/production/RollerBallChess/edu/**"/>
-    <exclude name="out/production/RollerBallChess/edu/colostate/**"/>
-    <exclude name="out/production/RollerBallChess/edu/colostate/cs/**"/>
-    <exclude name="out/production/RollerBallChess/edu/colostate/cs/cs414/**"/>
-    <exclude name="out/production/RollerBallChess/edu/colostate/cs/cs414/StringCheese/**"/>
-    <exclude name="out/production/RollerBallChess/edu/colostate/cs/cs414/StringCheese/src/**"/>
-    <exclude name="out/production/RollerBallChess/edu/colostate/cs/cs414/StringCheese/test/**"/>
-    <exclude name="out/production/RollerBallChess/.idea/**"/>
-    <exclude name="out/production/RollerBallChess/Documents P3/**"/>
-    <exclude name="out/production/RollerBallChess/SequenceDiagrams/**"/>
+    <exclude name="out/production/cs414-f18-001-stringCheese/**"/>
+    <exclude name="out/production/cs414-f18-001-stringCheese/edu/**"/>
+    <exclude name="out/production/cs414-f18-001-stringCheese/edu/colostate/**"/>
+    <exclude name="out/production/cs414-f18-001-stringCheese/edu/colostate/cs/**"/>
+    <exclude name="out/production/cs414-f18-001-stringCheese/edu/colostate/cs/cs414/**"/>
+    <exclude name="out/production/cs414-f18-001-stringCheese/edu/colostate/cs/cs414/StringCheese/**"/>
+    <exclude name="out/production/cs414-f18-001-stringCheese/edu/colostate/cs/cs414/StringCheese/src/**"/>
+    <exclude name="out/production/cs414-f18-001-stringCheese/edu/colostate/cs/cs414/StringCheese/test/**"/>
+    <exclude name="out/production/cs414-f18-001-stringCheese/.idea/**"/>
+    <exclude name="out/production/cs414-f18-001-stringCheese/Documents P3/**"/>
+    <exclude name="out/production/cs414-f18-001-stringCheese/SequenceDiagrams/**"/>
   </patternset>
   
-  <patternset id="excluded.from.compilation.rollerballchess">
-    <patternset refid="excluded.from.module.rollerballchess"/>
+  <patternset id="excluded.from.compilation.cs414-f18-001-stringcheese">
+    <patternset refid="excluded.from.module.cs414-f18-001-stringcheese"/>
   </patternset>
   
-  <path id="rollerballchess.module.sourcepath">
-    <dirset dir="${module.rollerballchess.basedir}/../../CS414P2">
-      <include name="RollerBallChess"/>
+  <path id="cs414-f18-001-stringcheese.module.sourcepath">
+    <dirset dir="${module.cs414-f18-001-stringcheese.basedir}/../../cs414">
+      <include name="cs414-f18-001-stringCheese"/>
     </dirset>
   </path>
   
   
-  <target name="compile.module.rollerballchess" depends="compile.module.rollerballchess.production,compile.module.rollerballchess.tests" description="Compile module RollerBallChess"/>
+  <target name="compile.module.cs414-f18-001-stringcheese" depends="compile.module.cs414-f18-001-stringcheese.production,compile.module.cs414-f18-001-stringcheese.tests" description="Compile module cs414-f18-001-stringCheese"/>
   
-  <target name="compile.module.rollerballchess.production" depends="register.custom.compilers" description="Compile module RollerBallChess; production classes">
-    <mkdir dir="${rollerballchess.output.dir}"/>
-    <javac2 destdir="${rollerballchess.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
-      <compilerarg line="${compiler.args.rollerballchess}"/>
-      <bootclasspath refid="rollerballchess.module.bootclasspath"/>
-      <classpath refid="rollerballchess.module.production.classpath"/>
-      <src refid="rollerballchess.module.sourcepath"/>
-      <patternset refid="excluded.from.compilation.rollerballchess"/>
+  <target name="compile.module.cs414-f18-001-stringcheese.production" depends="register.custom.compilers" description="Compile module cs414-f18-001-stringCheese; production classes">
+    <mkdir dir="${cs414-f18-001-stringcheese.output.dir}"/>
+    <javac2 destdir="${cs414-f18-001-stringcheese.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.cs414-f18-001-stringcheese}"/>
+      <bootclasspath refid="cs414-f18-001-stringcheese.module.bootclasspath"/>
+      <classpath refid="cs414-f18-001-stringcheese.module.production.classpath"/>
+      <src refid="cs414-f18-001-stringcheese.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.cs414-f18-001-stringcheese"/>
     </javac2>
     
-    <copy todir="${rollerballchess.output.dir}">
-      <fileset dir="${module.rollerballchess.basedir}">
+    <copy todir="${cs414-f18-001-stringcheese.output.dir}">
+      <fileset dir="${module.cs414-f18-001-stringcheese.basedir}">
         <patternset refid="compiler.resources"/>
         <type type="file"/>
       </fileset>
     </copy>
   </target>
   
-  <target name="compile.module.rollerballchess.tests" depends="register.custom.compilers,compile.module.rollerballchess.production" description="compile module RollerBallChess; test classes" unless="skip.tests"/>
+  <target name="compile.module.cs414-f18-001-stringcheese.tests" depends="register.custom.compilers,compile.module.cs414-f18-001-stringcheese.production" description="compile module cs414-f18-001-stringCheese; test classes" unless="skip.tests"/>
   
-  <target name="clean.module.rollerballchess" description="cleanup module">
-    <delete dir="${rollerballchess.output.dir}"/>
-    <delete dir="${rollerballchess.testoutput.dir}"/>
+  <target name="clean.module.cs414-f18-001-stringcheese" description="cleanup module">
+    <delete dir="${cs414-f18-001-stringcheese.output.dir}"/>
+    <delete dir="${cs414-f18-001-stringcheese.testoutput.dir}"/>
   </target>
   
   <target name="init" description="Build initialization">
     <!-- Perform any build initialization in this target -->
   </target>
   
-  <target name="clean" depends="clean.module.rollerballchess" description="cleanup all"/>
+  <target name="clean" depends="clean.module.cs414-f18-001-stringcheese" description="cleanup all"/>
   
-  <target name="build.modules" depends="init, clean, compile.module.rollerballchess" description="build all modules"/>
+  <target name="build.modules" depends="init, clean, compile.module.cs414-f18-001-stringcheese" description="build all modules"/>
   
   <target name="all" depends="build.modules" description="build all"/>
 </project>
