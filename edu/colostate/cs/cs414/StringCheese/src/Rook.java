@@ -26,13 +26,13 @@ public class Rook extends ChessPiece {
         if(board.outerRing.contains(position))
         {
             int index=board.outerRing.indexOf(position);
-             try {
+             //try {
                     prevmove=getPrevBackward(position);
                     if(prevmove.isEmpty())
                         legalMoves.addAll(prevmove);
-                } catch (IllegalPositionException ex) {
-                    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                }
+               // } catch (IllegalPositionException ex) {
+               //     Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                //}
             String nxtpos=position;
             String sidepos=position;
             if(index>=0 && index<6 )
@@ -44,41 +44,41 @@ public class Rook extends ChessPiece {
                     int j=0;
                     while(j!=6)
                     {
-                        try {
+                        //try {
                             sidemove=getSideways(sidepos);
                             if(sidemove.isEmpty())break;
                              Iterator itr=sidemove.iterator();
                              sidepos=itr.next().toString();
                               legalMoves.addAll(sidemove);
-                        } catch (IllegalPositionException ex) {
-                            Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        //} catch (IllegalPositionException ex) {
+                        //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                        //}
                         j++;
                        
                     }
                 }
                 else
                 {
-                    try {
+                    //try {
                             sidemove=getSideways(position);
                             if(!sidemove.isEmpty())
                                 legalMoves.addAll(sidemove);
-                        } catch (IllegalPositionException ex) {
-                            Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        //} catch (IllegalPositionException ex) {
+                        //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                        //}
                 }
                 int i=index;
                 while(i<13)
                 {
-                    try {
+                    //try {
                          nextmove=getNextForward(nxtpos);
                          if(nextmove.isEmpty())break;
                         Iterator itr=nextmove.iterator();
                         nxtpos=itr.next().toString();
                         legalMoves.addAll(nextmove);
-                    } catch (IllegalPositionException ex) {
-                        Logger. getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    //} catch (IllegalPositionException ex) {
+                    //    Logger. getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                    //}
                     i++;
                 }
                 
@@ -91,41 +91,41 @@ public class Rook extends ChessPiece {
                     int j=0;
                     while(j!=6)
                     {
-                        try {
+                        //try {
                             sidemove=getSideways(sidepos);
                             if(sidemove.isEmpty())break;
                              Iterator itr=sidemove.iterator();
                              sidepos=itr.next().toString();
                               legalMoves.addAll(sidemove);
-                        } catch (IllegalPositionException ex) {
-                            Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        //} catch (IllegalPositionException ex) {
+                        //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                        //}
                         j++;
                        
                     }
                 }
                  else
                 {
-                    try {
+                    //try {
                             sidemove=getSideways(position);
                             if(!sidemove.isEmpty())
                                 legalMoves.addAll(sidemove);
-                        } catch (IllegalPositionException ex) {
-                            Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                    //    } catch (IllegalPositionException ex) {
+                    //        Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                    //    }
                 }
                 int i=index;
                 while(i<19)
                 {
-                    try {
+                    //try {
                         nextmove=getNextForward(nxtpos);
                         if(nextmove.isEmpty())break;
                         Iterator itr=nextmove.iterator();
                         nxtpos=itr.next().toString();
                         legalMoves.addAll(nextmove);
-                    } catch (IllegalPositionException ex) {
-                        Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    //} catch (IllegalPositionException ex) {
+                    //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                    //}
                     i++;
                 }
                 
@@ -138,42 +138,42 @@ public class Rook extends ChessPiece {
                     int j=0;
                     while(j!=6)
                     {
-                        try {
+                        //try {
                             sidemove=getSideways(sidepos);
                             if(sidemove.isEmpty())break;
                             Iterator itr=sidemove.iterator();
                             sidepos=itr.next().toString();
                             legalMoves.addAll(sidemove);
-                        } catch (IllegalPositionException ex) {
-                            Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        //} catch (IllegalPositionException ex) {
+                        //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                        //}
                         j++;
                        
                     }
                 }
                 else
                 {
-                    try {
+                    //try {
                             sidemove=getSideways(position);
                             if(!sidemove.isEmpty())
                                 legalMoves.addAll(sidemove);
-                        } catch (IllegalPositionException ex) {
-                            Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                    //    } catch (IllegalPositionException ex) {
+                    //        Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                    //    }
                 }
                 int i=index;
                 while(i<25)
                 {
-                    try {
+                    //try {
                         
                         nextmove=getNextForward(nxtpos);
                         if(nextmove.isEmpty())break;
                         Iterator itr=nextmove.iterator();
                         nxtpos=itr.next().toString();
                         legalMoves.addAll(nextmove);
-                    } catch (IllegalPositionException ex) {
-                        Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    //} catch (IllegalPositionException ex) {
+                    //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                    //}
                     i++;
                 }
                
@@ -186,42 +186,42 @@ public class Rook extends ChessPiece {
                     int j=0;
                     while(j!=6)
                     {
-                        try {
+                        //try {
                             sidemove=getSideways(sidepos);
                             if(sidemove.isEmpty())break;
                             Iterator itr=sidemove.iterator();
                             sidepos=itr.next().toString();
                             legalMoves.addAll(sidemove);
-                        } catch (IllegalPositionException ex) {
-                            Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        //} catch (IllegalPositionException ex) {
+                        //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                        //}
                         j++;
                        
                     }
                 }
                 else
                 {
-                    try {
+                    //try {
                             sidemove=getSideways(position);
                             
                            if(!sidemove.isEmpty())
                                 legalMoves.addAll(sidemove);
-                        } catch (IllegalPositionException ex) {
-                            Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        //} catch (IllegalPositionException ex) {
+                        //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                        //}
                 }
                 int i=index;
                 while(i<31)
                 {
-                    try {
+                    //try {
                         nextmove=getNextForward(nxtpos);
                         if(nextmove.isEmpty())break;
                         Iterator itr=nextmove.iterator();
                         nxtpos=itr.next().toString();
                         legalMoves.addAll(nextmove);
-                    } catch (IllegalPositionException ex) {
-                        Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    //} catch (IllegalPositionException ex) {
+                    //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                    //}
                     i++;
                 }
                 
@@ -234,7 +234,7 @@ public class Rook extends ChessPiece {
             String nxtpos=position;
             String sidepos=position;
             int index=board.innerRing.indexOf(position);
-             try {
+             //try {
                     prevmove=getPrevBackward(position);
                     if(!prevmove.isEmpty())
                         legalMoves.addAll(prevmove);
@@ -242,23 +242,23 @@ public class Rook extends ChessPiece {
                     sidemove=getSideways(position);
                     if(!sidemove.isEmpty())
                        legalMoves.addAll(sidemove);
-                } catch (IllegalPositionException ex) {
-                    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                }
+             //   } catch (IllegalPositionException ex) {
+             //       Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+             //   }
             if(index>=0 && index<4)
             {
                 int j=0;
                 while(j<=4)
                 {
-                    try {
+                    //try {
                         nextmove=getNextForward(nxtpos);
                         if(nextmove.isEmpty())break;
                         Iterator itr=nextmove.iterator();
                         nxtpos=itr.next().toString();
                         legalMoves.addAll(nextmove);
-                    } catch (IllegalPositionException ex) {
-                        Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    //} catch (IllegalPositionException ex) {
+                    //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                    //}
                     j++;
                 }
                 
@@ -268,15 +268,15 @@ public class Rook extends ChessPiece {
                 int j=0;
                 while(j<=4)
                 {
-                    try {
+                    //try {
                         nextmove=getNextForward(nxtpos);
                         if(nextmove.isEmpty())break;
                         Iterator itr=nextmove.iterator();
                         nxtpos=itr.next().toString();
                         legalMoves.addAll(nextmove);
-                    } catch (IllegalPositionException ex) {
-                        Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    //} catch (IllegalPositionException ex) {
+                    //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                    //}
                     j++;
                 }
             }
@@ -285,16 +285,16 @@ public class Rook extends ChessPiece {
                 int j=0;
                 while(j<=4)
                 {
-                    try {
+                    //try {
                         nextmove=getNextForward(nxtpos);
                         if(nextmove.isEmpty())break;
                         Iterator itr=nextmove.iterator();
                         nxtpos=itr.next().toString();
                         
                         legalMoves.addAll(nextmove);
-                    } catch (IllegalPositionException ex) {
-                        Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    //} catch (IllegalPositionException ex) {
+                    //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                    //}
                     j++;
                 }
                 
@@ -304,22 +304,27 @@ public class Rook extends ChessPiece {
                 int j=0;
                 while(j<=4)
                 {
-                    try {
+                    //try {
                         nextmove=getNextForward(nxtpos);
                         if(nextmove.isEmpty())break;
                         Iterator itr=nextmove.iterator();
                         nxtpos=itr.next().toString();
                         legalMoves.addAll(nextmove);
-                    } catch (IllegalPositionException ex) {
-                        Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    //} catch (IllegalPositionException ex) {
+                    //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+                    //}
                     j++;
                 }
             }
             return legalMoves;
         }
-       else
-            return null;
+       else{
+            System.out.println("Rook is not on board at position " + position + " something went wrong");
+            System.exit(1);
+
+            return legalMoves;
+        }
+
         
        
         

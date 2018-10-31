@@ -39,7 +39,7 @@ public class ChessBoard {
 
     }
 
-    public ChessPiece getPiece(String position) throws IllegalPositionException {
+    public ChessPiece getPiece(String position) { //throws IllegalPositionException {
         checkValidPosition(position);
         return board[getRow(position)][getCol(position)];
     }
@@ -49,7 +49,7 @@ public class ChessBoard {
     // position outside the board, the exception is caught and an empty HashSet is returned.
     public HashSet<String> selectPiece(String position){
         HashSet<String> moves = new HashSet<>();
-        try {
+        //try {
             ChessPiece piece = getPiece(position);
             if(piece == null){
                 return moves;
@@ -59,9 +59,9 @@ public class ChessBoard {
             selectedPiece = piece;
             selectedPieceMoves = moves;
             return moves;
-        } catch (IllegalPositionException e) {
-            return moves;
-        }
+        //} catch (IllegalPositionException e) {
+        //    return moves;
+        //}
     }
 
     // This method tries to place the given piece at a given position, and returns true if successful, and false if
@@ -71,7 +71,7 @@ public class ChessBoard {
     // This method is used for initialization as well as debugging a specific board setup
     private boolean placePiece(ChessPiece piece, String newPosition) {
         if(newPosition.length() != 2) return false;
-        try {
+        //try {
             //piece is not currently on board i.e. initializing board
             if(piece.getPosition() == null){
                 piece.setPosition(newPosition);    
@@ -82,10 +82,10 @@ public class ChessBoard {
             }
             else {
                 return false;
-            }
-        } catch (IllegalPositionException e) {
-            return false;
-        }
+        //}
+        } //catch (IllegalPositionException e) {
+            //return false;
+        //}
     }
  
     private int getRow(String position) {
@@ -98,14 +98,19 @@ public class ChessBoard {
     }
 
     //Checks that position is a location on the board
-    private void checkValidPosition(String position) throws IllegalPositionException{
-        if(position.length() != 2) throw new IllegalPositionException("Position " + position + " invalid");
-        if(position.charAt(0) < 'a' || position.charAt(0) > 'g' ||
-                position.charAt(1) < '1' || position.charAt(1) > '7')
-            throw new IllegalPositionException("Position " + position + " is invalid");
+    private void checkValidPosition(String position) { //throws IllegalPositionException{
+        if(position.length() != 2 ||
+                position.charAt(0) < 'a' || position.charAt(0) > 'g' ||
+                position.charAt(1) < '1' || position.charAt(1) > '7'){
+
+            System.out.println("Position " + position + " is invalid in checkValidPosition()");
+            System.exit(1);
+            //throw new IllegalPositionException("Position " + position + " is invalid");
+        }
+
     }
     
-    public void move(String fromPosition, String toPosition) throws IllegalPositionException {
+    public void move(String fromPosition, String toPosition) {//throws IllegalPositionException {
         if(selectedPiece.getPosition().equals(fromPosition)){
             if(selectedPieceMoves.contains(toPosition)){
                 ChessPiece piece = getPiece(fromPosition);

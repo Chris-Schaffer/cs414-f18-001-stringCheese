@@ -11,10 +11,10 @@ public class Pawn extends ChessPiece {
         legalMoves = new HashSet<String>();
     }
 
-    public HashSet<String> legalMoves() throws IllegalPositionException {
+    public HashSet<String> legalMoves(){ //throws IllegalPositionException {
         legalMoves.clear();
-        legalMoves.addAll(getNextForward(position));
-        legalMoves.addAll(getNextDiagonals(position));
+        legalMoves.addAll(getNextForward(getPosition()));
+        legalMoves.addAll(getNextDiagonals(getPosition()));
         return legalMoves;
     }
 

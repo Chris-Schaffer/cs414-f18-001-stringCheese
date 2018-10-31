@@ -9,10 +9,10 @@ public abstract class ChessPiece {
 
     public enum Color {White, Black};
     protected ChessBoard board; // the board it belongs to, default null
-    protected int row; // the index of the horizontal rows 0..7
-    protected int column; //the index of the vertical coloumn 0..7
-    protected Color color; // the color of the piece
-    protected String position;
+    private int row; // the index of the horizontal rows 0..7
+    private int column; //the index of the vertical coloumn 0..7
+    private Color color; // the color of the piece
+    private String position;
 
     public ChessPiece(ChessBoard board, Color color){
         this.board = board;
@@ -23,20 +23,26 @@ public abstract class ChessPiece {
 
     public String getPosition() { return position; }
 
-    public void setPosition(String position) throws IllegalPositionException {
+    public void setPosition(String position) { //throws IllegalPositionException {
 
         if(position.charAt(0) < 'a' || position.charAt(0) > 'h' ||
-           position.charAt(1) < '1' || position.charAt(1) > '8')
-            throw new IllegalPositionException("");
+           position.charAt(1) < '1' || position.charAt(1) > '8' ||
+                position.length() != 2){
+            System.out.println("Position " + position + " is not a valid position in setPosition()");
+            System.exit(1);
+            //throw new IllegalPositionException("");
+        }
+
+
 
         row = position.charAt(0) - 'a';
         column = Character.getNumericValue(position.charAt(1)) - 1;
         this.position = position;
     }
 
-    public HashSet<String> getNextForward(String position) throws IllegalPositionException {
+    public HashSet<String> getNextForward(String position) { //throws IllegalPositionException {
         int index;
-        String newPos;
+        String newPos = "";
         ArrayList<String> innerRing = board.getInnerRing();
         ArrayList<String> outerRing = board.getOuterRing();
         if(innerRing.contains(position)){
@@ -55,7 +61,9 @@ public abstract class ChessPiece {
                 newPos = outerRing.get(index + 1);
             }
         }else {
-            throw new IllegalPositionException("Position given not valid");
+            System.out.println("Position " + position + " not valid. getNextForward()");
+            System.exit(1);
+            //throw new IllegalPositionException("Position given not valid");
         }
         HashSet<String> moves = new HashSet<>();
         if(board.getPiece(newPos) != null && board.getPiece(newPos).color == board.getPiece(position).color){
@@ -66,9 +74,9 @@ public abstract class ChessPiece {
         }
     }
 
-    public HashSet<String> getPrevBackward(String position) throws IllegalPositionException {
+    public HashSet<String> getPrevBackward(String position){ //throws IllegalPositionException {
         int index;
-        String newPos;
+        String newPos="";
         ArrayList<String> innerRing = board.getInnerRing();
         ArrayList<String> outerRing = board.getOuterRing();
         if(innerRing.contains(position)){
@@ -87,7 +95,9 @@ public abstract class ChessPiece {
                 newPos = outerRing.get(index - 1);
             }
         }else {
-            throw new IllegalPositionException("Position given not valid");
+            //throw new IllegalPositionException("Position given not valid");
+            System.out.println("Position " + position + " is invalid in getPrevBackward()");
+            System.exit(1);
         }
         HashSet<String> moves = new HashSet<>();
         if(board.getPiece(newPos) != null && board.getPiece(newPos).color == board.getPiece(position).color){
@@ -101,25 +111,25 @@ public abstract class ChessPiece {
         HashSet<String> legalMoves = new HashSet<>();
         char letter = position.charAt(0);
         int row = Character.getNumericValue(position.charAt(1));
-        //if ( row <=2 and col > b ) move left i.e. decrease col by 1 and row can be 1 or 2. with exception if c2 then also b3
+        //move left i.e. decrease col by 1 and row can be 1 or 2
         if(row <=2 && letter > 'b'){
             letter -= 1;
             if(row == 1) legalMoves.add(Character.toString(letter).concat(Integer.toString(2)));
             else legalMoves.add(Character.toString(letter).concat(Integer.toString(1)));
         }
-        //if ( col <=b and row < 5 ) move up i.e. increase row by 1 and col can be a or b. with exception if b5 then also c6
+        //move up i.e. increase row by 1 and col can be a or b
        else if(letter <= 'b' && row < 6){
             //don't need?
             if(letter == 'a') legalMoves.add(Character.toString('b').concat(Integer.toString(row+1)));
             else legalMoves.add(Character.toString('a').concat(Integer.toString(row+1)));
         }
-        //if ( row >=5 and col < f ) move right i.e. increase col by 1 and row can be 6 or 7. with exception if e6 then also f5
+        //move right i.e. increase col by 1 and row can be 6 or 7
         else if(row >=6 && letter < 'f'){
             letter += 1;
             if(row == 6) legalMoves.add(Character.toString(letter).concat(Integer.toString(7)));
             else legalMoves.add(Character.toString(letter).concat(Integer.toString(6)));
         }
-        //if ( col >=f and row > 1 ) move down i.e. decrease row by 1 and col can be f or g. with exception f3 can move e2
+        //move down i.e. decrease row by 1 and col can be f or g
         else if(row >1 && letter >= 'f'){
             if(letter == 'f')  legalMoves.add(Character.toString('g').concat(Integer.toString(row-1)));
             else legalMoves.add(Character.toString('f').concat(Integer.toString(row-1)));
@@ -145,24 +155,20 @@ public abstract class ChessPiece {
         HashSet<String> legalMoves = new HashSet<>();
         char letter = position.charAt(0);
         int row = Character.getNumericValue(position.charAt(1));
-        //if ( row <=2 and col > b ) move left i.e. decrease col by 1 and row can be 1 or 2. with exception if c2 then also b3
         if(row <=2 && letter < 'f'){
             letter += 1;
             if(row == 2) legalMoves.add(Character.toString(letter).concat(Integer.toString(1)));
             else legalMoves.add(Character.toString(letter).concat(Integer.toString(2)));
         }
-        //if ( col <=b and row < 5 ) move up i.e. increase row by 1 and col can be a or b. with exception if b5 then also c6
         else if(letter <= 'b' && row > 2 ){
             if(letter == 'a') legalMoves.add(Character.toString('b').concat(Integer.toString(row-1)));
             else legalMoves.add(Character.toString('a').concat(Integer.toString(row-1)));
         }
-        //if ( row >=5 and col < f ) move right i.e. increase col by 1 and row can be 6 or 7. with exception if e6 then also f5
         else if(row >=5 && letter > 'b'){
             letter -= 1;
             if(row == 5) legalMoves.add(Character.toString(letter).concat(Integer.toString(6)));
             else legalMoves.add(Character.toString(letter).concat(Integer.toString(5)));
         }
-        //if ( col >=f and row > 1 ) move down i.e. decrease row by 1 and col can be f or g. with exception f3 can move e2
         else if(row <= 4 && letter >= 'f'){
             if(letter == 'f')  legalMoves.add(Character.toString('g').concat(Integer.toString(row+1)));
             else legalMoves.add(Character.toString('f').concat(Integer.toString(row+1)));
@@ -183,11 +189,10 @@ public abstract class ChessPiece {
         }
         return legalMoves;
 
-        //return new HashSet<String>();
     }
 
     //returns adjacent tiles on opposite ring
-    public HashSet<String> getSideways(String position) throws IllegalPositionException {
+    public HashSet<String> getSideways(String position){ //throws IllegalPositionException {
         HashSet<String> legalMoves = new HashSet<>();
         ArrayList<String> innerRing = board.getInnerRing();
         ArrayList<String> outerRing = board.getOuterRing();
@@ -228,7 +233,10 @@ public abstract class ChessPiece {
             return legalMoves;
         }
         else{
-            throw new IllegalPositionException("Position " + position + " not valid");
+            System.out.println("Position " + position + " is invalid in getSideways()");
+            System.exit(1);
+            //throw new IllegalPositionException("Position " + position + " not valid");
+            return legalMoves;
         }
     }
 
@@ -243,7 +251,7 @@ public abstract class ChessPiece {
 
 
 
-    abstract public HashSet<String> legalMoves() throws IllegalPositionException;
+    abstract public HashSet<String> legalMoves(); //throws IllegalPositionException;
     abstract public String toString();
 
 }

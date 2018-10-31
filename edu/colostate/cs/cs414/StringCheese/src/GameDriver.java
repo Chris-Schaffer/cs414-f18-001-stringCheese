@@ -14,7 +14,7 @@ public class GameDriver {
         System.out.println(board.toString());
         System.out.println("White Player goes first" +
                 "\nEnter \"Select\" <position> to show the valid moves of a piece " +
-                "\nExample: \"select A4\"");
+                "\nExample: \"select C2\"");
 
         Scanner scan = new Scanner(System.in);
         String[] com = new String("select c2").split(" ");
@@ -23,16 +23,19 @@ public class GameDriver {
 
 while(!command[0].equals("QUIT")) {
     if (command[0].equalsIgnoreCase("select")) {
-        moves = board.selectPiece(command[1]);
+        if(command.length >1 && command[1].length() == 2) {
+            moves = board.selectPiece(command[1]);
+        }
+        else{
+            System.out.println("Try again. Example: \"select C2\"");
+            command = scan.nextLine().split(" ");
+            continue;
+        }
 
     }
     else if(command[0].equalsIgnoreCase("move")){
-        try {
-            board.move(command[1],command[2]);
-            System.out.println(board);
-        } catch (IllegalPositionException e) {
-            e.printStackTrace();
-        }
+        board.move(command[1],command[2]);
+        System.out.println(board);
     }
 
     if (moves.isEmpty()) {
