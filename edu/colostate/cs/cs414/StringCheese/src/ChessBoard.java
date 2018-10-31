@@ -125,6 +125,7 @@ public class ChessBoard {
         int row = 0;
         int col = 0;
         for( row = 0; row < 7; row++){
+            s += Integer.toString(7 - row) + " ";
             for(col = 0; col < 7; col++){
             	if(board[row][col] == null){
             	    if(row >= 2 && col >= 2 && row <= 4 && col <=4){
@@ -140,6 +141,7 @@ public class ChessBoard {
             	}
             s += '\n';
         }
+        s += "  A   B   C   D   E   F   G  \n";
         return s;
         // call ChessPiece toString(), just for debugging
     }
