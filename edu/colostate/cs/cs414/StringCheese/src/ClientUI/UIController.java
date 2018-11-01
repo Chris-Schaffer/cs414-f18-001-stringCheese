@@ -33,11 +33,22 @@ public class UIController implements ActionListener{
 		else if(e.getActionCommand().equalsIgnoreCase("register")){
 			register();
 		}
+		else if (e.getActionCommand().equalsIgnoreCase("game")){
+			game();
+		}
 
 	}
 
+	private void game() {
+		gamePanel = new GamePanel();
+		window.remove(menuPanel);
+		window.add(gamePanel);
+		window.revalidate();
+		window.repaint();
+	}
+
 	private void register() {
-		menuPanel = new MenuPanel();
+		menuPanel = new MenuPanel(this);
 		window.remove(registerPanel);
 		window.add(menuPanel);
 		window.revalidate();
@@ -62,7 +73,7 @@ public class UIController implements ActionListener{
 	}
 
 	private void login(){
-		menuPanel = new MenuPanel();
+		menuPanel = new MenuPanel(this);
 		window.remove(loginPanel);
 		window.add(menuPanel);
 		window.revalidate();

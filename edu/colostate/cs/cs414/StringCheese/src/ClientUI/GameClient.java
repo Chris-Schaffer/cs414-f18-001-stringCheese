@@ -54,12 +54,9 @@ public class GameClient {
 
             }
             else if(command[0].equalsIgnoreCase("move")){
-                try {
                     board.move(command[1],command[2]);
                     System.out.println(board);
-                } catch (IllegalPositionException e) {
-                    e.printStackTrace();
-                }
+
             }
 
             if (moves.isEmpty()) {

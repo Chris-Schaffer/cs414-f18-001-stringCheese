@@ -5,10 +5,11 @@ import java.awt.*;
 
 public class MenuPanel extends JPanel{
 
-	Image background;
+	UIController controller;
 
-	public MenuPanel(){
+	public MenuPanel(UIController controller){
 		this.setLayout(new BorderLayout());
+		this.controller = controller;
 
 		JLabel title = new JLabel("Rollerball",JLabel.CENTER);
 		title.setPreferredSize(new Dimension(2000,200));
@@ -28,6 +29,7 @@ public class MenuPanel extends JPanel{
 
 		JButton game = new JButton("Game");
 		game.setPreferredSize(new Dimension(200,100));
+		game.addActionListener(this.controller);
 		menuArea.add(game,BorderLayout.CENTER);
 
 
