@@ -1,5 +1,6 @@
 package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 
+import com.sun.tools.javac.Main;
 import edu.colostate.cs.cs414.StringCheese.src.ChessBoard;
 import edu.colostate.cs.cs414.StringCheese.src.IllegalPositionException;
 
@@ -73,10 +74,9 @@ public class GameClient {
     }
 
     public static void main(String[] args){
-
         MainWindow window = new MainWindow();
-        window.setVisible(true);
-        window.add(new StartPanel());
+        UIController controller = new UIController(window);
+
         /*
         Scanner scan = new Scanner(System.in);
         GameClient driver = new GameClient();
