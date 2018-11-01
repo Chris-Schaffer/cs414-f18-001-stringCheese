@@ -90,7 +90,7 @@ public abstract class ChessPiece {
         }else if(outerRing.contains(position)){
             index = outerRing.indexOf(position);
             if(index-1 < 0){
-                newPos = outerRing.get(innerRing.size()-1);
+                newPos = outerRing.get(outerRing.size()-1);
             }else {
                 newPos = outerRing.get(index - 1);
             }
@@ -228,7 +228,7 @@ public abstract class ChessPiece {
             if(board.getPiece(position) != null && board.getPiece(position).color == board.getPiece(oldPosition).color){
                 return legalMoves;
             }else{
-                legalMoves.add(innerRing.get(index+offset));
+                legalMoves.add(innerRing.get(index-offset));
             }
             return legalMoves;
         }

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import edu.colostate.cs.cs414.StringCheese.src.IllegalPositionException;
 import edu.colostate.cs.cs414.StringCheese.src.*;
 
 
