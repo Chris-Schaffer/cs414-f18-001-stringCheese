@@ -1,5 +1,12 @@
 package edu.colostate.cs.cs414.StringCheese.test;
 
+import org.junit.jupiter.api.BeforeEach;
+
+import java.util.HashSet;
+import java.util.Iterator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 class RookTest extends ChessSuite {
     
     ChessBoard board;
@@ -17,7 +24,7 @@ class RookTest extends ChessSuite {
         HashSet<String> move= new HashSet<>();
         move=rook.legalMoves();
 
-        Iterator<String> it = move.iterator();
+       
         assertTrue(move.contains(expected));
 
     }
