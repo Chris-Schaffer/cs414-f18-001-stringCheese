@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import edu.colostate.cs.cs414.StringCheese.src.ChessBoard;
 import edu.colostate.cs.cs414.StringCheese.src.ChessPiece;
-import edu.colostate.cs.cs414.StringCheese.src.IllegalPositionException;
 import edu.colostate.cs.cs414.StringCheese.src.Pawn;
 
 class PawnTest extends ChessSuite {
