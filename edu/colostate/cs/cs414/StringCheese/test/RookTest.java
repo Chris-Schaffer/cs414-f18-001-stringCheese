@@ -72,6 +72,16 @@ class RookTest extends ChessSuite {
         assertTrue(move.contains("c2"));
 
     }
+    @org.junit.jupiter.api.Test
+    void backWays() {
+        Rook rook=new Rook(board,ChessPiece.Color.White);
+        rook.setPosition("c1");
+
+        HashSet<String> move= new HashSet<>();
+        move=rook.legalMoves();
+        assertTrue(move.contains("a3"));
+
+    }
 
 
 }
