@@ -23,23 +23,25 @@ public class ChessBoard {
         // This method should use the constructors of the appropriate pieces, and call placePiece below to place the
         // newly constructed pieces in the right position.
         // a = 0, b = 1, ..., h = 7
-        placePiece( new Rook(this, ChessPiece.Color.White), "e1");
-		placePiece( new Rook(this, ChessPiece.Color.White), "e2");
-        placePiece( new Bishop(this, ChessPiece.Color.White), "d1");
-        placePiece( new King(this, ChessPiece.Color.White), "d2");
-        placePiece( new Pawn(this, ChessPiece.Color.White),"c1");
-		placePiece( new Pawn(this, ChessPiece.Color.White),"c2");
+        //FIXME Swapped black and white pieces for presentation so that they show up in the correct place.
+        //FIXME swap back and find bug
+        placePiece( new Rook(this, ChessPiece.Color.Black), "e1");
+		placePiece( new Rook(this, ChessPiece.Color.Black), "e2");
+        placePiece( new Bishop(this, ChessPiece.Color.Black), "d1");
+        placePiece( new King(this, ChessPiece.Color.Black), "d2");
+        placePiece( new Pawn(this, ChessPiece.Color.Black),"c1");
+		placePiece( new Pawn(this, ChessPiece.Color.Black),"c2");
 
-		placePiece( new Rook(this, ChessPiece.Color.Black), "c7");
-		placePiece( new Rook(this, ChessPiece.Color.Black), "c6");
-		placePiece( new Bishop(this, ChessPiece.Color.Black), "d7");
-		placePiece( new King(this, ChessPiece.Color.Black), "d6");
-		placePiece( new Pawn(this, ChessPiece.Color.Black),"e6");
-		placePiece( new Pawn(this, ChessPiece.Color.Black),"e7");
+		placePiece( new Rook(this, ChessPiece.Color.White), "c7");
+		placePiece( new Rook(this, ChessPiece.Color.White), "c6");
+		placePiece( new Bishop(this, ChessPiece.Color.White), "d7");
+		placePiece( new King(this, ChessPiece.Color.White), "d6");
+		placePiece( new Pawn(this, ChessPiece.Color.White),"e6");
+		placePiece( new Pawn(this, ChessPiece.Color.White),"e7");
 
     }
 
-    public ChessPiece getPiece(String position) throws IllegalPositionException {
+    public ChessPiece getPiece(String position) { //throws IllegalPositionException {
         checkValidPosition(position);
         return board[getRow(position)][getCol(position)];
     }
@@ -49,7 +51,7 @@ public class ChessBoard {
     // position outside the board, the exception is caught and an empty HashSet is returned.
     public HashSet<String> selectPiece(String position){
         HashSet<String> moves = new HashSet<>();
-        try {
+        //try {
             ChessPiece piece = getPiece(position);
             if(piece == null){
                 return moves;
@@ -59,9 +61,9 @@ public class ChessBoard {
             selectedPiece = piece;
             selectedPieceMoves = moves;
             return moves;
-        } catch (IllegalPositionException e) {
-            return moves;
-        }
+        //} catch (IllegalPositionException e) {
+        //    return moves;
+        //}
     }
 
     // This method tries to place the given piece at a given position, and returns true if successful, and false if
@@ -69,9 +71,9 @@ public class ChessBoard {
     // If successful, this method should call an appropriate method in the ChessPiece class (i.e., setPosition) to
     // set the piece's position.
     // This method is used for initialization as well as debugging a specific board setup
-    private boolean placePiece(ChessPiece piece, String newPosition) {
+    public boolean placePiece(ChessPiece piece, String newPosition) {
         if(newPosition.length() != 2) return false;
-        try {
+        //try {
             //piece is not currently on board i.e. initializing board
             if(piece.getPosition() == null){
                 piece.setPosition(newPosition);    
@@ -82,10 +84,10 @@ public class ChessBoard {
             }
             else {
                 return false;
-            }
-        } catch (IllegalPositionException e) {
-            return false;
-        }
+        //}
+        } //catch (IllegalPositionException e) {
+            //return false;
+        //}
     }
  
     private int getRow(String position) {
@@ -98,14 +100,19 @@ public class ChessBoard {
     }
 
     //Checks that position is a location on the board
-    private void checkValidPosition(String position) throws IllegalPositionException{
-        if(position.length() != 2) throw new IllegalPositionException("Position " + position + " invalid");
-        if(position.charAt(0) < 'a' || position.charAt(0) > 'g' ||
-                position.charAt(1) < '1' || position.charAt(1) > '7')
-            throw new IllegalPositionException("Position " + position + " is invalid");
+    private void checkValidPosition(String position) { //throws IllegalPositionException{
+        if(position.length() != 2 ||
+                position.charAt(0) < 'a' || position.charAt(0) > 'g' ||
+                position.charAt(1) < '1' || position.charAt(1) > '7'){
+
+            System.out.println("Position " + position + " is invalid in checkValidPosition()");
+            System.exit(1);
+            //throw new IllegalPositionException("Position " + position + " is invalid");
+        }
+
     }
     
-    public void move(String fromPosition, String toPosition) throws IllegalPositionException {
+    public void move(String fromPosition, String toPosition) {//throws IllegalPositionException {
         if(selectedPiece.getPosition().equals(fromPosition)){
             if(selectedPieceMoves.contains(toPosition)){
                 ChessPiece piece = getPiece(fromPosition);
@@ -125,6 +132,7 @@ public class ChessBoard {
         int row = 0;
         int col = 0;
         for( row = 0; row < 7; row++){
+            s += Integer.toString(7 - row) + " ";
             for(col = 0; col < 7; col++){
             	if(board[row][col] == null){
             	    if(row >= 2 && col >= 2 && row <= 4 && col <=4){
@@ -140,6 +148,7 @@ public class ChessBoard {
             	}
             s += '\n';
         }
+        s += "  A   B   C   D   E   F   G  \n";
         return s;
         // call ChessPiece toString(), just for debugging
     }

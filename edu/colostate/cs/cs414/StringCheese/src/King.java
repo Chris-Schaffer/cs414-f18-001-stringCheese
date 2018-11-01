@@ -11,33 +11,14 @@ public class King extends ChessPiece {
         legalMoves = new HashSet<String>();
     }
 
-    public HashSet<String> legalMoves() throws IllegalPositionException {
-        legalMoves.clear();
-        legalMoves.addAll(getNextDiagonals(position));
-        legalMoves.addAll(getNextForward(position));
-        legalMoves.addAll(getPrevBackward(position));
-        legalMoves.addAll(getPrevDiagonals(position));
-        legalMoves.addAll(getSideways(position));
-
-       /*
+    public HashSet<String> legalMoves() { //throws IllegalPositionException {
         //FIXME currently doesn't check if the move places the king into check
-        //FIXME currently considers the middle squares missing in Rollerball as valid squares
-        //currently adds move if the square is empty or if occupied by other color
-        //currently skips if the square is off the board or if occupied by same color
-        char letter = position.charAt(0);
-        for(int i = -1; i < 2; i++){
-            for (int j = -1; j < 2; j++) {
-                if (row + i < 8 && row + i >= 0 && column + j < 8 && column + j >= 0 && !(row + i == row && column + j == column)) {
-                    try {
-                        if (board.getPiece(Character.toString((char) (letter + i)) + Integer.toString(column + j)) == null ||
-                                board.getPiece(Character.toString((char) (letter + i)) + Integer.toString(column + j)).getColor() != this.color) {
-                            legalMoves.add(Character.toString((char) (letter + i)) + Integer.toString(column + j));
-                        }
-                    } catch (IllegalPositionException e) {
-                    }
-                }
-            }
-        }*/
+        legalMoves.clear();
+        legalMoves.addAll(getNextDiagonals(getPosition()));
+        legalMoves.addAll(getNextForward(getPosition()));
+        legalMoves.addAll(getPrevBackward(getPosition()));
+        legalMoves.addAll(getPrevDiagonals(getPosition()));
+        legalMoves.addAll(getSideways(getPosition()));
         return legalMoves;
 }
 
