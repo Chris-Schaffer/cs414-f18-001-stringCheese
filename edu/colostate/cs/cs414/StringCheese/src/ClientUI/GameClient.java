@@ -76,7 +76,7 @@ public class GameClient {
 
         MainWindow window = new MainWindow();
         window.setVisible(true);
-        window.add(new MenuPanel());
+        window.add(new StartPanel());
         /*
         Scanner scan = new Scanner(System.in);
         GameClient driver = new GameClient();

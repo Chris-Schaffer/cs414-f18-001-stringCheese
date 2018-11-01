@@ -8,7 +8,7 @@ public class MainWindow extends JFrame {
     public MainWindow(){
         super("RollerBall");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(1600,800);
+        setSize(1920,1080);
 
     }
 
