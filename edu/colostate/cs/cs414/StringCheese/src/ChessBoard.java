@@ -23,19 +23,21 @@ public class ChessBoard {
         // This method should use the constructors of the appropriate pieces, and call placePiece below to place the
         // newly constructed pieces in the right position.
         // a = 0, b = 1, ..., h = 7
-        placePiece( new Rook(this, ChessPiece.Color.White), "e1");
-		placePiece( new Rook(this, ChessPiece.Color.White), "e2");
-        placePiece( new Bishop(this, ChessPiece.Color.White), "d1");
-        placePiece( new King(this, ChessPiece.Color.White), "d2");
-        placePiece( new Pawn(this, ChessPiece.Color.White),"c1");
-		placePiece( new Pawn(this, ChessPiece.Color.White),"c2");
+        //FIXME Swapped black and white pieces for presentation so that they show up in the correct place.
+        //FIXME swap back and find bug
+        placePiece( new Rook(this, ChessPiece.Color.Black), "e1");
+		placePiece( new Rook(this, ChessPiece.Color.Black), "e2");
+        placePiece( new Bishop(this, ChessPiece.Color.Black), "d1");
+        placePiece( new King(this, ChessPiece.Color.Black), "d2");
+        placePiece( new Pawn(this, ChessPiece.Color.Black),"c1");
+		placePiece( new Pawn(this, ChessPiece.Color.Black),"c2");
 
-		placePiece( new Rook(this, ChessPiece.Color.Black), "c7");
-		placePiece( new Rook(this, ChessPiece.Color.Black), "c6");
-		placePiece( new Bishop(this, ChessPiece.Color.Black), "d7");
-		placePiece( new King(this, ChessPiece.Color.Black), "d6");
-		placePiece( new Pawn(this, ChessPiece.Color.Black),"e6");
-		placePiece( new Pawn(this, ChessPiece.Color.Black),"e7");
+		placePiece( new Rook(this, ChessPiece.Color.White), "c7");
+		placePiece( new Rook(this, ChessPiece.Color.White), "c6");
+		placePiece( new Bishop(this, ChessPiece.Color.White), "d7");
+		placePiece( new King(this, ChessPiece.Color.White), "d6");
+		placePiece( new Pawn(this, ChessPiece.Color.White),"e6");
+		placePiece( new Pawn(this, ChessPiece.Color.White),"e7");
 
     }
 
@@ -69,7 +71,7 @@ public class ChessBoard {
     // If successful, this method should call an appropriate method in the ChessPiece class (i.e., setPosition) to
     // set the piece's position.
     // This method is used for initialization as well as debugging a specific board setup
-    private boolean placePiece(ChessPiece piece, String newPosition) {
+    public boolean placePiece(ChessPiece piece, String newPosition) {
         if(newPosition.length() != 2) return false;
         //try {
             //piece is not currently on board i.e. initializing board

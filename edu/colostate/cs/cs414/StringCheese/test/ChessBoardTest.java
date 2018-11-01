@@ -27,7 +27,7 @@ class ChessBoardTest extends ChessSuite {
 
 
     @org.junit.jupiter.api.Test
-    void initialize() throws IllegalPositionException {
+    void initialize() {
         // a = 0, b = 1, ..., h = 7
         // white king at e1, index [0][7]
         // black queen at d8, index [7][3]
