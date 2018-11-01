@@ -1,5 +1,8 @@
 package edu.colostate.cs.cs414.StringCheese.test;
 
+import edu.colostate.cs.cs414.StringCheese.src.ChessBoard;
+import edu.colostate.cs.cs414.StringCheese.src.ChessPiece;
+import edu.colostate.cs.cs414.StringCheese.src.Rook;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.HashSet;
@@ -17,7 +20,7 @@ class RookTest extends ChessSuite {
 
     @org.junit.jupiter.api.Test
     void legalMoves() {
-        Rook rook=new Rook(board,ChessPiece.Color.White);
+        Rook rook=new Rook(board, ChessPiece.Color.White);
         rook.setPosition("a4");
 
         String expected="e7";
