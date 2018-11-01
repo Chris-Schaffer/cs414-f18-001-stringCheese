@@ -18,7 +18,10 @@ public class GamePanel extends JPanel{
 			for(int j =0; j < 7;j++){
 				gameTiles[i][j] = new JPanel();
 				JPanel currentPanel = gameTiles[i][j];
-				if(j %2 == 0 && i %2 == 0){
+				if(i >= 2 && j >=2 && i < 5 && j <5){
+
+				}
+				else if(j %2 == 0 && i %2 == 0){
 					currentPanel.setBackground(new Color(139,69,19));
 				}
 				else if(j %2 !=0 && i %2 != 0){
