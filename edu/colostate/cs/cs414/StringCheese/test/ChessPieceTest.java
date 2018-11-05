@@ -120,4 +120,7 @@ class ChessPieceTest {
         assertTrue(rook.getSideways("d7").contains("d6"));
     }
 
+
+
+
 }
