@@ -26,7 +26,7 @@ class KingTest extends ChessSuite {
     @org.junit.jupiter.api.Test
     void testSquaresWithThreeMovesB2() {
         board.placePiece(king, "b2");
-        assertTrue(king.legalMoves().containsAll(Arrays.asList("a1","a2"."a3","b1", "b3", "c1","c2")));
+        assertTrue(king.legalMoves().containsAll(Arrays.asList("a1","a2","a3","b1", "b3", "c1","c2")));
         assertTrue(king.legalMoves().size() == 3);
     }
 
