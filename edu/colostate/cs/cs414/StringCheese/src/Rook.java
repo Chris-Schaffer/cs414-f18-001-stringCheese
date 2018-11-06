@@ -15,6 +15,7 @@ public class Rook extends ChessPiece {
     }
 
     public HashSet<String> legalMoves(){
+        legalMoves.clear();
         String position = getPosition();
         
         HashSet<String> nextmove=new HashSet<String>();
