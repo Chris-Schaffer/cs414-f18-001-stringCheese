@@ -32,12 +32,7 @@ public class MenuPanel extends JPanel{
 		game.setMaximumSize(new Dimension(200,30));
 		game.addActionListener(this.controller);
 		menuArea.add(game);
-
-		JLabel gamePicture = new JLabel(new ImageIcon("UIresources/chessBoard.png"));
-
-		gamePicture.setMaximumSize(new Dimension(500,500));
-
-		this.add(gamePicture,BorderLayout.CENTER);
+		
 		this.add(menuArea,BorderLayout.LINE_START);
 	}
 

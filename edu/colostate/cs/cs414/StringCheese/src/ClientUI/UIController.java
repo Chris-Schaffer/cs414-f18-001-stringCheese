@@ -2,6 +2,8 @@ package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 
 import edu.colostate.cs.cs414.StringCheese.src.GameFacade;
 
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +20,7 @@ public class UIController implements ActionListener, MouseListener {
 	private  MenuPanel menuPanel;
 	private GamePanel gamePanel;
 	private GameFacade gameFacade;
+	private String selectedPosition;
 
 	public UIController(MainWindow window){
 		this.window = window;
@@ -61,6 +64,7 @@ public class UIController implements ActionListener, MouseListener {
 		window.repaint();
 	}
 
+	//right now just switches panels, will eventually call facade for registration
 	private void register() {
 		menuPanel = new MenuPanel(this);
 		window.remove(registerPanel);
@@ -85,7 +89,7 @@ public class UIController implements ActionListener, MouseListener {
 		window.revalidate();
 		window.repaint();
 	}
-
+	//right now just switches panels, will eventually call facade for login
 	private void login(){
 		menuPanel = new MenuPanel(this);
 		window.remove(loginPanel);
@@ -100,8 +104,17 @@ public class UIController implements ActionListener, MouseListener {
 		GameTile tile;
 		if(c instanceof GameTile){
 			tile = (GameTile) c;
-			HashSet<String> moves = gameFacade.getValidMoves(tile.getPosition());
-			gamePanel.displayValidMoves(moves);
+
+			if(((LineBorder)tile.getBorder()).getLineColor() == Color.GREEN){
+				gameFacade.move(selectedPosition, tile.getPosition());
+				gamePanel.displayState();
+			}
+			else{
+				selectedPosition = tile.getPosition();
+				HashSet<String> moves = gameFacade.getValidMoves(selectedPosition);
+				gamePanel.displayValidMoves(moves);
+			}
+
 		}
 	}
 

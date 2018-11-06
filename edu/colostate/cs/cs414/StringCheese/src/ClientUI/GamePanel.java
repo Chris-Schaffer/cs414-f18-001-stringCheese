@@ -6,8 +6,9 @@ import java.util.HashSet;
 
 public class GamePanel extends JPanel{
 
-	GameTile[][] gameTiles;
-	UIController controller;
+	private GameTile[][] gameTiles;
+	private UIController controller;
+	private GameTile selectedTile;
 
 	public GamePanel(){
 		gameTiles = new GameTile[7][7];
@@ -87,14 +88,22 @@ public class GamePanel extends JPanel{
 		else if (type.equalsIgnoreCase("whitebishop")) {
 			piece = new ImageIcon("UIresources/whiteBishop.png");
 		}
+		else if(type.equalsIgnoreCase("blank")){
+			tile.removeAll();
+			tile.revalidate();
+			tile.repaint();
+		}
+
 		if(piece == null){
 
 		}
 		else{
+			tile.removeAll();
 			Image pieceImage = piece.getImage(); // transform it
 			pieceImage = pieceImage.getScaledInstance(85, 80,  Image.SCALE_SMOOTH);
 			ImageIcon newPiece = new ImageIcon(pieceImage);
 			imageLabel.setIcon(newPiece);
+			repaintBorders();
 			tile.add(imageLabel,BorderLayout.CENTER);
 			tile.revalidate();
 			tile.repaint();
@@ -114,6 +123,16 @@ public class GamePanel extends JPanel{
 	}
 
 	public void displayValidMoves(HashSet<String> moves){
+		repaintBorders();
+		for (String move : moves) {
+			GameTile tile = gameTiles[getRow(move)][getCol(move)];
+			tile.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+			tile.revalidate();
+			tile.repaint();
+		}
+	}
+
+	private void repaintBorders(){
 		for(int row = 0; row < 7;row++){
 			for(int col =0; col < 7;col++){
 				if(row >= 2 && col >=2 && row < 5 && col <5){
@@ -122,12 +141,6 @@ public class GamePanel extends JPanel{
 					gameTiles[row][col].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				}
 			}
-		}
-		for (String move : moves) {
-			GameTile tile = gameTiles[getRow(move)][getCol(move)];
-			tile.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-			tile.revalidate();
-			tile.repaint();
 		}
 	}
 
@@ -139,6 +152,4 @@ public class GamePanel extends JPanel{
 		return position.charAt(0) - 'a';
 
 	}
-
-
 }

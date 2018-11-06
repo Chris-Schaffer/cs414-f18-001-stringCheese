@@ -18,4 +18,8 @@ public class GameFacade {
     public String getType(String position) {
        return board.getPieceType(position);
     }
+
+    public void move(String from, String to) {
+        board.move(from,to);
+    }
 }
