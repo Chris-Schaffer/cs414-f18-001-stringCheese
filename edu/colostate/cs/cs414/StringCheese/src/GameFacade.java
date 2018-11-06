@@ -14,4 +14,8 @@ public class GameFacade {
     public HashSet<String> getValidMoves(String position) {
         return board.selectPiece(position);
     }
+
+    public String getType(String position) {
+       return board.getPieceType(position);
+    }
 }

@@ -21,8 +21,12 @@ public class UIController implements ActionListener, MouseListener {
 
 	public UIController(MainWindow window){
 		this.window = window;
-		startPanel = new  StartPanel(this);
 		gameFacade = new GameFacade();
+
+	}
+
+	public void initializeScreen(){
+		startPanel = new StartPanel(this);
 		window.add(startPanel);
 	}
 
@@ -50,6 +54,7 @@ public class UIController implements ActionListener, MouseListener {
 	private void game() {
 		gamePanel = new GamePanel();
 		gamePanel.setUIController(this);
+		gamePanel.displayState();
 		window.remove(menuPanel);
 		window.add(gamePanel);
 		window.revalidate();
@@ -118,5 +123,9 @@ public class UIController implements ActionListener, MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 		//do nothing for now
+	}
+
+	public String getType(String position) {
+		return gameFacade.getType(position);
 	}
 }
