@@ -14,7 +14,6 @@ public class King extends ChessPiece {
 
     public HashSet<String> legalMoves() {
         //FIXME currently doesn't check if the move places the king into check
-        //FIXME calling from inner corner does not give outer corner
         legalMoves.clear();
         legalMoves.addAll(getNextDiagonals(getPosition()));
         legalMoves.addAll(getNextForward(getPosition()));
