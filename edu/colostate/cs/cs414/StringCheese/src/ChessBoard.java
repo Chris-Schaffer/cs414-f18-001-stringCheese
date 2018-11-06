@@ -25,19 +25,19 @@ public class ChessBoard {
         // a = 0, b = 1, ..., h = 7
         //FIXME Swapped black and white pieces so that they show up in the correct place.
         //FIXME swap back and find bug
-        placePiece( new Rook(this, ChessPiece.Color.Black), "e1");
-		placePiece( new Rook(this, ChessPiece.Color.Black), "e2");
-        placePiece( new Bishop(this, ChessPiece.Color.Black), "d1");
-        placePiece( new King(this, ChessPiece.Color.Black), "d2");
-        placePiece( new Pawn(this, ChessPiece.Color.Black),"c1");
-		placePiece( new Pawn(this, ChessPiece.Color.Black),"c2");
+        placePiece( new Rook(this, ChessPiece.Color.White), "e1");
+		placePiece( new Rook(this, ChessPiece.Color.White), "e2");
+        placePiece( new Bishop(this, ChessPiece.Color.White), "d1");
+        placePiece( new King(this, ChessPiece.Color.White), "d2");
+        placePiece( new Pawn(this, ChessPiece.Color.White),"c1");
+		placePiece( new Pawn(this, ChessPiece.Color.White),"c2");
 
-		placePiece( new Rook(this, ChessPiece.Color.White), "c7");
-		placePiece( new Rook(this, ChessPiece.Color.White), "c6");
-		placePiece( new Bishop(this, ChessPiece.Color.White), "d7");
-		placePiece( new King(this, ChessPiece.Color.White), "d6");
-		placePiece( new Pawn(this, ChessPiece.Color.White),"e6");
-		placePiece( new Pawn(this, ChessPiece.Color.White),"e7");
+		placePiece( new Rook(this, ChessPiece.Color.Black), "c7");
+		placePiece( new Rook(this, ChessPiece.Color.Black), "c6");
+		placePiece( new Bishop(this, ChessPiece.Color.Black), "d7");
+		placePiece( new King(this, ChessPiece.Color.Black), "d6");
+		placePiece( new Pawn(this, ChessPiece.Color.Black),"e6");
+		placePiece( new Pawn(this, ChessPiece.Color.Black),"e7");
 
     }
 
@@ -142,5 +142,38 @@ public class ChessBoard {
         //System.out.println(board);
     }
 
+    public String getPieceType(String position) {
+        ChessPiece piece = getPiece(position);
+        if(piece == null){
+            return "blank";
+        }
+        else if( piece instanceof King){
+            if(piece.getColor().equals(ChessPiece.Color.Black)){
+                return "blackking";
+            }
+                return "whiteking";
+        }
+        else if (piece instanceof Bishop){
+            if(piece.getColor().equals(ChessPiece.Color.Black)){
+                return "blackbishop";
+            }
+            return "whitebishop";
+        }
+        else if (piece instanceof Rook){
+            if(piece.getColor().equals(ChessPiece.Color.Black)){
+                return "blackrook";
+            }
+            return "whiterook";
+        }
+        else if(piece instanceof Pawn){
+            if(piece.getColor().equals(ChessPiece.Color.Black)){
+                return "blackpawn";
+            }
+            return "whitepawn";
+        }
+        else {
+            return "error";
+        }
+    }
 }
 
