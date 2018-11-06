@@ -1,8 +1,6 @@
 package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 
-import com.sun.tools.javac.Main;
 import edu.colostate.cs.cs414.StringCheese.src.ChessBoard;
-import edu.colostate.cs.cs414.StringCheese.src.IllegalPositionException;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -76,9 +74,5 @@ public class GameClient {
         window.revalidate();
         window.repaint();
 
-/*
-        Scanner scan = new Scanner(System.in);
-        GameClient driver = new GameClient();
-        driver.loginScreen(scan);*/
     }
 }
