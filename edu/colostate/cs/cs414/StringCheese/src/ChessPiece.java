@@ -214,7 +214,12 @@ public abstract class ChessPiece {
             else if(index > 6 && index <= 11) offset = 3;
             else if(index > 13 && index <= 17) offset = 5;
             else offset = 7;
-            legalMoves.add(innerRing.get(index-offset));
+            //If statement for corner case where piece calls getSideways() from B1
+            if(index-offset == innerRing.size()){
+                legalMoves.add(innerRing.get(0));
+            }else {
+                legalMoves.add(innerRing.get(index - offset));
+            }
             return removePositionsWithSameColorPiece(legalMoves,position);
         }
         else{
