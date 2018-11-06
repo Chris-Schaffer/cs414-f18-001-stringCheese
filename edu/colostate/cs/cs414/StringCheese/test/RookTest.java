@@ -100,7 +100,7 @@ class RookTest extends ChessSuite {
         assertTrue(move.contains("b3"));
         assertTrue(move.contains("b6"));
         assertTrue(move.contains("a4"));
-       // assertTrue(move.contains("f5"));
+      
 
 
     }
