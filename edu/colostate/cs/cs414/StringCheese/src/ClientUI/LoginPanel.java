@@ -8,7 +8,7 @@ public class LoginPanel extends JPanel{
 	public LoginPanel(UIController controller){
 		this.controller = controller;
 		JLabel title = new JLabel("If You Have An Account Login Here:",JLabel.CENTER);
-		title.setPreferredSize(new Dimension(2000,400));
+		title.setPreferredSize(new Dimension(2000,200));
 		title.setFont(new Font(Font.SANS_SERIF, Font.BOLD,50));
 		this.add(title,BorderLayout.PAGE_START);
 

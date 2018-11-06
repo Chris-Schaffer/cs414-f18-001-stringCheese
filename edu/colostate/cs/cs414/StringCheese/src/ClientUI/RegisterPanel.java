@@ -8,7 +8,7 @@ public class RegisterPanel extends JPanel {
 	public RegisterPanel(UIController controller){
 		this.controller = controller;
 		JLabel title = new JLabel("If You Don't Have An Account Register Here:",JLabel.CENTER);
-		title.setPreferredSize(new Dimension(2000,400));
+		title.setPreferredSize(new Dimension(2000,200));
 		title.setFont(new Font(Font.SANS_SERIF, Font.BOLD,50));
 		this.add(title,BorderLayout.PAGE_START);
 

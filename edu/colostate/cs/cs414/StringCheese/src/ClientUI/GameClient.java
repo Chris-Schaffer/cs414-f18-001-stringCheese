@@ -71,10 +71,12 @@ public class GameClient {
     }
 
     public static void main(String[] args){
-        MainWindow window = new MainWindow();
+       MainWindow window = new MainWindow();
         UIController controller = new UIController(window);
+        window.revalidate();
+        window.repaint();
 
-        /*
+/*
         Scanner scan = new Scanner(System.in);
         GameClient driver = new GameClient();
         driver.loginScreen(scan);*/

@@ -12,27 +12,32 @@ public class MenuPanel extends JPanel{
 		this.controller = controller;
 
 		JLabel title = new JLabel("Rollerball",JLabel.CENTER);
-		title.setPreferredSize(new Dimension(2000,200));
+		title.setMaximumSize(new Dimension(2000,200));
 		title.setFont(new Font(Font.SANS_SERIF, Font.BOLD,100));
 		this.add(title,BorderLayout.PAGE_START);
 
-		JPanel menuArea = new JPanel();
-		menuArea.setPreferredSize(new Dimension(200,700));
+		JPanel menuArea = new JPanel(new GridLayout(4,1));
+		menuArea.setSize(200,90);
+		menuArea.setMaximumSize(new Dimension(200,300));
 
 		JButton menu = new JButton("Menu");
-		menu.setPreferredSize(new Dimension(200,100));
-		menuArea.add(menu,BorderLayout.CENTER);
+		menu.setMaximumSize(new Dimension(200,40));
+		menuArea.add(menu);
 
 		JButton profile = new JButton("Profile");
-		profile.setPreferredSize(new Dimension(200,100));
-		menuArea.add(profile,BorderLayout.CENTER);
+		profile.setMaximumSize(new Dimension(200,30));
+		menuArea.add(profile);
 
 		JButton game = new JButton("Game");
-		game.setPreferredSize(new Dimension(200,100));
+		game.setMaximumSize(new Dimension(200,30));
 		game.addActionListener(this.controller);
-		menuArea.add(game,BorderLayout.CENTER);
+		menuArea.add(game);
 
+		JLabel gamePicture = new JLabel(new ImageIcon("UIresources/chessBoard.png"));
 
+		gamePicture.setMaximumSize(new Dimension(500,500));
+
+		this.add(gamePicture,BorderLayout.CENTER);
 		this.add(menuArea,BorderLayout.LINE_START);
 	}
 

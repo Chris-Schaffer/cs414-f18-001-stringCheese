@@ -75,7 +75,7 @@ public class ChessBoard {
         if(newPosition.length() != 2) return false;
         //try {
             //piece is not currently on board i.e. initializing board
-            if(piece.getPosition() == null){
+            if(piece.getPosition() == ""){
                 piece.setPosition(newPosition);    
                 int row = getRow(newPosition);
                 int col = getCol(newPosition);
