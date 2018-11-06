@@ -103,10 +103,27 @@ class ChessPieceTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testGetSidewaysOuterRing() {
-        //FIXME this doesn't work
-        //assertTrue(rook.getSideways("b2").size()==2);
-        //assertTrue(rook.getSideways("b2").containsAll(Arrays.asList("b1", "b2", "b3")));
+    void testGetPrevBackwardOpposingColorValidMove() {
+        board.placePiece(pawn, "g2");
+        board.placePiece(rook, "g1");
+        assertTrue(rook.getPrevBackward("g1").size()==1);
+        assertTrue(rook.getPrevBackward("g1").contains("g2"));
+    }
+
+
+    @org.junit.jupiter.api.Test
+    void testGetPrevBackwardSameColorInvalidMove() {
+        board.placePiece(bishop, "b5");
+        board.placePiece(rook, "b6");
+        assertTrue(rook.getPrevBackward("b6").size()==0);
+    }
+
+
+
+    @org.junit.jupiter.api.Test
+    void testGetSidewaysInnerRing() {
+        assertTrue(rook.getSideways("b2").size()==2);
+        assertTrue(rook.getSideways("b2").containsAll(Arrays.asList("b1", "a2")));
 
         assertTrue(rook.getSideways("a1").size()==0);
 
@@ -119,5 +136,8 @@ class ChessPieceTest {
         assertTrue(rook.getSideways("d7").size()==1);
         assertTrue(rook.getSideways("d7").contains("d6"));
     }
+
+
+
 
 }

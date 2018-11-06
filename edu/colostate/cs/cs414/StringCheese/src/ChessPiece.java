@@ -9,14 +9,15 @@ public abstract class ChessPiece {
 
     public enum Color {White, Black};
     protected ChessBoard board; // the board it belongs to, default null
-    private int row; // the index of the horizontal rows 0..7
-    private int column; //the index of the vertical coloumn 0..7
+    //private int row; // the index of the horizontal rows 0..7
+    //private int column; //the index of the vertical coloumn 0..7
     private Color color; // the color of the piece
     private String position;
 
     public ChessPiece(ChessBoard board, Color color){
         this.board = board;
         this.color = color;
+        position = "";
     }
 
     public Color getColor(){ return color; }
@@ -32,14 +33,12 @@ public abstract class ChessPiece {
             System.exit(1);
             //throw new IllegalPositionException("");
         }
-
-
-
-        row = position.charAt(0) - 'a';
-        column = Character.getNumericValue(position.charAt(1)) - 1;
+        //row = position.charAt(0) - 'a';
+        //column = Character.getNumericValue(position.charAt(1)) - 1;
         this.position = position;
     }
-
+    //returns zero if previous backward has piece of same color
+    //returns set of size one if not
     public HashSet<String> getNextForward(String position) { //throws IllegalPositionException {
         int index;
         String newPos = "";
@@ -73,12 +72,14 @@ public abstract class ChessPiece {
             return moves;
         }
     }
-
+    //returns zero if previous backward has piece of same color
+    //returns set of size one if not
     public HashSet<String> getPrevBackward(String position){ //throws IllegalPositionException {
         int index;
         String newPos="";
         ArrayList<String> innerRing = board.getInnerRing();
         ArrayList<String> outerRing = board.getOuterRing();
+
         if(innerRing.contains(position)){
             index = innerRing.indexOf(position);
             //circular array, so prev of index(0) is .size()-1
@@ -99,14 +100,16 @@ public abstract class ChessPiece {
             System.out.println("Position " + position + " is invalid in getPrevBackward()");
             System.exit(1);
         }
-        HashSet<String> moves = new HashSet<>();
         if(board.getPiece(newPos) != null && board.getPiece(newPos).color == board.getPiece(position).color){
-            return new HashSet<String>();
+            return new HashSet<>();
         }else{
-            return new HashSet<String>(Arrays.asList(newPos));
+            HashSet<String> legalMoves = new HashSet<>();
+            legalMoves.add(newPos);
+            return legalMoves;
         }
     }
-
+    //can return between zero and two next diagnonal positions from given position
+    //returns zero if next diagonal has piece of same color
     public HashSet<String> getNextDiagonals(String position) {
         HashSet<String> legalMoves = new HashSet<>();
         char letter = position.charAt(0);
@@ -150,7 +153,8 @@ public abstract class ChessPiece {
         }
         return legalMoves;
     }
-
+    //can return between zero and two previous diagnonal positions from given position
+    //returns zero if previous diagonals have piece of same color
     public HashSet<String> getPrevDiagonals(String position) {
         HashSet<String> legalMoves = new HashSet<>();
         char letter = position.charAt(0);
@@ -194,6 +198,27 @@ public abstract class ChessPiece {
     //returns adjacent tiles on opposite ring
     public HashSet<String> getSideways(String position){ //throws IllegalPositionException {
         HashSet<String> legalMoves = new HashSet<>();
+        //outer corner squares have no sideways
+        if(isOuterCorner(position)){ return legalMoves;}
+        //special case where inner corner has two sideways positions
+        else if(isInnerCorner(position)){
+            switch (position) {
+                case "b2":
+                    legalMoves.addAll(Arrays.asList("b1", "a2"));
+                    break;
+                case "b6":
+                    legalMoves.addAll(Arrays.asList("b7", "a6"));
+                    break;
+                case "f6":
+                    legalMoves.addAll(Arrays.asList("f7", "g6"));
+                    break;
+                //else it is "f2"
+                default:
+                    legalMoves.addAll(Arrays.asList("f1", "g2"));
+                    break;
+            }
+            return removePositionsWithSameColorPiece(legalMoves, position);
+        }
         ArrayList<String> innerRing = board.getInnerRing();
         ArrayList<String> outerRing = board.getOuterRing();
         int index, offset = 0;
@@ -218,12 +243,7 @@ public abstract class ChessPiece {
             if(index >= 1 && index <= 5) offset = 1;
             else if(index > 6 && index <= 11) offset = 3;
             else if(index > 13 && index <= 17) offset = 5;
-                //if on corner there is no sideways
-            else if(isCorner(index)){
-                return legalMoves;
-            }else{
-                offset = 7;
-            }
+            else offset = 7;
             String oldPosition = outerRing.get(index-offset);
             if(board.getPiece(position) != null && board.getPiece(position).color == board.getPiece(oldPosition).color){
                 return legalMoves;
@@ -240,16 +260,28 @@ public abstract class ChessPiece {
         }
     }
 
-    private boolean isCorner(int index){ return (index == 0 || index == 6 || index == 12 || index == 18); }
+    private HashSet<String> removePositionsWithSameColorPiece(HashSet<String> legalMoves, String position) {
+        HashSet<String> newSet = new HashSet<>();
+        for(String move: legalMoves){
+            if(board.getPiece(move) == null || board.getPiece(move).color != board.getPiece(position).color){
+                newSet.add(move);
+            }
+        }
+        return newSet;
+    }
+
+    private boolean isOuterCorner(String position){
+        return position.equals("a1") || position.equals("a7")|| position.equals("g7")|| position.equals("g1");
+    }
+    private boolean isInnerCorner(String position){
+        return position.equals("b2") || position.equals("b6")|| position.equals("f6")|| position.equals("f2");
+    }
     private int getRow(String position) {
         return position.charAt(0) - 'a';
     }
     private int getCol(String position){
         return Character.getNumericValue(position.charAt(1)) - 1;
     }
-
-
-
 
     abstract public HashSet<String> legalMoves(); //throws IllegalPositionException;
     abstract public String toString();
