@@ -28,7 +28,7 @@ public class Rook extends ChessPiece {
             int index=board.outerRing.indexOf(position);
              //try {
                     prevmove=getPrevBackward(position);
-                    if(prevmove.isEmpty())
+                    if(!prevmove.isEmpty())
                         legalMoves.addAll(prevmove);
                // } catch (IllegalPositionException ex) {
                //     Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
