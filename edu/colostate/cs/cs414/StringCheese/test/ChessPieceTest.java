@@ -121,10 +121,9 @@ class ChessPieceTest {
 
 
     @org.junit.jupiter.api.Test
-    void testGetSidewaysOuterRing() {
-        //FIXME this doesn't work
+    void testGetSidewaysInnerRing() {
         assertTrue(rook.getSideways("b2").size()==2);
-        assertTrue(rook.getSideways("b2").containsAll(Arrays.asList("b1", "b3")));
+        assertTrue(rook.getSideways("b2").containsAll(Arrays.asList("b1", "a2")));
 
         assertTrue(rook.getSideways("a1").size()==0);
 

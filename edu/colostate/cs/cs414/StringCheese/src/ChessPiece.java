@@ -215,7 +215,7 @@ public abstract class ChessPiece {
             else{
                 legalMoves.addAll(Arrays.asList("f1","g2"));
             }
-            return legalMoves;
+            return removePositionsWithSameColorPiece(legalMoves, position);
         }
         ArrayList<String> innerRing = board.getInnerRing();
         ArrayList<String> outerRing = board.getOuterRing();
@@ -256,6 +256,16 @@ public abstract class ChessPiece {
             //throw new IllegalPositionException("Position " + position + " not valid");
             return legalMoves;
         }
+    }
+
+    private HashSet<String> removePositionsWithSameColorPiece(HashSet<String> legalMoves, String position) {
+        HashSet<String> newSet = new HashSet<>();
+        for(String move: legalMoves){
+            if(board.getPiece(move) == null || board.getPiece(move).color != board.getPiece(position).color){
+                newSet.add(move);
+            }
+        }
+        return newSet;
     }
 
     private boolean isOuterCorner(String position){
