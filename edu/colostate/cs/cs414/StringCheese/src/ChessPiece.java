@@ -202,18 +202,20 @@ public abstract class ChessPiece {
         if(isOuterCorner(position)){ return legalMoves;}
         //special case where inner corner has two sideways positions
         else if(isInnerCorner(position)){
-            if(position.equals("b2")){
-                legalMoves.addAll(Arrays.asList("b1","a2"));
-            }
-            else if(position.equals("b6")){
-                legalMoves.addAll(Arrays.asList("b7","a6"));
-            }
-            else if(position.equals("f6")){
-                legalMoves.addAll(Arrays.asList("f7","g6"));
-            }
-            //else it is "f2"
-            else{
-                legalMoves.addAll(Arrays.asList("f1","g2"));
+            switch (position) {
+                case "b2":
+                    legalMoves.addAll(Arrays.asList("b1", "a2"));
+                    break;
+                case "b6":
+                    legalMoves.addAll(Arrays.asList("b7", "a6"));
+                    break;
+                case "f6":
+                    legalMoves.addAll(Arrays.asList("f7", "g6"));
+                    break;
+                //else it is "f2"
+                default:
+                    legalMoves.addAll(Arrays.asList("f1", "g2"));
+                    break;
             }
             return removePositionsWithSameColorPiece(legalMoves, position);
         }
