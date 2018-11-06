@@ -23,7 +23,7 @@ public class ChessBoard {
         // This method should use the constructors of the appropriate pieces, and call placePiece below to place the
         // newly constructed pieces in the right position.
         // a = 0, b = 1, ..., h = 7
-        //FIXME Swapped black and white pieces for presentation so that they show up in the correct place.
+        //FIXME Swapped black and white pieces so that they show up in the correct place.
         //FIXME swap back and find bug
         placePiece( new Rook(this, ChessPiece.Color.Black), "e1");
 		placePiece( new Rook(this, ChessPiece.Color.Black), "e2");
@@ -41,7 +41,7 @@ public class ChessBoard {
 
     }
 
-    public ChessPiece getPiece(String position) { //throws IllegalPositionException {
+    public ChessPiece getPiece(String position) {
         checkValidPosition(position);
         return board[getRow(position)][getCol(position)];
     }
@@ -51,19 +51,12 @@ public class ChessBoard {
     // position outside the board, the exception is caught and an empty HashSet is returned.
     public HashSet<String> selectPiece(String position){
         HashSet<String> moves = new HashSet<>();
-        //try {
             ChessPiece piece = getPiece(position);
-            if(piece == null){
-                return moves;
-            }
+            if(piece == null){ return moves; }
             moves = piece.legalMoves();
-
             selectedPiece = piece;
             selectedPieceMoves = moves;
             return moves;
-        //} catch (IllegalPositionException e) {
-        //    return moves;
-        //}
     }
 
     // This method tries to place the given piece at a given position, and returns true if successful, and false if
@@ -73,7 +66,6 @@ public class ChessBoard {
     // This method is used for initialization as well as debugging a specific board setup
     public boolean placePiece(ChessPiece piece, String newPosition) {
         if(newPosition.length() != 2) return false;
-        //try {
             //piece is not currently on board i.e. initializing board
             if(piece.getPosition() == null){
                 piece.setPosition(newPosition);    
@@ -82,36 +74,9 @@ public class ChessBoard {
                 board[row][col] = piece;
                 return true;
             }
-            else {
-                return false;
-        //}
-        } //catch (IllegalPositionException e) {
-            //return false;
-        //}
-    }
- 
-    private int getRow(String position) {
-        return board[0].length - Character.getNumericValue(position.charAt(1));
+            return false;
     }
 
-    private int getCol(String position){
-        return position.charAt(0) - 'a';
-
-    }
-
-    //Checks that position is a location on the board
-    private void checkValidPosition(String position) { //throws IllegalPositionException{
-        if(position.length() != 2 ||
-                position.charAt(0) < 'a' || position.charAt(0) > 'g' ||
-                position.charAt(1) < '1' || position.charAt(1) > '7'){
-
-            System.out.println("Position " + position + " is invalid in checkValidPosition()");
-            System.exit(1);
-            //throw new IllegalPositionException("Position " + position + " is invalid");
-        }
-
-    }
-    
     public void move(String fromPosition, String toPosition) {//throws IllegalPositionException {
         if(selectedPiece.getPosition().equals(fromPosition)){
             if(selectedPieceMoves.contains(toPosition)){
@@ -126,6 +91,22 @@ public class ChessBoard {
     public ArrayList<String> getInnerRing() { return innerRing; }
 
     public ArrayList<String> getOuterRing() { return outerRing; }
+
+    private int getRow(String position) {
+        return board[0].length - Character.getNumericValue(position.charAt(1));
+    }
+
+    private int getCol(String position){ return position.charAt(0) - 'a'; }
+    //Checks that position is a location on the board
+    private void checkValidPosition(String position) {
+        if(position.length() != 2 ||
+                position.charAt(0) < 'a' || position.charAt(0) > 'g' ||
+                position.charAt(1) < '1' || position.charAt(1) > '7'){
+
+            System.out.println("Position " + position + " is invalid in checkValidPosition()");
+            System.exit(1);
+        }
+    }
 
     public String toString() {
         String s = "";

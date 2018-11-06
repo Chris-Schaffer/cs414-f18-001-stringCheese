@@ -27,28 +27,29 @@ class KingTest extends ChessSuite {
     void testSquaresWithThreeMovesB2() {
         board.placePiece(king, "b2");
         assertTrue(king.legalMoves().containsAll(Arrays.asList("a1","a2","a3","b1", "b3", "c1","c2")));
-        assertTrue(king.legalMoves().size() == 3);
+        System.out.println(king.legalMoves());
+        assertTrue(king.legalMoves().size() == 7);
     }
 
     @org.junit.jupiter.api.Test
     void testSquaresWithThreeMovesB6() {
         board.placePiece(king, "b6");
         assertTrue(king.legalMoves().containsAll(Arrays.asList("a5", "a6", "a7","b5","b7","c6","c7")));
-        assertTrue(king.legalMoves().size() == 3);
+        assertTrue(king.legalMoves().size() == 7);
     }
 
     @org.junit.jupiter.api.Test
     void testSquaresWithThreeMovesF2() {
         board.placePiece(king, "f2");
         assertTrue(king.legalMoves().containsAll(Arrays.asList("e1","e2","f1", "f3", "g1","g2","g3")));
-        assertTrue(king.legalMoves().size() == 3);
+        assertTrue(king.legalMoves().size() == 7);
     }
 
     @org.junit.jupiter.api.Test
     void testSquaresWithThreeMovesF6() {
         board.placePiece(king, "f6");
         assertTrue(king.legalMoves().containsAll(Arrays.asList("e6", "f7", "f5","f7","g5","g6","g7")));
-        assertTrue(king.legalMoves().size() == 3);
+        assertTrue(king.legalMoves().size() == 7);
     }
 
     @org.junit.jupiter.api.Test
