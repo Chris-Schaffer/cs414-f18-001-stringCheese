@@ -27,7 +27,6 @@ class KingTest extends ChessSuite {
     void testSquaresWithThreeMovesB2() {
         board.placePiece(king, "b2");
         assertTrue(king.legalMoves().containsAll(Arrays.asList("a1","a2","a3","b1", "b3", "c1","c2")));
-        System.out.println(king.legalMoves());
         assertTrue(king.legalMoves().size() == 7);
     }
 
