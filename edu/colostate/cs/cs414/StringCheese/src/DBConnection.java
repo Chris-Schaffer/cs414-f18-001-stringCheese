@@ -1,19 +1,19 @@
 package edu.colostate.cs.cs414.StringCheese.src;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static edu.colostate.cs.cs414.StringCheese.src.User.getEncryptedPassword;
 
 public class DBConnection {
     static Connection con;
 
     public static Connection open(){
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //Deprecated Class.forName("com.mysql.jdbc.Driver");
             con=DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/rollerball","root","root");
+                    "jdbc:mysql://localhost:3306/rollerball","root","");
             //here rollerball is database name, root is username and password
             /*
             Statement stmt=con.createStatement();
@@ -114,22 +114,15 @@ public class DBConnection {
 
 
     public static void main(String args[]){
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con=DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/rollerball","root","root");
-            //here rollerball is database name, root is username and password
-            /*
-            Statement stmt=con.createStatement();
-            ResultSet rs=stmt.executeQuery("select * from emp");
-            while(rs.next())
-                System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));
-            con.close();
-            */
-        }catch(Exception e){
-            System.out.println(e);
-            System.exit(1);
-        }
+        //Connection connection = DBConnection.open();
+        //System.out.println(User.authenticate("Chris",null));
+        User.registerUser("chris","Chris@yahoo.com","12345");
+        User.authenticate("chris","12345");
+        byte[] salt = User.generateSalt();
+        System.out.println(salt);
+        byte[] first = User.getEncryptedPassword("12345", salt);
+        byte[] second = User.getEncryptedPassword("12345", salt);
+        System.out.println(Arrays.equals(first,second));
     }
 
 
