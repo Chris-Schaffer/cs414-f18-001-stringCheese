@@ -1,5 +1,7 @@
 package edu.colostate.cs.cs414.StringCheese.src;
 
+import org.jetbrains.annotations.Contract;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.io.ByteArrayInputStream;
@@ -8,6 +10,7 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -18,13 +21,49 @@ public class User {
     static Statement stmt;
     static Connection conn;
 
-    public User(String nickname, String email){
+    public User(String nickname){
         this.name = nickname;
-        this.email = email;
+        //this.email = email;
     }
 
+    public ArrayList<String> listRegisteredUsers(){
+        ArrayList<String> users= new ArrayList<>();
+        try{
+            conn = DBConnection.open();
+            stmt = conn.createStatement();
+            String query = "SELECT name FROM user WHERE name!='"+name+"' AND is_active=1";
+            ResultSet rs = stmt.executeQuery(query);
+            while(rs.next()){
+                users.add(rs.getString("name"));
+            }
+            DBConnection.close(conn);
+        }catch(SQLException se){
+            se.printStackTrace();
+            System.exit(1);
+        }
+        return users;
+    }
+    public boolean deactivate(){
+        int numRecordsAffected =0;
+        try {
+            conn = DBConnection.open();
+            stmt = conn.createStatement();
+            String query = "UPDATE user SET is_active=0 WHERE name='"+name+"'";
+            numRecordsAffected = stmt.executeUpdate(query);
+        }catch(SQLException se){
+            se.printStackTrace();
+            System.exit(1);
+        }
+        return numRecordsAffected==1;
+    }
+    public static boolean login(String name, String password){
+        return authenticate(name,password);
+    }
     public static boolean authenticate(String name, String password){
-
+        if(name ==null || password==null || name.length()<5 || password.length()<5 ){
+            System.out.println("Check username and password and try again.");
+            return false;
+        }
         try {
             conn = DBConnection.open();
             stmt = conn.createStatement();
@@ -33,6 +72,8 @@ public class User {
             if(rs.next()) {
                 byte[] hashedPass = rs.getBytes("password");
                 byte[] salt = rs.getBytes("salt");
+                //fixme should never be null, .sql should have constraint not null, only for testing
+                if(hashedPass==null || salt==null){return true;}
                 byte[] encryptedAttemptedPassword = getEncryptedPassword(password, salt);
                 boolean isEqual = Arrays.equals(encryptedAttemptedPassword, hashedPass);
                 DBConnection.close(conn);
@@ -49,9 +90,6 @@ public class User {
         }
         return false;
     }
-
-
-
     public static boolean registerUser(String name, String email, String password){
         //email syntax check
         EmailValidator emailValidator = new EmailValidator();
@@ -81,7 +119,7 @@ public class User {
                     return numRecordsInserted==1;
                 }catch(SQLIntegrityConstraintViolationException e){
                     System.out.println("This name or email is already registered, try again");
-                    System.exit(1);
+                    return false;
                 }
 
             } catch (Exception e) {
@@ -113,7 +151,7 @@ public class User {
         }
         return false;
     }
-    public static byte[] getEncryptedPassword(String password, byte[] salt) {
+    private static byte[] getEncryptedPassword(String password, byte[] salt) {
         // PBKDF2 with SHA-1 as the hashing algorithm. Note that the NIST
         // specifically names SHA-1 as an acceptable hashing algorithm for PBKDF2
         String algorithm = "PBKDF2WithHmacSHA1";

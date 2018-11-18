@@ -3,21 +3,33 @@ USE rollerball;
 
 drop table if exists user;
 CREATE TABLE user ( 
-	user_id smallint unsigned not null auto_increment, 
-	name varchar(20) unique not null, 
-	email varchar(30) unique not null, 
-	password varbinary(160),
-	salt varbinary(64),
-	primary key (user_id) 
+	user_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	name VARCHAR(20) UNIQUE NOT NULL,
+	email VARCHAR(30) UNIQUE NOT NULL,
+	password VARBINARY(160),
+	salt VARBINARY(64),
+	is_active BOOLEAN DEFAULT 1,  /* alias of tinyInt(1); 0 for false, nonzero for true */
+	PRIMARY KEY (user_id)
 );
 
 drop table if exists game;
 CREATE TABLE game ( 
-	game_id smallint unsigned not null auto_increment, 
-	name varchar(20) not null, 
-	primary key (game_id) 
+	game_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	host SMALLINT UNSIGNED,
+    invitee SMALLINT UNSIGNED DEFAULT NULL,
+    start_time TIMESTAMP,
+    end_time TIMESTAMP,
+    result VARCHAR(20),
+    abandon BOOLEAN DEFAULT 0,
+	PRIMARY KEY (game_id),
+	FOREIGN KEY (host) REFERENCES user(user_id),
+	FOREIGN KEY (invitee) REFERENCES user(user_id)
 );
 
-/* INSERT INTO user (name, email, password, salt ) VALUES
+ INSERT INTO user (name, email, password, salt ) VALUES
 ( 'chris', 'chris@yahoo.com', null, null),
-( 'zaira', 'zaira@google.com', null, null); */
+( 'zaira', 'zaira@google.com', null, null),
+('john', 'john@bing.com', null, null),
+('jane', 'jane@aol.com', null, null);
+
+
