@@ -138,8 +138,18 @@ public class ChessBoard {
         ChessBoard board = new ChessBoard();
         board.initialize();
         System.out.println(board);
-        //board.move("c2", "c4");
-        //System.out.println(board);
+        /*
+        board.move("c2", "b3");
+        board.move("b3", "b4");
+        board.move("c1", "c2");
+        board.move("c2", "b3");
+        board.move("d2", "c1");
+        board.move("c1", "b1");
+        */
+        board.placePiece(new King(board, ChessPiece.Color.White), "b1");
+        System.out.println(board);
+        System.out.println(board.getPiece("b1").legalMoves());
+
     }
 
     public String getPieceType(String position) {

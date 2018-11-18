@@ -3,7 +3,6 @@ package edu.colostate.cs.cs414.StringCheese.src;
 import java.sql.*;
 import java.util.*;
 
-import static edu.colostate.cs.cs414.StringCheese.src.User.getEncryptedPassword;
 
 public class DBConnection {
     static Connection con;
@@ -11,10 +10,11 @@ public class DBConnection {
     public static Connection open(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            //Deprecated Class.forName("com.mysql.jdbc.Driver");
-            con=DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/rollerball","root","");
-            //here rollerball is database name, root is username and password
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/rollerball","root","");
+            //here rollerball is database name, root is username and password stringcheese
+            //con=DriverManager.getConnection(
+             //       "jdbc:mysql://rollerballinstance.cds1ypryhrl5.us-east-1.rds.amazonaws.com/rollerball",
+             //       "root", "stringcheese");
             /*
             Statement stmt=con.createStatement();
             ResultSet rs=stmt.executeQuery("select * from emp");
@@ -114,15 +114,16 @@ public class DBConnection {
 
 
     public static void main(String args[]){
-        //Connection connection = DBConnection.open();
-        //System.out.println(User.authenticate("Chris",null));
-        User.registerUser("chris","Chris@yahoo.com","12345");
-        User.authenticate("chris","12345");
-        byte[] salt = User.generateSalt();
-        System.out.println(salt);
-        byte[] first = User.getEncryptedPassword("12345", salt);
-        byte[] second = User.getEncryptedPassword("12345", salt);
-        System.out.println(Arrays.equals(first,second));
+        Connection connection = DBConnection.open();
+        //System.out.println("Authenticate is "+ User.authenticate("Chris",null));
+        /*
+        System.out.println(User.registerUser("chris","Chris@yahoo.com","12345"));
+        System.out.println(User.authenticate("chris","12345"));
+      */
+        User user = new User("zaira");
+        System.out.println("deactivated is " + user.deactivate());
+        System.out.println(user.listRegisteredUsers());
+
     }
 
 
