@@ -1,6 +1,7 @@
 package edu.colostate.cs.cs414.StringCheese.src;
 
 
+import java.util.ArrayList;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.AddressException;
@@ -9,16 +10,17 @@ import javax.mail.internet.MimeMessage;
 
 public class Invitation {
 
-    private String gameID, senderName;
+    private String senderName;
+    private int gameID;
 
     //need gameID to send in email
-    public Invitation(String senderName, String gameID) {
+    public Invitation(String senderName, int gameID) {
         this.gameID = gameID;
         this.senderName = senderName;
     }
 
     //working
-    public boolean sendEmail(String[] recipientEmailAddresses) {
+    private boolean sendEmail(String[] recipientEmailAddresses) {
         //String to = "chris@yahoo.com";
         //Recipient's email
         InternetAddress[] recipients = new InternetAddress[recipientEmailAddresses.length];
@@ -74,8 +76,16 @@ public class Invitation {
         return true;
     }
 
+    public boolean sendInvitation(ArrayList<User> users){
+        String[] emails = new String[users.size()];
+        for(int i = 0; i< users.size(); i++){
+            emails[i] = users.get(i).getEmail();
+        }
+        return sendEmail(emails);
+    }
+
     public static void main(String args[]){
-        Invitation invitation = new Invitation("","");
+        Invitation invitation = new Invitation("",2);
         invitation.sendEmail(new String[0]);
     }
 

@@ -24,12 +24,19 @@ public class Game {
     private Connection conn;
     private int gameID;
     private String host, invitee, result, startTime, endTime;
+    private User user;
     private String name;
     private ChessBoard board;
 
+
+    //used to initially create a game in GameFacade
+    //then game object is changed to a game chosen from listActiveGames()
     public Game(User user){
+        this.user = user;
         name = user.getName();
         gameID = -1;
+        board = new ChessBoard();
+        board.initialize();
     }
     public Game(int gameID, String host, String invitee, String startTime,
                       String endTime, String result){
@@ -67,6 +74,11 @@ public class Game {
     }
 
     //FIXME NEED TO TEST
+    //NOTE: flow of joinGame()
+    //GameFacade
+    //Game game = new Game(user);
+    //game.listActiveGames();
+    //game.joinGame(gameID);
     public boolean joinGame(int gameID){
         //check if game has invitee before joining
         if(isGameStarted(gameID)){
@@ -90,10 +102,35 @@ public class Game {
         return false;
     }
 
-    public int getID(){
-        //FIXME only works if createGame was called otherwise returns -1.
-        return gameID;
+    //abandon game
+    public boolean quitGame(String username){
+        String opponent=getOpponent(username);
+        String query = "UPDATE game SET abandon=TRUE, end_time=CURRENT_TIMESTAMP(), result='"
+                +opponent+"' WHERE game_id='"+gameID+"'";
+        return updateDatabase(query);
     }
+    //quitGame() helper
+    private String getOpponent(String username){
+        String query = "SELECT host, invitee FROM game WHERE game_id='"+gameID+"'";
+        ResultSet rs = queryDatabase(query);
+        String opponent="";
+        try {
+            if(rs.next()){
+                String host = rs.getString("host");
+                String invitee = rs.getString("invitee");
+                if(host.equals(username)){
+                    opponent = invitee;
+                }else{
+                    opponent = host;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return opponent;
+    }
+
 
     public int createGame(String playerOne){
         //create new game with playerOne as host
@@ -101,6 +138,9 @@ public class Game {
                 "VALUES ('"+playerOne+"', CURRENT_TIMESTAMP() )";
         if(updateDatabase(query)) {
             setGameID(playerOne);
+        }else{
+            System.out.println("Something went wrong in creating game");
+            System.exit(1);
         }
         return gameID;
 
@@ -171,6 +211,11 @@ public class Game {
             System.exit(1);
         }
         return rs;
+    }
+
+    public int getID(){
+        //FIXME only works if createGame was called otherwise returns -1.
+        return gameID;
     }
 
     public String getStartTime() {

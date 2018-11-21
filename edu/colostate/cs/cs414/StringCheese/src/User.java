@@ -23,7 +23,10 @@ public class User {
 
     public User(String nickname){
         this.name = nickname;
-        //this.email = email;
+    }
+    public User(String name, String email){
+        this.name = name;
+        this.email = email;
     }
 
     public String getName() {
@@ -34,15 +37,16 @@ public class User {
         return email;
     }
 
-    public ArrayList<String> listRegisteredUsers(){
-        ArrayList<String> users= new ArrayList<>();
+    public ArrayList<User> listRegisteredUsers(){
+        ArrayList<User> users= new ArrayList<>();
         try{
             conn = DBConnection.open();
             stmt = conn.createStatement();
-            String query = "SELECT name FROM user WHERE name!='"+name+"' AND is_active=1";
+            String query = "SELECT name, email FROM user WHERE name!='"+name+"' AND is_active=1";
             ResultSet rs = stmt.executeQuery(query);
+            String name,email;
             while(rs.next()){
-                users.add(rs.getString("name"));
+                users.add(new User(rs.getString("name"),rs.getString("email")));
             }
             DBConnection.close(conn);
         }catch(SQLException se){
@@ -67,7 +71,7 @@ public class User {
     public static boolean login(String name, String password){
         return authenticate(name,password);
     }
-    public static boolean authenticate(String name, String password){
+    private static boolean authenticate(String name, String password){
         if(name ==null || password==null || name.length()<5 || password.length()<5 ){
             System.out.println("Check username and password and try again.");
             return false;
