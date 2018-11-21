@@ -13,11 +13,11 @@ public class Game {
     private Statement stmt;
     private Connection conn;
     private int gameID;
-    private String startTime;
-    private String endTime;
+    private String startTime, endTime;
+    private String inviteeName;
 
-    public Game(){
-        //
+    public Game(User user){
+        inviteeName = user.getName();
     }
     //FIXME NEED TO TEST
     public ArrayList<Pair<String,String>> listActiveGames(String name){
@@ -51,7 +51,7 @@ public class Game {
     //FIXME NEED TO TEST
     public boolean joinGame(int gameID, String name){
         //check if game has invitee before joining
-        if(gameStarted(gameID)){
+        if(isGameStarted(gameID)){
             System.out.println("This game has already started");
             return false;
         }
@@ -72,10 +72,24 @@ public class Game {
         return false;
     }
 
+    public int getID(){
+        //FIXME QUERY DB SET GAMEID
+        return gameID;
+    }
+
+    public boolean createGame(String playerOne){
+        String query = "";//create new game with playerOne as invitee
+       // if(updateDatabase(query)){
+            query = "";//query to find new gameID of game just created
+        //}
+        return false;
+    }
+
+
 
     //FIXME NEED TO TEST
     //check if game has invitee
-    private boolean gameStarted(int gameID) {
+    private boolean isGameStarted(int gameID) {
         ResultSet rs = queryDatabase("SELECT invitee FROM game WHERE game_id="+gameID);
         try{
             if(rs.next()){

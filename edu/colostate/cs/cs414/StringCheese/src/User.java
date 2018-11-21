@@ -17,13 +17,21 @@ import java.util.Arrays;
 
 public class User {
 
-    String name, email;
-    static Statement stmt;
-    static Connection conn;
+    private String name, email;
+    private static Statement stmt;
+    private static Connection conn;
 
     public User(String nickname){
         this.name = nickname;
         //this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public ArrayList<String> listRegisteredUsers(){
@@ -129,7 +137,6 @@ public class User {
         }else{
             System.out.println("Something went wrong");
             System.out.println("Check email is valid. Nickname and Password length must be at least 5 characters");
-            System.exit(1);
         }
         return false;
     }
@@ -172,7 +179,7 @@ public class User {
         }
         return new byte[0];
     }
-    public static byte[] generateSalt()  {
+    private static byte[] generateSalt()  {
         // VERY important to use SecureRandom instead of just Random
         SecureRandom random = null;
         try {
