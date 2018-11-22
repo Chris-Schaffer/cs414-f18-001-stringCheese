@@ -15,7 +15,7 @@ public class Rook extends ChessPiece {
     }
 
     public HashSet<String> legalMoves(){
-        legalMoves.clear();
+       legalMoves.clear();
         String position = getPosition();
         
         HashSet<String> nextmove=new HashSet<String>();
@@ -49,6 +49,7 @@ public class Rook extends ChessPiece {
                     temp.add("f6");
                     temp.add("g6");
                     sidemove.addAll(temp);
+                    legalMoves.addAll(sidemove);
                 }
                 else
                 {
@@ -61,7 +62,7 @@ public class Rook extends ChessPiece {
                         //}
                 }
                 int i=index;
-                while(i<13)
+                while(i<12)
                 {
                     //try {
                          nextmove=getNextForward(nxtpos);
@@ -89,6 +90,7 @@ public class Rook extends ChessPiece {
                      temp.add("f5");
                      temp.add("f6");
                      sidemove.addAll(temp);
+                     legalMoves.addAll(sidemove);
                 }
                  else
                 {
@@ -102,7 +104,7 @@ public class Rook extends ChessPiece {
                     //    }
                 }
                 int i=index;
-                while(i<19)
+                while(i<18)
                 {
                     //try {
                         nextmove=getNextForward(nxtpos);
@@ -130,6 +132,7 @@ public class Rook extends ChessPiece {
                     temp.add("b2");
                     temp.add("a2");
                     sidemove.addAll(temp);
+                    legalMoves.addAll(sidemove);
                 }
                 else
                 {
@@ -142,7 +145,7 @@ public class Rook extends ChessPiece {
                     //    }
                 }
                 int i=index;
-                while(i<25)
+                while(i<24)
                 {
                     //try {
                         
@@ -171,6 +174,7 @@ public class Rook extends ChessPiece {
                     temp.add("b6");
                     temp.add("b7");
                     sidemove.addAll(temp);
+                    legalMoves.addAll(sidemove);
                 }
                 else
                 {
@@ -184,7 +188,7 @@ public class Rook extends ChessPiece {
                         //}
                 }
                 int i=index;
-                while(i<31)
+                while(i<30)
                 {
                     //try {
                         nextmove=getNextForward(nxtpos);
@@ -222,8 +226,8 @@ public class Rook extends ChessPiece {
              //   }
             if(index>=0 && index<4)
             {
-                int j=0;
-                while(j<=4)
+                int j=index;
+                while(j<4)
                 {
                     //try {
                         nextmove=getNextForward(nxtpos);
@@ -240,8 +244,9 @@ public class Rook extends ChessPiece {
             }
             if(index>=4 && index<8)
             {
-                int j=0;
-                while(j<=4)
+                int j=index
+                        ;
+                while(j<8)
                 {
                     //try {
                         nextmove=getNextForward(nxtpos);
@@ -255,10 +260,10 @@ public class Rook extends ChessPiece {
                     j++;
                 }
             }
-            if(index>=8 && index<11)
+            if(index>=8 && index<12)
             {
-                int j=0;
-                while(j<=4)
+                int j=index;
+                while(j<12)
                 {
                     //try {
                         nextmove=getNextForward(nxtpos);
@@ -274,10 +279,10 @@ public class Rook extends ChessPiece {
                 }
                 
             }
-            if(index>=11 && index<15)
+            if(index>=12 && index<=15)
             {
-                int j=0;
-                while(j<=4)
+                int j=index;
+                while(j<16)
                 {
                     //try {
                         nextmove=getNextForward(nxtpos);
@@ -298,11 +303,7 @@ public class Rook extends ChessPiece {
             System.exit(1);
 
             return legalMoves;
-        }
-
-        
-       
-        
+        }    
     }
 
     public String toString(){
