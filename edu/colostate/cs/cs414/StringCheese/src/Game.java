@@ -131,9 +131,8 @@ public class Game {
         return opponent;
     }
 
-
+    //create new game with playerOne as host
     public int createGame(String playerOne){
-        //create new game with playerOne as host
         String query = "INSERT INTO GAME (host, start_time) " +
                 "VALUES ('"+playerOne+"', CURRENT_TIMESTAMP() )";
         if(updateDatabase(query)) {
@@ -164,7 +163,6 @@ public class Game {
         }
     }
 
-
     //FIXME NEED TO TEST
     //check if game table has null in invitee column
     private boolean isGameStarted(int gameID) {
@@ -184,7 +182,9 @@ public class Game {
         }
         return true;
     }
-
+    //query DB with a query that does not require a
+    //returned result. method returns true if the
+    //query made changes to 1 or more records in the table
     private boolean updateDatabase(String query){
         int numRecordsAffected=0;
         try{
@@ -199,6 +199,7 @@ public class Game {
         return numRecordsAffected>=1;
     }
 
+    //takes a SQL statement, queries DB and returns resultset or null
     private ResultSet queryDatabase(String query){
         ResultSet rs = null;
         try{
@@ -212,6 +213,7 @@ public class Game {
         }
         return rs;
     }
+
 
     public int getID(){
         //FIXME only works if createGame was called otherwise returns -1.
