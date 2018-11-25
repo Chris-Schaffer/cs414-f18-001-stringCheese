@@ -16,11 +16,11 @@ drop table if exists game;
 CREATE TABLE game ( 
 	game_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	host SMALLINT UNSIGNED,
-    invitee SMALLINT UNSIGNED DEFAULT NULL,
+    invitee SMALLINT UNSIGNED DEFAULT (-1),
     start_time TIMESTAMP,
     end_time TIMESTAMP,
-    result VARCHAR(20),
-    abandon BOOLEAN DEFAULT 0,
+    result VARCHAR(20) DEFAULT 'UNFINISHED',/*WINNER NAME*/
+    abandon BOOLEAN DEFAULT FALSE,
 	PRIMARY KEY (game_id),
 	FOREIGN KEY (host) REFERENCES user(user_id),
 	FOREIGN KEY (invitee) REFERENCES user(user_id)
@@ -31,5 +31,8 @@ CREATE TABLE game (
 ( 'zaira', 'zaira@google.com', null, null),
 ('john', 'john@bing.com', null, null),
 ('jane', 'jane@aol.com', null, null);
+
+
+
 
 
