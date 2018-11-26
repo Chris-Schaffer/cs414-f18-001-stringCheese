@@ -21,6 +21,7 @@ CREATE TABLE game (
     end_time TIMESTAMP,
     result VARCHAR(20) DEFAULT 'UNFINISHED',/*WINNER NAME*/
     abandon BOOLEAN DEFAULT FALSE,
+    next_turn SMALLINT UNSIGNED,
 	PRIMARY KEY (game_id),
 	FOREIGN KEY (host) REFERENCES user(user_id),
 	FOREIGN KEY (invitee) REFERENCES user(user_id)

@@ -24,7 +24,7 @@ public class Game {
     private Connection conn;
     private int gameID;
     private String host, invitee, result, startTime, endTime;
-    private User user;
+    private User user1, user2;
     private String name;
     private ChessBoard board;
 
@@ -32,7 +32,7 @@ public class Game {
     //used to initially create a game in GameFacade
     //then game object is changed to a game chosen from listActiveGames()
     public Game(User user){
-        this.user = user;
+        this.user1 = user;
         name = user.getName();
         gameID = -1;
         board = new ChessBoard();
@@ -76,6 +76,7 @@ public class Game {
     //FIXME NEED TO TEST
     //NOTE: flow of joinGame()
     //GameFacade
+    //ArrayList<Game> games = new ArrayList<>();
     //Game game = new Game(user);
     //game.listActiveGames();
     //game.joinGame(gameID);
@@ -215,11 +216,6 @@ public class Game {
     }
 
 
-    public int getID(){
-        //FIXME only works if createGame was called otherwise returns -1.
-        return gameID;
-    }
-
     public String getStartTime() {
         return startTime;
     }
@@ -233,6 +229,7 @@ public class Game {
     }
 
     public int getGameID() {
+        //FIXME only works if createGame was called otherwise returns -1.
         return gameID;
     }
 
