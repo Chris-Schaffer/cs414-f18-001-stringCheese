@@ -212,7 +212,7 @@ public abstract class ChessPiece {
             index=outerRing.indexOf(position);
             if(index >= 1 && index <= 5) offset = 1;
             else if(index > 6 && index <= 11) offset = 3;
-            else if(index > 13 && index <= 17) offset = 5;
+            else if(index > 12 && index <= 17) offset = 5;
             else offset = 7;
             //If statement for corner case where piece calls getSideways() from B1
             if(index-offset == innerRing.size()){
