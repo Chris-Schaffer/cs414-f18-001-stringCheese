@@ -37,7 +37,7 @@ public abstract class ChessPiece {
     }
     //returns zero if previous backward has piece of same color
     //returns set of size one if not
-    public HashSet<String> getNextForward(String position) { //throws IllegalPositionException {
+     public HashSet<String> getNextForward(String position,Color color) { //throws IllegalPositionException {
         int index;
         String newPos = "";
         HashSet<String> moves = new HashSet<>();
@@ -63,11 +63,11 @@ public abstract class ChessPiece {
             System.exit(1);
         }
         moves.add(newPos);
-        return removePositionsWithSameColorPiece(moves, position);
+        return removePositionsWithSameColorPiece(moves, color);
     }
     //returns zero if previous backward has piece of same color
     //returns set of size one if not
-    public HashSet<String> getPrevBackward(String position){ //throws IllegalPositionException {
+    public HashSet<String> getPrevBackward(String position,Color color){ //throws IllegalPositionException {
         int index;
         String newPos="";
         HashSet<String> legalMoves = new HashSet<>();
@@ -95,11 +95,11 @@ public abstract class ChessPiece {
             System.exit(1);
         }
         legalMoves.add(newPos);
-        return removePositionsWithSameColorPiece(legalMoves, position);
+        return removePositionsWithSameColorPiece(legalMoves, color);
     }
     //can return between zero and two next diagnonal positions from given position
     //returns zero if next diagonal has piece of same color
-    public HashSet<String> getNextDiagonals(String position) {
+    public HashSet<String> getNextDiagonals(String position,Color color) {
         HashSet<String> legalMoves = new HashSet<>();
         char letter = position.charAt(0);
         int row = Character.getNumericValue(position.charAt(1));
@@ -110,7 +110,7 @@ public abstract class ChessPiece {
             else legalMoves.add(Character.toString(letter).concat(Integer.toString(1)));
         }
         //move up i.e. increase row by 1 and col can be a or b
-       else if(letter <= 'b' && row < 6){
+        else if(letter <= 'b' && row < 6){
             //don't need?
             if(letter == 'a') legalMoves.add(Character.toString('b').concat(Integer.toString(row+1)));
             else legalMoves.add(Character.toString('a').concat(Integer.toString(row+1)));
@@ -140,11 +140,11 @@ public abstract class ChessPiece {
         if(position.equals("f3")){
             legalMoves.add("e2");
         }
-        return removePositionsWithSameColorPiece(legalMoves, position);
+        return removePositionsWithSameColorPiece(legalMoves, color);
     }
     //can return between zero and two previous diagnonal positions from given position
     //returns zero if previous diagonals have piece of same color
-    public HashSet<String> getPrevDiagonals(String position) {
+    public HashSet<String> getPrevDiagonals(String position, Color color) {
         HashSet<String> legalMoves = new HashSet<>();
         char letter = position.charAt(0);
         int row = Character.getNumericValue(position.charAt(1));
@@ -180,18 +180,18 @@ public abstract class ChessPiece {
         if(position.equals("f5")){
             legalMoves.add("e6");
         }
-        return removePositionsWithSameColorPiece(legalMoves, position);
+        return removePositionsWithSameColorPiece(legalMoves, color);
 
     }
 
     //returns adjacent tiles on opposite ring
-    public HashSet<String> getSideways(String position){
+    public HashSet<String> getSideways(String position, Color color){
         HashSet<String> legalMoves = new HashSet<>();
         //outer corner squares have no sideways
         if(isOuterCorner(position)){ return legalMoves;}
         //special case where inner corner has two sideways positions
         else if(isInnerCorner(position)){
-            return getSidewaysSpecialCase(position);
+            return getSidewaysSpecialCase(position,color );
         }
 
         ArrayList<String> innerRing = board.getInnerRing();
@@ -205,7 +205,7 @@ public abstract class ChessPiece {
             else if(index <= 11 ) offset = 5;
             else offset = 7;
             legalMoves.add(outerRing.get(index+offset));
-            return removePositionsWithSameColorPiece(legalMoves,position);
+            return removePositionsWithSameColorPiece(legalMoves,color);
         }
         //if index is inbetween
         else if(outerRing.contains(position)) {
@@ -220,7 +220,7 @@ public abstract class ChessPiece {
             }else {
                 legalMoves.add(innerRing.get(index - offset));
             }
-            return removePositionsWithSameColorPiece(legalMoves,position);
+            return removePositionsWithSameColorPiece(legalMoves,color);
         }
         else{
             System.out.println("Position " + position + " is invalid in getSideways()");
@@ -229,7 +229,7 @@ public abstract class ChessPiece {
         }
     }
     //getSideways helper method for case when position is on inner corner and has two sideways moves
-    private HashSet<String> getSidewaysSpecialCase(String position) {
+    private HashSet<String> getSidewaysSpecialCase(String position, Color color) {
         HashSet<String> legalMoves = new HashSet<>();
         switch (position) {
             case "b2":
@@ -246,16 +246,19 @@ public abstract class ChessPiece {
                 legalMoves.addAll(Arrays.asList("f1", "g2"));
                 break;
         }
-        return removePositionsWithSameColorPiece(legalMoves, position);
+        return removePositionsWithSameColorPiece(legalMoves, color);
     }
     //package private
-    HashSet<String> removePositionsWithSameColorPiece(HashSet<String> legalMoves, String position) {
+
+    HashSet<String> removePositionsWithSameColorPiece(HashSet<String> legalMoves, Color origionalColor) {
         HashSet<String> newSet = new HashSet<>();
-        for(String move: legalMoves) {
-            if (board.getPiece(move) == null || board.getPiece(move).color != board.getPiece(position).color) {
+
+         for(String move: legalMoves) {
+            if (board.getPiece(move) == null || board.getPiece(move).color != origionalColor) {
                 newSet.add(move);
             }
         }
+
         return newSet;
     }
     //package private
