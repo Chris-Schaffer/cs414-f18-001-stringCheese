@@ -2,6 +2,7 @@ package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 
 import edu.colostate.cs.cs414.StringCheese.src.GameFacade;
 
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -9,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class UIController implements ActionListener, MouseListener {
@@ -66,11 +68,25 @@ public class UIController implements ActionListener, MouseListener {
 
 	//right now just switches panels, will eventually call facade for registration
 	private void register() {
-		menuPanel = new MenuPanel(this);
-		window.remove(registerPanel);
-		window.add(menuPanel);
-		window.revalidate();
-		window.repaint();
+		String email = registerPanel.getEmail().getText();
+		String nickname = registerPanel.getNickname().getText();
+		char[] password = registerPanel.getPassword().getPassword();
+
+		String passablePassword = "";
+		for(char c : password){
+			passablePassword += c;
+		}
+
+		boolean loginSuccessful = gameFacade.register(nickname,email,passablePassword);
+
+
+		if(loginSuccessful){
+			goToMenu("register");
+		}
+		else {
+			//display error
+		}
+
 	}
 
 	private void goToRegister() {
@@ -89,10 +105,41 @@ public class UIController implements ActionListener, MouseListener {
 		window.revalidate();
 		window.repaint();
 	}
+
 	//right now just switches panels, will eventually call facade for login
 	private void login(){
+		Component comps[] = loginPanel.getComponents();
+		String email;
+		char[] password;
+		boolean logInSuccessful;
+
+		email = loginPanel.getEmail().getText();
+		password = loginPanel.getPassword().getPassword();
+		String passablePassword = "";
+		for(char c : password){
+			passablePassword += c;
+		}
+
+		logInSuccessful = gameFacade.login(email,passablePassword);
+
+		if(logInSuccessful){
+			goToMenu("login");
+		}
+
+		else {
+			//add some sort off error text
+		}
+
+	}
+
+	private void goToMenu(String panelType){
 		menuPanel = new MenuPanel(this);
-		window.remove(loginPanel);
+		if(panelType.equalsIgnoreCase("login")){
+			window.remove(loginPanel);
+		}
+		else{
+			window.remove(registerPanel);
+		}
 		window.add(menuPanel);
 		window.revalidate();
 		window.repaint();
