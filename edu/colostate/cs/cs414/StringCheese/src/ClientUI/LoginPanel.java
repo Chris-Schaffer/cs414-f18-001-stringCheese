@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class LoginPanel extends JPanel{
-	UIController controller;
+	private UIController controller;
+	private JTextField email;
+	private JPasswordField password;
+
 	public LoginPanel(UIController controller){
 		this.controller = controller;
 		JLabel title = new JLabel("If You Have An Account Login Here:",JLabel.CENTER);
@@ -18,16 +21,28 @@ public class LoginPanel extends JPanel{
 		this.add(loginInfo,BorderLayout.LINE_START);
 
 		JTextField email = new JTextField("email:",20);
+		email.setName("email");
 		email.setPreferredSize(new Dimension(2000,40));
 		this.add(email,BorderLayout.CENTER);
+		this.email = email;
 
 		JPasswordField password = new JPasswordField("password:",20);
+		password.setName("password");
 		password.setPreferredSize(new Dimension(2000,40));
 		this.add(password,BorderLayout.CENTER);
+		this.password = password;
 
 		JButton login = new JButton("login");
 		login.setPreferredSize(new Dimension(200,40));
 		login.addActionListener(this.controller);
 		this.add(login, BorderLayout.PAGE_END);
+	}
+
+	public JTextField getEmail(){
+		return email;
+	}
+
+	public JPasswordField getPassword(){
+		return password;
 	}
 }
