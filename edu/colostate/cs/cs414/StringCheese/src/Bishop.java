@@ -24,7 +24,7 @@ public class Bishop extends ChessPiece {
     }
 
     private HashSet<String> getNextMovesRecurse(String position, String prevPosition, boolean hasBounced,HashSet<String> moves){
-        HashSet<String> nextMoves = getNextDiagonals(position);
+        HashSet<String> nextMoves = getNextDiagonals(position, getColor());
 
         //base case if it has moved and has bounced then there are no legal moves left
         if(nextMoves.size() == 1 && hasBounced && prevPosition.equals("")){

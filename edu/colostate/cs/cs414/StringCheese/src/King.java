@@ -15,15 +15,15 @@ public class King extends ChessPiece {
     public HashSet<String> legalMoves() {
         //FIXME currently doesn't check if the move places the king into check
         legalMoves.clear();
-        legalMoves.addAll(getNextDiagonals(getPosition()));
-        legalMoves.addAll(getNextForward(getPosition()));
-        legalMoves.addAll(getPrevBackward(getPosition()));
-        legalMoves.addAll(getPrevDiagonals(getPosition()));
-        legalMoves.addAll(getSideways(getPosition()));
+        legalMoves.addAll(getNextDiagonals(getPosition(), getColor()));
+        legalMoves.addAll(getNextForward(getPosition(), getColor()));
+        legalMoves.addAll(getPrevBackward(getPosition(), getColor()));
+        legalMoves.addAll(getPrevDiagonals(getPosition(), getColor()));
+        legalMoves.addAll(getSideways(getPosition(), getColor()));
         if(isInnerCorner(getPosition())){
             addOuterCorner();
         }
-        return removePositionsWithSameColorPiece(legalMoves, getPosition());
+        return removePositionsWithSameColorPiece(legalMoves, getColor());
 }
 
     private HashSet<String> addOuterCorner() {
