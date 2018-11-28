@@ -4,7 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RegisterPanel extends JPanel {
-	UIController controller;
+	private UIController controller;
+	private JTextField email;
+	private JTextField nickname;
+	private JPasswordField password;
+
 	public RegisterPanel(UIController controller){
 		this.controller = controller;
 		JLabel title = new JLabel("If You Don't Have An Account Register Here:",JLabel.CENTER);
@@ -20,20 +24,35 @@ public class RegisterPanel extends JPanel {
 		JTextField email = new JTextField("email:",20);
 		email.setPreferredSize(new Dimension(2000,40));
 		this.add(email,BorderLayout.CENTER);
+		this.email = email;
 
 		JTextField nickname = new JTextField("nickname:",20);
 		nickname.setPreferredSize(new Dimension(2000,40));
 		this.add(nickname,BorderLayout.CENTER);
+		this.nickname = nickname;
 
 		JPasswordField password = new JPasswordField("password:",20);
 		password.setPreferredSize(new Dimension(2000,40));
 		this.add(password,BorderLayout.CENTER);
+		this.password = password;
 
 		JButton register = new JButton("register");
 		register.setPreferredSize(new Dimension(200,40));
 		register.addActionListener(this.controller);
 		this.add(register, BorderLayout.PAGE_END);
 
+	}
+
+	public JTextField getEmail(){
+		return email;
+	}
+
+	public JTextField getNickname(){
+		return nickname;
+	}
+
+	public JPasswordField getPassword(){
+		return password;
 	}
 
 }
