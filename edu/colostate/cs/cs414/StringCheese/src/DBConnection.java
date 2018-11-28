@@ -10,11 +10,11 @@ public class DBConnection {
     public static Connection open(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/rollerball","root","");
+            //con=DriverManager.getConnection("jdbc:mysql://localhost:3306/rollerball","root","");
             //here rollerball is database name, root is username and password stringcheese
-            //con=DriverManager.getConnection(
-             //       "jdbc:mysql://rollerballinstance.cds1ypryhrl5.us-east-1.rds.amazonaws.com/rollerball",
-             //       "root", "stringcheese");
+            con=DriverManager.getConnection(
+                    "jdbc:mysql://rollerball.c16s0sml8won.us-east-1.rds.amazonaws.com:3306/rollerball",
+                    "root", "stringcheese");
             /*
             Statement stmt=con.createStatement();
             ResultSet rs=stmt.executeQuery("select * from emp");
@@ -114,15 +114,16 @@ public class DBConnection {
 
 
     public static void main(String args[]){
-        Connection connection = DBConnection.open();
+        //Connection connection = DBConnection.open();
+        //connection.createStatement();
         //System.out.println("Authenticate is "+ User.authenticate("Chris",null));
-        /*
-        System.out.println(User.registerUser("chris","Chris@yahoo.com","12345"));
-        System.out.println(User.authenticate("chris","12345"));
-      */
-        User user = new User("zaira");
-        System.out.println("deactivated is " + user.deactivate());
-        System.out.println(user.listRegisteredUsers());
+
+        System.out.println(User.registerUser("joey123","joey123@yahoo.com","123456"));
+        //System.out.println(User.authenticate("chris","12345"));
+
+        //User user = new User("zaira");
+        //System.out.println("deactivated is " + user.deactivate());
+        //System.out.println(user.listRegisteredUsers());
 
     }
 

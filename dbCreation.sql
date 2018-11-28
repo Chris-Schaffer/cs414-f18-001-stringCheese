@@ -16,7 +16,7 @@ drop table if exists game;
 CREATE TABLE game ( 
 	game_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	host SMALLINT UNSIGNED,
-    invitee SMALLINT UNSIGNED DEFAULT (-1),
+    invitee SMALLINT UNSIGNED DEFAULT 0,
     start_time TIMESTAMP,
     end_time TIMESTAMP,
     result VARCHAR(20) DEFAULT 'UNFINISHED',/*WINNER NAME*/
