@@ -171,10 +171,11 @@ public class Rook extends ChessPiece {
                     //    } catch (IllegalPositionException ex) {
                     //        Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
                     //    }
-                    for(String move:sidemove)
+                    /*for(String move:sidemove)
                     {
                         System.out.println(move);
                     }
+                    */
                 }
                 int i = index;
                 while (i < 24) {
