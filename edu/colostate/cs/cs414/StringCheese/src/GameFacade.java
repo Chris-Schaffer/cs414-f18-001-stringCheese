@@ -65,4 +65,8 @@ public class GameFacade {
     public void move(String from, String to) {
         board.move(from,to);
     }
+
+    public User getUser(){
+        return user;
+    }
 }

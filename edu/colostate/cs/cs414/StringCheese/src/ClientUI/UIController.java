@@ -76,6 +76,12 @@ public class UIController implements ActionListener, MouseListener {
 		gamePanel = new GamePanel();
 		gamePanel.setUIController(this);
 		gamePanel.displayState();
+		//testing
+        if(gameFacade.getUser()== null){
+            gamePanel.addActiveGames(null,null);
+        }else {
+            gamePanel.addActiveGames(gameFacade.getUser().listActiveGames(), gameFacade.getUser().getName());
+        }
 		window.remove(menuPanel);
 		window.add(gamePanel);
 		window.revalidate();
@@ -138,7 +144,7 @@ public class UIController implements ActionListener, MouseListener {
 			passablePassword += c;
 		}
 
-		logInSuccessful = false;//gameFacade.login(nickname,passablePassword);
+		logInSuccessful = true;//gameFacade.login(nickname,passablePassword);
 
 		if(logInSuccessful){
 			goToMenu("login");
@@ -153,6 +159,9 @@ public class UIController implements ActionListener, MouseListener {
 
 	}
 
+
+
+
 	private void goToMenu(String panelType){
 		menuPanel = new MenuPanel(this);
 		if(panelType.equalsIgnoreCase("login")){
@@ -165,6 +174,10 @@ public class UIController implements ActionListener, MouseListener {
 		window.revalidate();
 		window.repaint();
 	}
+
+
+
+
 
 	@Override
 	public void mouseClicked(MouseEvent e) {

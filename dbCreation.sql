@@ -18,7 +18,7 @@ CREATE TABLE game (
 	host SMALLINT UNSIGNED,
     invitee SMALLINT UNSIGNED DEFAULT 0,
     start_time TIMESTAMP,
-    end_time TIMESTAMP,
+    end_time TIMESTAMP  DEFAULT NULL,
     result VARCHAR(20) DEFAULT 'UNFINISHED',/*WINNER NAME*/
     abandon BOOLEAN DEFAULT FALSE,
     next_turn SMALLINT UNSIGNED,
@@ -33,6 +33,11 @@ CREATE TABLE game (
 ('john', 'john@bing.com', null, null),
 ('jane', 'jane@aol.com', null, null);
 
+
+INSERT INTO game (host, invitee, start_time, next_turn) VALUES
+(1,2,current_timestamp,1),
+(2,1,current_timestamp,2),
+(5,1,current_timestamp,5);
 
 
 
