@@ -39,13 +39,19 @@ public class UIController implements ActionListener, MouseListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equalsIgnoreCase("go to login")){
-			goToLogin();
+			goToLogin(startPanel);
+		}
+		else if(e.getActionCommand().equalsIgnoreCase("to login")){
+			goToLogin(registerPanel);
 		}
 		else if(e.getActionCommand().equalsIgnoreCase("login")){
 			login();
 		}
 		else if(e.getActionCommand().equalsIgnoreCase("go to register")){
-			goToRegister();
+			goToRegister(startPanel);
+		}
+		else if(e.getActionCommand().equalsIgnoreCase("register an account")){
+			goToRegister(loginPanel);
 		}
 		else if(e.getActionCommand().equalsIgnoreCase("register")){
 			register();
@@ -77,29 +83,31 @@ public class UIController implements ActionListener, MouseListener {
 			passablePassword += c;
 		}
 
-		boolean loginSuccessful = gameFacade.register(nickname,email,passablePassword);
+		boolean loginSuccessful = true;//gameFacade.register(nickname,email,passablePassword);
 
 
 		if(loginSuccessful){
+			registerPanel.showSuccessMsg();
 			goToMenu("register");
 		}
 		else {
-			//display error
+			registerPanel.showFailureMsg();
 		}
 
 	}
 
-	private void goToRegister() {
+	private void goToRegister(JPanel fromPanel) {
+		window.remove(fromPanel);
 		registerPanel = new RegisterPanel(this);
-		window.remove(startPanel);
 		window.add(registerPanel);
 		window.revalidate();
 		window.repaint();
 	}
 
 
-	private void goToLogin(){
-		window.remove(startPanel);
+	private void goToLogin(JPanel fromPanel){
+		//window.remove(startPanel);
+		window.remove(fromPanel);
 		loginPanel = new LoginPanel(this);
 		window.add(loginPanel);
 		window.revalidate();
@@ -109,18 +117,18 @@ public class UIController implements ActionListener, MouseListener {
 	//right now just switches panels, will eventually call facade for login
 	private void login(){
 		Component comps[] = loginPanel.getComponents();
-		String email;
+		String nickname;
 		char[] password;
 		boolean logInSuccessful;
 
-		email = loginPanel.getEmail().getText();
+		nickname = loginPanel.getNickname().getText();
 		password = loginPanel.getPassword().getPassword();
 		String passablePassword = "";
 		for(char c : password){
 			passablePassword += c;
 		}
 
-		logInSuccessful = gameFacade.login(email,passablePassword);
+		logInSuccessful = false;//gameFacade.login(nickname,passablePassword);
 
 		if(logInSuccessful){
 			goToMenu("login");
@@ -128,6 +136,9 @@ public class UIController implements ActionListener, MouseListener {
 
 		else {
 			//add some sort off error text
+			MainWindow.infoBox("Error logging in.\n" +
+					"Ensure nickname and password are correct.\n" +
+					"Nickname and password both must be at least 5 characters.","");
 		}
 
 	}

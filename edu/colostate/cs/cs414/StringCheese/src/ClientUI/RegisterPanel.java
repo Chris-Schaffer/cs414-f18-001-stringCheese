@@ -8,6 +8,8 @@ public class RegisterPanel extends JPanel {
 	private JTextField email;
 	private JTextField nickname;
 	private JPasswordField password;
+	private JLabel successMsgLabel;
+	private JLabel failureMsgLabel;
 
 	public RegisterPanel(UIController controller){
 		this.controller = controller;
@@ -22,7 +24,7 @@ public class RegisterPanel extends JPanel {
 		this.add(registerInfo,BorderLayout.LINE_START);
 
 		JTextField email = new JTextField("email:",20);
-		email.setPreferredSize(new Dimension(2000,40));
+		email.setPreferredSize(new Dimension(200,40));
 		this.add(email,BorderLayout.CENTER);
 		this.email = email;
 
@@ -41,6 +43,20 @@ public class RegisterPanel extends JPanel {
 		register.addActionListener(this.controller);
 		this.add(register, BorderLayout.PAGE_END);
 
+		successMsgLabel = new JLabel("Registration Successful");
+		successMsgLabel.setVisible(false);
+		this.add(successMsgLabel, BorderLayout.CENTER);
+
+		failureMsgLabel = new JLabel("Registration Failure");
+		failureMsgLabel.setVisible(false);
+		this.add(failureMsgLabel, BorderLayout.CENTER);
+
+		JButton login = new JButton("to login");
+		login.setPreferredSize(new Dimension(200,40));
+		login.addActionListener(this.controller);
+		this.add(login, BorderLayout.PAGE_END);
+
+
 	}
 
 	public JTextField getEmail(){
@@ -53,6 +69,20 @@ public class RegisterPanel extends JPanel {
 
 	public JPasswordField getPassword(){
 		return password;
+	}
+
+	public void showSuccessMsg(){
+		failureMsgLabel.setVisible(false);
+		successMsgLabel.setVisible(true);
+		MainWindow.infoBox("Registration Successful\n" +
+				"Logging in...", "");
+	}
+
+	public void showFailureMsg(){
+		failureMsgLabel.setVisible(true);
+		MainWindow.infoBox("Registration Failed\n" +
+				"Email or Nickname may already be in use.\n" +
+				"Nickname and Password must be at least 5 characters long.","");
 	}
 
 }

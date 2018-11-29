@@ -1,11 +1,12 @@
 package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class LoginPanel extends JPanel{
 	private UIController controller;
-	private JTextField email;
+	private JTextField nickname;//email;
 	private JPasswordField password;
 
 	public LoginPanel(UIController controller){
@@ -20,11 +21,15 @@ public class LoginPanel extends JPanel{
 		loginInfo.setFont(new Font(Font.SANS_SERIF, Font.BOLD,20));
 		this.add(loginInfo,BorderLayout.LINE_START);
 
-		JTextField email = new JTextField("email:",20);
-		email.setName("email");
-		email.setPreferredSize(new Dimension(2000,40));
-		this.add(email,BorderLayout.CENTER);
-		this.email = email;
+		JTextField nickname = new JTextField("nickname:",20);
+		nickname.setName("nickname");
+		nickname.setPreferredSize(new Dimension(2000,40));
+		this.add(nickname, BorderLayout.CENTER);
+		this.nickname = nickname;
+		//email.setName("email");
+		//email.setPreferredSize(new Dimension(2000,40));
+		//this.add(email,BorderLayout.CENTER);
+		//this.email = email;
 
 		JPasswordField password = new JPasswordField("password:",20);
 		password.setName("password");
@@ -35,14 +40,25 @@ public class LoginPanel extends JPanel{
 		JButton login = new JButton("login");
 		login.setPreferredSize(new Dimension(200,40));
 		login.addActionListener(this.controller);
-		this.add(login, BorderLayout.PAGE_END);
+		this.add(login, BorderLayout.CENTER);
+
+
+		JButton register = new JButton("register an account");
+		register.setPreferredSize(new Dimension(200,40));
+		register.addActionListener(this.controller);
+		this.add(register, BorderLayout.PAGE_END);
 	}
 
-	public JTextField getEmail(){
+	/*
+	public JTextField getEmail() {
 		return email;
 	}
-
+	*/
 	public JPasswordField getPassword(){
 		return password;
+	}
+
+	public JTextField getNickname() {
+		return nickname;
 	}
 }
