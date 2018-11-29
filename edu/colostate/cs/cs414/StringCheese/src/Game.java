@@ -1,7 +1,7 @@
 package edu.colostate.cs.cs414.StringCheese.src;
 
 
-
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +18,7 @@ GameFacade
  -> UI -> pair = User chosen pair
  -> game = game associated with pair
  */
-public class Game {
+public class Game implements java.io.Serializable {
 
     private Statement stmt;
     private Connection conn;
