@@ -46,7 +46,7 @@ public class GamePanel extends JPanel{
 	}
 
 	public void displayState(){
-
+		//repaintBorders();
 		for(int row = 0; row < 7;row++){
 			for(int col =0; col < 7;col++){
 				if(row >= 2 && col >=2 && row < 5 && col <5){
@@ -126,7 +126,8 @@ public class GamePanel extends JPanel{
 		repaintBorders();
 		for (String move : moves) {
 			GameTile tile = gameTiles[getRow(move)][getCol(move)];
-			tile.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+			tile.setBackground(Color.GREEN);
+			//tile.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 			tile.revalidate();
 			tile.repaint();
 		}
@@ -138,7 +139,12 @@ public class GamePanel extends JPanel{
 				if(row >= 2 && col >=2 && row < 5 && col <5){
 
 				}else{
-					gameTiles[row][col].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+					if((col %2 == 0 && row %2 == 0) || (col %2 !=0 && row %2 != 0)){
+						gameTiles[row][col].setBackground(new Color(139,69,19));
+					}else{
+						gameTiles[row][col].setBackground(new Color(210,180,140));
+					}
+					//gameTiles[row][col].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				}
 			}
 		}

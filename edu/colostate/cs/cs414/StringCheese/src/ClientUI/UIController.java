@@ -59,10 +59,20 @@ public class UIController implements ActionListener, MouseListener {
 		else if (e.getActionCommand().equalsIgnoreCase("game")){
 			game();
 		}
+        else if (e.getActionCommand().equalsIgnoreCase("profile")){
+            profile();
+        }
 
 	}
 
-	private void game() {
+    private void profile() {
+	    window.remove(menuPanel);
+	   // window.add();
+        window.revalidate();
+        window.repaint();
+    }
+
+    private void game() {
 		gamePanel = new GamePanel();
 		gamePanel.setUIController(this);
 		gamePanel.displayState();
@@ -163,7 +173,7 @@ public class UIController implements ActionListener, MouseListener {
 		if(c instanceof GameTile){
 			tile = (GameTile) c;
 
-			if(((LineBorder)tile.getBorder()).getLineColor() == Color.GREEN){
+			if((tile.getBackground()) == Color.GREEN){
 				gameFacade.move(selectedPosition, tile.getPosition());
 				gamePanel.displayState();
 			}
