@@ -47,31 +47,7 @@ public class Game implements java.io.Serializable {
         this.endTime = endTime;
         this.result = result;
     }
-    //FIXME NEED TO TEST
-    public ArrayList<Game> listActiveGames(){
-        // what do you want to display to user when displaying games
-        // Pair<OpponentName, StartTime>
-        ArrayList<Game> games = new ArrayList<>();
-        int gameID;
-        String host, invitee,startTime, endTime, result;
-        ResultSet rs = queryDatabase("SELECT * FROM game WHERE (host='"+name+"' OR invitee='"+name+"') AND result = 'UNFINISHED'");
-        if(rs != null){
-            try {
-                while (rs.next()) {
-                    gameID = rs.getInt("game_id");
-                    host = rs.getString("host");
-                    invitee = rs.getString("invitee");
-                    startTime = rs.getString("start_time");
-                    endTime = rs.getString("end_time");
-                    result = rs.getString("result");
-                    games.add(new Game(gameID,host,invitee,startTime,endTime,result));
-                }
-            }catch (SQLException se){
-                se.printStackTrace();
-            }
-        }
-        return games;
-    }
+
 
     //FIXME NEED TO TEST
     //NOTE: flow of joinGame()

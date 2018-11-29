@@ -53,6 +53,31 @@ public class User {
         }
         return users;
     }
+    //FIXME NEED TO TEST
+    public ArrayList<Game> listActiveGames(){
+        // what do you want to display to user when displaying games
+        // Pair<OpponentName, StartTime>
+        ArrayList<Game> games = new ArrayList<>();
+        int gameID;
+        String host, invitee,startTime, endTime, result;
+        ResultSet rs = queryDatabase("SELECT * FROM game WHERE (host='"+name+"' OR invitee='"+name+"') AND result = 'UNFINISHED'");
+        if(rs != null){
+            try {
+                while (rs.next()) {
+                    gameID = rs.getInt("game_id");
+                    host = rs.getString("host");
+                    invitee = rs.getString("invitee");
+                    startTime = rs.getString("start_time");
+                    endTime = rs.getString("end_time");
+                    result = rs.getString("result");
+                    games.add(new Game(gameID,host,invitee,startTime,endTime,result));
+                }
+            }catch (SQLException se){
+                se.printStackTrace();
+            }
+        }
+        return games;
+    }
     public boolean deactivate(){
         int numRecordsAffected =0;
         try {
@@ -141,6 +166,20 @@ public class User {
             System.out.println("Check email is valid. Nickname and Password length must be at least 5 characters");
         }
         return false;
+    }
+    //takes a SQL statement, queries DB and returns resultset or null
+    private ResultSet queryDatabase(String query){
+        ResultSet rs = null;
+        try{
+            conn = DBConnection.open();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+            DBConnection.close(conn);
+        }catch(SQLException se){
+            se.printStackTrace();
+            System.exit(1);
+        }
+        return rs;
     }
     //validate database has new user
     //FIXME: has bugs BUT NOT SURE IF WE EVEN NEED THIS METHOD
