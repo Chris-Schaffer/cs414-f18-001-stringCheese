@@ -23,7 +23,6 @@ public class GameFacade {
         }
         return false;
     }
-
     public boolean register(String name, String email, String password){
         return User.registerUser(name,email,password);
     }
@@ -35,7 +34,7 @@ public class GameFacade {
         return user.listRegisteredUsers();
     }
     public ArrayList<Game> listActiveGames(){
-        return game.listActiveGames();
+        return user.listActiveGames();
     }
     public boolean joinGame(int gameID){
         return game.joinGame(gameID);
