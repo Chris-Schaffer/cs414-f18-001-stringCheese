@@ -27,7 +27,7 @@ public class Game implements Serializable {
     private User user1, user2;
     private String name;
     private String whitePlayer;
-    public ChessBoard board;
+    private ChessBoard board;
     private static final long serialVersionUID = -4618541295249374750L;
 
 
@@ -71,10 +71,10 @@ public class Game implements Serializable {
             return false;
         }
         int userID;
-        ResultSet rs1 = queryDatabase("SELECT user_id FROM user WHERE name='"+this.name+"'");
+        ResultSet rs = queryDatabase("SELECT user_id FROM user WHERE name='"+this.name+"'");
         try {
-            if(rs1 !=null && rs1.next()) {
-                userID = rs1.getInt("user_id");
+            if(rs !=null && rs.next()) {
+                userID = rs.getInt("user_id");
                 return updateDatabase("UPDATE game SET invitee="+userID+" WHERE game_id="+gameID);
             }else {
                 System.out.println("Query went wrong");
@@ -85,6 +85,24 @@ public class Game implements Serializable {
             System.exit(1);
         }
         return false;
+    }
+    //FIXME NEED TO TEST
+    //check if game table has null in invitee column
+    private boolean isGameStarted(int gameID) {
+        ResultSet rs = queryDatabase("SELECT invitee FROM game WHERE game_id="+gameID);
+        try{
+            if(rs.next()){
+                String invitee = rs.getString("invitee");
+                return invitee==null;
+            }else{
+                System.out.println("Something went wrong, resultSet is empty");
+                System.exit(1);
+            }
+        }catch(SQLException se){
+            se.printStackTrace();
+            System.exit(1);
+        }
+        return true;
     }
 
     //abandon game
@@ -148,25 +166,7 @@ public class Game implements Serializable {
         }
     }
 
-    //FIXME NEED TO TEST
-    //check if game table has null in invitee column
-    private boolean isGameStarted(int gameID) {
-        ResultSet rs = queryDatabase("SELECT invitee FROM game WHERE game_id="+gameID);
-        try{
-            if(rs.next()){
-                //-1 represents null
-                int isNULL = rs.getInt("invitee");
-                return isNULL==(-1);
-            }else{
-                System.out.println("Something went wrong, resultSet is empty");
-                System.exit(1);
-            }
-        }catch(SQLException se){
-            se.printStackTrace();
-            System.exit(1);
-        }
-        return true;
-    }
+
     //query DB with a query that does not require a
     //returned result. method returns true if the
     //query made changes to 1 or more records in the table
@@ -231,5 +231,12 @@ public class Game implements Serializable {
 
     public String getResult() {
         return result;
+    }
+
+    public ChessBoard getBoard(){return board;}
+
+    public void updateDatabase() {
+        SerializedGame sg = new SerializedGame();
+        sg.write(new DBConnection(),this);
     }
 }

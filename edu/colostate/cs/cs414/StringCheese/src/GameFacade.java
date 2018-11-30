@@ -5,13 +5,15 @@ import java.util.HashSet;
 
 public class GameFacade {
 
-    private ChessBoard board;
+    private ChessBoard board;   //should access board in the game object, not create a new one
     private User user;
     private Game game;
     private Invitation invitation;
 
 
     public GameFacade(){
+        //remove these as board is set upon login()
+        //currently needed when skipping login i.e. debugging
         board = new ChessBoard();
         board.initialize();
     }
@@ -19,6 +21,8 @@ public class GameFacade {
     public boolean login(String name, String password){
         if(User.login(name,password)){
             user = new User(name);
+            game = new Game(user);
+            board = game.getBoard();
             return true;
         }
         return false;
@@ -43,15 +47,16 @@ public class GameFacade {
     public boolean quitGame(String username){
         return game.quitGame(user.getName());
     }
-    public int createGame(String playerOne){
-        return game.createGame(playerOne);
-    }
 
     public boolean sendInvitation(ArrayList<User> users){
         //first creates a game with host as user then creates invitation
         //then sends invitation
         invitation = new Invitation(user.getName(),createGame(user.getName()));
         return invitation.sendInvitation(users);
+    }
+    //called in sendInvitation
+    private int createGame(String playerOne){
+        return game.createGame(playerOne);
     }
 
     public HashSet<String> getValidMoves(String position) {
@@ -64,6 +69,7 @@ public class GameFacade {
 
     public void move(String from, String to) {
         board.move(from,to);
+        //game.updateDatabase();
     }
 
     public User getUser(){
