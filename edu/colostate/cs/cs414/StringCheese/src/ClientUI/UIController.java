@@ -23,11 +23,12 @@ public class UIController implements ActionListener, MouseListener {
 	private GamePanel gamePanel;
 	private GameFacade gameFacade;
 	private String selectedPosition;
+	private ActiveGamesController activeGamesController;
 
 	public UIController(MainWindow window){
 		this.window = window;
 		gameFacade = new GameFacade();
-
+		this.activeGamesController = new ActiveGamesController(gameFacade);
 	}
 
 	public void initializeScreen(){
@@ -75,13 +76,9 @@ public class UIController implements ActionListener, MouseListener {
     private void game() {
 		gamePanel = new GamePanel();
 		gamePanel.setUIController(this);
+		gamePanel.setActiveGamesController(activeGamesController);
+		gamePanel.addActiveGames();
 		gamePanel.displayState();
-		//testing
-        if(gameFacade.getUser()== null){
-            gamePanel.addActiveGames(null,null);
-        }else {
-            gamePanel.addActiveGames(gameFacade.getUser().listActiveGames(), gameFacade.getUser().getName());
-        }
 		window.remove(menuPanel);
 		window.add(gamePanel);
 		window.revalidate();
@@ -144,7 +141,7 @@ public class UIController implements ActionListener, MouseListener {
 			passablePassword += c;
 		}
 
-		logInSuccessful = true;//gameFacade.login(nickname,passablePassword);
+		logInSuccessful = gameFacade.login(nickname,passablePassword);
 
 		if(logInSuccessful){
 			goToMenu("login");
