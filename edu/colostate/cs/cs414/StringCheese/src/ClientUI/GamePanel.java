@@ -1,6 +1,5 @@
 package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 
-import com.sun.tools.javac.util.Pair;
 import edu.colostate.cs.cs414.StringCheese.src.Game;
 
 import javax.swing.*;
@@ -12,6 +11,7 @@ public class GamePanel extends JPanel{
 
 	private GameTile[][] gameTiles;
 	private UIController controller;
+	private ActiveGamesController activeGamesController;
 	private GameTile selectedTile;
 	JPanel gameBoard, games;
 	JComboBox activeGames;
@@ -25,13 +25,14 @@ public class GamePanel extends JPanel{
         colorBoard();
 		this.add(gameBoard);
 
-		//display comboBox on bottom of screen
-        activeGames = new JComboBox();
-        activeGames.setVisible(true);
-        this.add(activeGames);
 	}
 
-	public void addActiveGames(ArrayList<Game> games, String userName){
+	public void addActiveGames(){
+
+		activeGames = new JComboBox(activeGamesController.populateActiveGames().toArray());
+		activeGames.setVisible(true);
+		activeGames.addActionListener(activeGamesController);
+		this.add(activeGames);
 	   /*
 	     if(games != null && userName != null) {
             //Pair<OpponentName, StartTime>
@@ -154,6 +155,10 @@ public class GamePanel extends JPanel{
 				gameTiles[row][col].addMouseListener(controller);
 			}
 		}
+	}
+
+	public void setActiveGamesController(ActiveGamesController controller){
+		this.activeGamesController = controller;
 	}
 
 	public void displayValidMoves(HashSet<String> moves){
