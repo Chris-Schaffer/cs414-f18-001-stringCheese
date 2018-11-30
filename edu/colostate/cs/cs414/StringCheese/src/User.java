@@ -114,12 +114,10 @@ public class User {
                 byte[] encryptedAttemptedPassword = getEncryptedPassword(password, salt);
                 boolean isEqual = Arrays.equals(encryptedAttemptedPassword, hashedPass);
                 DBConnection.close(conn);
-                System.out.println("isEqual: " + isEqual);
                 return isEqual;
             }
             else{
-                System.out.println("No Results Found");
-                System.exit(1);
+                //System.out.println("No Results Found");
             }
         }
         catch(Exception e){
