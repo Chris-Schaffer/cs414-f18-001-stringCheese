@@ -17,7 +17,6 @@ public class SerializedGame {
             obj.reset();
             bt.close();
             data = bt.toByteArray();
-            System.out.println("--------------" + data);
 
             if (!con.isClosed()) {
                 PreparedStatement ptst = con.prepareStatement("SELECT * from gameserialized where game_id=?");// For meet local db instance
@@ -29,13 +28,11 @@ public class SerializedGame {
                     ptst.setInt(1, tmp.getGameID());
                     ptst.setBytes(2, data);
                     ptst.executeUpdate();
-                    System.out.println("+++++inserted++++++");
                 } else {
                     ptst = con.prepareStatement("update gameserialized SET game_object=? where game_id=?");
                     ptst.setBytes(1, data);
                     ptst.setInt(2, tmp.getGameID());
                     ptst.executeUpdate();
-                    System.out.println("+++++update+++++");
                 }
                 rs.close();
             }
@@ -49,8 +46,9 @@ public class SerializedGame {
 
     }
 
-    public Game read(Connection con, int id) {
+    public Game read(DBConnection conn, int id) {
 
+        Connection con = conn.open();
         Game meet = null;
         try {
             if (!con.isClosed()) {
@@ -60,7 +58,6 @@ public class SerializedGame {
                 ResultSet rs = ptst.executeQuery();
                 rs.next();
                 byte[] t = rs.getBytes(1);
-                System.out.println(t);
                 if (t != null) {
                     ByteArrayInputStream targetStream = new ByteArrayInputStream(t);
                     ObjectInputStream in = new ObjectInputStream(targetStream);
@@ -82,6 +79,20 @@ public class SerializedGame {
             e.printStackTrace();
         }
         return meet;
+    }
+
+    public static void main(String args[]) throws IOException, SQLException {
+        SerializedGame sg = new SerializedGame();
+        DBConnection connection = new DBConnection();
+        Game game = sg.read(connection,1);
+        //game.board = new ChessBoard();
+       // game.board.initialize();
+       // game.board.selectPiece("c2");
+      //  game.board.move("c2","b2");
+     //   sg.write(connection,game);
+      //  Game game1 = sg.read(connection,1);
+        System.out.println(game.board);
+
     }
 }
 

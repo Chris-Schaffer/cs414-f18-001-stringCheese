@@ -1,10 +1,11 @@
 package edu.colostate.cs.cs414.StringCheese.src;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
-public abstract class ChessPiece {
+public abstract class ChessPiece implements Serializable {
 
     public enum Color {White, Black};
     protected ChessBoard board; // the board it belongs to, default null

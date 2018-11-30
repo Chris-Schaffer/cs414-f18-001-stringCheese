@@ -18,7 +18,7 @@ GameFacade
  -> UI -> pair = User chosen pair
  -> game = game associated with pair
  */
-public class Game implements java.io.Serializable {
+public class Game implements Serializable {
 
     private Statement stmt;
     private Connection conn;
@@ -26,8 +26,8 @@ public class Game implements java.io.Serializable {
     private String host, invitee, result, startTime, endTime;
     private User user1, user2;
     private String name;
-    private ChessBoard board;
-
+    public ChessBoard board;
+    private static final long serialVersionUID = -4618541295249374750L;
 
     //used to initially create a game in GameFacade
     //then game object is changed to a game chosen from listActiveGames()
