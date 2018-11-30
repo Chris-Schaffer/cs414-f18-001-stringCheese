@@ -27,6 +27,13 @@ CREATE TABLE game (
 	FOREIGN KEY (invitee) REFERENCES user(user_id)
 );
 
+drop table if exists gameserialized;
+Create table gameserialized (
+    game_id SMALLINT UNSIGNED NOT NULL,
+    game_object BLOB,
+    FOREIGN KEY (game_id) references game(game_id)
+);
+
  INSERT INTO user (name, email, password, salt ) VALUES
 ( 'chris', 'chris@yahoo.com', null, null),
 ( 'zaira', 'zaira@google.com', null, null),
