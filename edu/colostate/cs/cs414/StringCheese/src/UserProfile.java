@@ -31,10 +31,12 @@ public class UserProfile {
     //totalGamesWon
     //totalGamesLost
     //totalGamesPlayed
-    //totalGamesAbandoned
+    //totalGamesAbandoned fixme need to implement
 
     /*
     FIXME need to check all classes for anywhere that used result='UNFINISHED' and change it to result=null.
+
+
      */
 
 
