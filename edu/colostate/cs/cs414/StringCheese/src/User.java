@@ -4,6 +4,7 @@ package edu.colostate.cs.cs414.StringCheese.src;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
@@ -53,24 +54,25 @@ public class User {
         }
         return users;
     }
-    //FIXME NEED TO TEST
     public ArrayList<Game> listActiveGames(){
         // what do you want to display to user when displaying games
         // Pair<OpponentName, StartTime>
         ArrayList<Game> games = new ArrayList<>();
-        int gameID;
-        String host, invitee,startTime, endTime, result;
-        ResultSet rs = queryDatabase("SELECT * FROM game WHERE (host='"+name+"' OR invitee='"+name+"') AND result = 'UNFINISHED'");
+        int gameID, invitee, host;
+        Game game = null;
+        String startTime, endTime, result;
+        SerializedGame sg = new SerializedGame();
+        ResultSet rs = queryDatabase("SELECT * FROM game WHERE (host='"+name+"' OR invitee='"+name+"') AND (result = 'UNFINISHED' AND invitee is NOT NULL)");
+        ArrayList<Integer> gameids = new ArrayList<>();
         if(rs != null){
             try {
                 while (rs.next()) {
-                    gameID = rs.getInt("game_id");
-                    host = rs.getString("host");
-                    invitee = rs.getString("invitee");
-                    startTime = rs.getString("start_time");
-                    endTime = rs.getString("end_time");
-                    result = rs.getString("result");
-                    games.add(new Game(gameID,host,invitee,startTime,endTime,result));
+                    gameids.add(rs.getInt("game_id"));
+                }
+                rs.close();
+                for(int i: gameids){
+                    game = sg.read(new DBConnection(),i);
+                    games.add(game);
                 }
             }catch (SQLException se){
                 se.printStackTrace();
@@ -174,7 +176,7 @@ public class User {
             conn = DBConnection.open();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
-            DBConnection.close(conn);
+            //DBConnection.close(conn);
         }catch(SQLException se){
             se.printStackTrace();
             System.exit(1);
@@ -235,5 +237,29 @@ public class User {
         random.nextBytes(salt);
 
         return salt;
+    }
+
+    public static void main(String args[]) throws IOException, SQLException {
+        User user = new User("chris");
+        User user1 = new User("john");
+
+       /*
+        // Game game = new Game(1,"chris","john","now",null,"UNFINISHED");
+        Game game1 = new Game(2,"john","chris","now",null,"UNFINISHED");
+      //  Game game2 = new Game(1,"chris","john","now",null,"UNFINISHED");
+        SerializedGame sg = new SerializedGame();
+        DBConnection dconn= new DBConnection();
+        sg.write(dconn,game1);
+
+
+        user.listActiveGames();
+        */
+       // user1.listRegisteredUsers();
+       System.out.println(user.listRegisteredUsers());
+       ArrayList<User> users = user1.listRegisteredUsers();
+       for(User u:users){
+           System.out.println(u.getName());
+       }
+       //user.deactivate();
     }
 }

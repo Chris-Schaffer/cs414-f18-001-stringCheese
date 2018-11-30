@@ -1,14 +1,18 @@
 package edu.colostate.cs.cs414.StringCheese.src;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
-public class ChessBoard {
+public class ChessBoard implements Serializable {
     private ChessPiece[][] board;
     public ArrayList<String> innerRing, outerRing;
     private ChessPiece selectedPiece;
     private HashSet<String> selectedPieceMoves;
+    private ChessPiece.Color turn = ChessPiece.Color.White; //who's turn is it next
+    private String whitePlayer;
+    //private boolean whiteTurn = true;
 
     public ChessBoard() {
         board = new ChessPiece[7][7];
@@ -52,10 +56,12 @@ public class ChessBoard {
     public HashSet<String> selectPiece(String position){
         HashSet<String> moves = new HashSet<>();
             ChessPiece piece = getPiece(position);
-            if(piece == null){ return moves; }
+            if(piece == null || piece.getColor() != turn ){ return moves; }
             moves = piece.legalMoves();
             selectedPiece = piece;
             selectedPieceMoves = moves;
+            //if whites turn then call legalMoves() on all black pieces and see if they contain the square that white king is on
+            //method(moves)
             return moves;
     }
 
@@ -84,6 +90,11 @@ public class ChessBoard {
                 piece.setPosition(toPosition);
                 board[getRow(toPosition)][getCol(toPosition)] = piece;
                 board[getRow(fromPosition)][getCol(fromPosition)] = null;
+                if(turn == ChessPiece.Color.White){
+                    turn = ChessPiece.Color.Black;
+                }else{
+                    turn= ChessPiece.Color.White;
+                }
             }
         }
     }
@@ -134,22 +145,11 @@ public class ChessBoard {
         // call ChessPiece toString(), just for debugging
     }
 
-    public static void main(String[] args) {
-        ChessBoard board = new ChessBoard();
-        board.initialize();
-        System.out.println(board);
-        /*
-        board.move("c2", "b3");
-        board.move("b3", "b4");
-        board.move("c1", "c2");
-        board.move("c2", "b3");
-        board.move("d2", "c1");
-        board.move("c1", "b1");
-        */
-        board.placePiece(new King(board, ChessPiece.Color.White), "b1");
-        System.out.println(board);
-        System.out.println(board.getPiece("b1").legalMoves());
-
+    public void setWhitePlayer(String hostname){
+        whitePlayer = hostname;
+    }
+    public String getWhitePlayer(){
+        return whitePlayer;
     }
 
     public String getPieceType(String position) {

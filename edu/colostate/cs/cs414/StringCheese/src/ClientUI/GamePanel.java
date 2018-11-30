@@ -32,7 +32,8 @@ public class GamePanel extends JPanel{
 	}
 
 	public void addActiveGames(ArrayList<Game> games, String userName){
-	    if(games != null && userName != null) {
+	   /*
+	     if(games != null && userName != null) {
             //Pair<OpponentName, StartTime>
             ArrayList<Pair<String, String>> gameList = new ArrayList<>();
             for (Game game : games) {
@@ -50,6 +51,7 @@ public class GamePanel extends JPanel{
             System.out.println("Null values");
         }
         //activeGames.addActionListener(controller);
+        */
     }
 
     private void colorBoard() {

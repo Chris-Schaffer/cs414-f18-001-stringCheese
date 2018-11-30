@@ -23,11 +23,13 @@ public class Game implements Serializable {
     private Statement stmt;
     private Connection conn;
     private int gameID;
-    private String host, invitee, result, startTime, endTime;
+    private String result, startTime, endTime, host, invitee;
     private User user1, user2;
     private String name;
+    private String whitePlayer;
     public ChessBoard board;
     private static final long serialVersionUID = -4618541295249374750L;
+
 
     //used to initially create a game in GameFacade
     //then game object is changed to a game chosen from listActiveGames()
@@ -46,6 +48,12 @@ public class Game implements Serializable {
         this.startTime = startTime;
         this.endTime = endTime;
         this.result = result;
+        board = new ChessBoard();
+        board.initialize();
+        board.setWhitePlayer(host);
+        this.whitePlayer = host;
+
+
     }
 
 
