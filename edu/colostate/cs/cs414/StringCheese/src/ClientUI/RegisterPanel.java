@@ -75,7 +75,7 @@ public class RegisterPanel extends JPanel {
 		failureMsgLabel.setVisible(false);
 		successMsgLabel.setVisible(true);
 		MainWindow.infoBox("Registration Successful\n" +
-				"Logging in...", "");
+				"You can now login...", "");
 	}
 
 	public void showFailureMsg(){

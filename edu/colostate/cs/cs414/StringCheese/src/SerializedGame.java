@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class SerializedGame {
 
-    public void write(DBConnection conn, Game tmp) throws IOException, SQLException {
+    public void write(DBConnection conn, Game tmp) {
         Connection con = conn.open();
         try {
             byte[] data = null;
@@ -36,8 +36,6 @@ public class SerializedGame {
                 }
                 rs.close();
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -84,14 +82,14 @@ public class SerializedGame {
     public static void main(String args[]) throws IOException, SQLException {
         SerializedGame sg = new SerializedGame();
         DBConnection connection = new DBConnection();
-        Game game = sg.read(connection,1);
+        //Game game = sg.read(connection,1);
         //game.board = new ChessBoard();
        // game.board.initialize();
        // game.board.selectPiece("c2");
       //  game.board.move("c2","b2");
      //   sg.write(connection,game);
       //  Game game1 = sg.read(connection,1);
-        System.out.println(game.board);
+        //System.out.println(game.board);
 
     }
 }

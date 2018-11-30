@@ -88,7 +88,7 @@ public class UIController implements ActionListener, MouseListener {
 		window.repaint();
 	}
 
-	//right now just switches panels, will eventually call facade for registration
+	//if registration is successful it will display popup success message then go to login page
 	private void register() {
 		String email = registerPanel.getEmail().getText();
 		String nickname = registerPanel.getNickname().getText();
@@ -104,7 +104,8 @@ public class UIController implements ActionListener, MouseListener {
 
 		if(loginSuccessful){
 			registerPanel.showSuccessMsg();
-			goToMenu("register");
+			goToLogin(registerPanel);
+			//goToMenu("register");
 		}
 		else {
 			registerPanel.showFailureMsg();
@@ -147,14 +148,13 @@ public class UIController implements ActionListener, MouseListener {
 		logInSuccessful = true;//gameFacade.login(nickname,passablePassword);
 
 		if(logInSuccessful){
+			loginPanel.showSuccessMsg();
 			goToMenu("login");
 		}
 
 		else {
 			//add some sort off error text
-			MainWindow.infoBox("Error logging in.\n" +
-					"Ensure nickname and password are correct.\n" +
-					"Nickname and password both must be at least 5 characters.","");
+			loginPanel.showFailureMsg();
 		}
 
 	}
