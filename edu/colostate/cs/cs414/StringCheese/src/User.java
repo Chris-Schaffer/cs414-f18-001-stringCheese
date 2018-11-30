@@ -96,6 +96,7 @@ public class User {
     public static boolean login(String name, String password){
         return authenticate(name,password);
     }
+    //fixme remove null values after testing
     private static boolean authenticate(String name, String password){
         if(name ==null || password==null || name.length()<5 || password.length()<5 ){
             System.out.println("Check username and password and try again.");
