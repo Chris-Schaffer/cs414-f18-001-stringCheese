@@ -24,11 +24,18 @@ public class UIController implements ActionListener, MouseListener {
 	private GameFacade gameFacade;
 	private String selectedPosition;
 	private ActiveGamesController activeGamesController;
+	private JoinGameController joinGameController;
 
 	public UIController(MainWindow window){
 		this.window = window;
 		gameFacade = new GameFacade();
 		this.activeGamesController = new ActiveGamesController(gameFacade);
+		this.joinGameController = new JoinGameController(gameFacade);
+		this.gamePanel = new GamePanel(this);
+		gamePanel.setUIController();
+		gamePanel.setActiveGamesController(activeGamesController);
+		gamePanel.addActiveGames();
+		gamePanel.addJoinGame(joinGameController);
 	}
 
 	public void initializeScreen(){
@@ -57,7 +64,7 @@ public class UIController implements ActionListener, MouseListener {
 		else if(e.getActionCommand().equalsIgnoreCase("register")){
 			register();
 		}
-		else if (e.getActionCommand().equalsIgnoreCase("game")){
+		else if (e.getActionCommand().equalsIgnoreCase("games")){
 			game();
 		}
         else if (e.getActionCommand().equalsIgnoreCase("profile")){
@@ -74,10 +81,7 @@ public class UIController implements ActionListener, MouseListener {
     }
 
     private void game() {
-		gamePanel = new GamePanel();
-		gamePanel.setUIController(this);
-		gamePanel.setActiveGamesController(activeGamesController);
-		gamePanel.addActiveGames();
+		//gamePanel = new GamePanel(this);
 		gamePanel.displayState();
 		window.remove(menuPanel);
 		window.add(gamePanel);
@@ -96,7 +100,7 @@ public class UIController implements ActionListener, MouseListener {
 			passablePassword += c;
 		}
 
-		boolean loginSuccessful = true;//gameFacade.register(nickname,email,passablePassword);
+		boolean loginSuccessful = gameFacade.register(nickname,email,passablePassword);
 
 
 		if(loginSuccessful){
