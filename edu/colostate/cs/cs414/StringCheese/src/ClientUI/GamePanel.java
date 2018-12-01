@@ -209,6 +209,10 @@ public class GamePanel extends JPanel{
 		}
 	}
 
+	public JTextField getJoinGameId(){
+		return joinGameId;
+	}
+
 	private int getRow(String position) {
 		return 7 - Character.getNumericValue(position.charAt(1));
 	}
