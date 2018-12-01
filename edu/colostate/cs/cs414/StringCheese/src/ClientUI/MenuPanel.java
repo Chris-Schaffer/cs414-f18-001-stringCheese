@@ -31,6 +31,7 @@ public class MenuPanel extends JPanel{
 
 		JButton invitation = new JButton("Send Invitation/Create Game");
 		invitation.setMaximumSize(new Dimension(200,30));
+		invitation.addActionListener(this.controller);
 		menuArea.add(invitation);
 		
 		this.add(menuArea,BorderLayout.LINE_START);
