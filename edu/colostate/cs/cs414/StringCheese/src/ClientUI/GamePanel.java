@@ -3,6 +3,7 @@ package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class GamePanel extends JPanel{
@@ -15,7 +16,7 @@ public class GamePanel extends JPanel{
 	private JButton joinGameButton;
 	private GameTile selectedTile;
 	JPanel gameBoard, games;
-	JComboBox activeGames;
+	JComboBox<String> activeGames;
 
 	public GamePanel(UIController uiController){
 		this.controller = uiController;
@@ -53,6 +54,17 @@ public class GamePanel extends JPanel{
 		activeGames.addActionListener(activeGamesController);
 		this.add(activeGames);
     }
+
+    public void repopulateActiveGames(){
+		activeGames.removeAllItems();
+		ArrayList<String> games = activeGamesController.populateActiveGames();
+
+		for(String game: games){
+			activeGames.addItem(game);
+		}
+		activeGames.revalidate();
+		activeGames.repaint();
+	}
 
     public void addJoinGame(JoinGameController joinGameController){
 		this.joinGameController = joinGameController;
