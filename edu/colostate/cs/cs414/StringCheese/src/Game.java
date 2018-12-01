@@ -148,7 +148,7 @@ public class Game implements Serializable {
     //createGame() helper function
     private void setGameID(String playerOne) {
         //get gameID of newest game started by playerOne - called from createGame()
-        String query = "SELECT TOP * FROM game WHERE host='"+playerOne+"' ORDER BY start_time desc limit 1";
+        String query = "SELECT * FROM game WHERE host='"+playerOne+"' ORDER BY start_time desc limit 1";
         ResultSet rs = queryDatabase(query);
         try {
             if (rs != null && rs.next()) {
