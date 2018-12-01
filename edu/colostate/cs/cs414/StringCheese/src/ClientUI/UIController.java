@@ -25,6 +25,8 @@ public class UIController implements ActionListener, MouseListener {
 	private String selectedPosition;
 	private ActiveGamesController activeGamesController;
 	private JoinGameController joinGameController;
+	private InvitationPanel invitationPanel;
+	private InvitationPanelController invitationPanelController;
 
 	public UIController(MainWindow window){
 		this.window = window;
@@ -36,6 +38,8 @@ public class UIController implements ActionListener, MouseListener {
 		gamePanel.setActiveGamesController(activeGamesController);
 		gamePanel.addActiveGames();
 		gamePanel.addJoinGame(joinGameController);
+		invitationPanelController = new InvitationPanelController(gameFacade);
+		invitationPanel = new InvitationPanel(invitationPanelController);
 	}
 
 	public void initializeScreen(){
@@ -70,10 +74,21 @@ public class UIController implements ActionListener, MouseListener {
         else if (e.getActionCommand().equalsIgnoreCase("profile")){
             profile();
         }
+        else if(e.getActionCommand().equalsIgnoreCase("Send Invitation/Create Game")){
+        	invitationPage();
+		}
 
 	}
 
-    private void profile() {
+	private void invitationPage() {
+		window.remove(menuPanel);
+		invitationPanel.initializeMenu();
+		window.add(invitationPanel);
+		window.revalidate();
+		window.repaint();
+	}
+
+	private void profile() {
 	    window.remove(menuPanel);
 	   // window.add();
         window.revalidate();
