@@ -160,7 +160,7 @@ public class Game implements Serializable {
             }
         }catch(SQLException se){
             System.out.println("Error in query");
-            System.exit(1);
+            //System.exit(1);
         }
     }
 

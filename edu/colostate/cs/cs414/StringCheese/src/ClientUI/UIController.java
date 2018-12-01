@@ -99,6 +99,7 @@ public class UIController implements ActionListener, MouseListener {
 
     private void game() {
 		window.getContentPane().removeAll();
+		gamePanel.repopulateActiveGames();
 		gamePanel.displayState();
 		window.add(gamePanel);
 		window.revalidate();
