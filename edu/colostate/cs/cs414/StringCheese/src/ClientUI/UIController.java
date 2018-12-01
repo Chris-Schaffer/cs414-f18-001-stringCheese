@@ -36,8 +36,6 @@ public class UIController implements ActionListener, MouseListener {
 		this.gamePanel = new GamePanel(this);
 		gamePanel.setUIController();
 		gamePanel.setActiveGamesController(activeGamesController);
-		gamePanel.addActiveGames();
-		gamePanel.addJoinGame(joinGameController);
 		invitationPanelController = new InvitationPanelController(gameFacade);
 		invitationPanel = new InvitationPanel(invitationPanelController);
 	}
@@ -96,7 +94,8 @@ public class UIController implements ActionListener, MouseListener {
     }
 
     private void game() {
-		//gamePanel = new GamePanel(this);
+		gamePanel.addActiveGames();
+		gamePanel.addJoinGame(joinGameController);
 		gamePanel.displayState();
 		window.remove(menuPanel);
 		window.add(gamePanel);

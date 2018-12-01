@@ -21,11 +21,19 @@ public class ActiveGamesController implements ActionListener {
     }
 
     public ArrayList<String> populateActiveGames(){
-            ArrayList<String> games = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            games.add(i + "Opponent");
+         ArrayList<Game> games  =  gameFacade.listActiveGames();
+         ArrayList<String> gameIdentifiers = new ArrayList<>();
+        for(Game game: games){
+            String identifier = "" + game.getGameID();
+            if(game.getInvitee() != null){
+                identifier += game.getInvitee();
+            }
+            else{
+                identifier += "No opponent yet";
+            }
+            gameIdentifiers.add(identifier);
         }
-        return games;
+        return gameIdentifiers;
     }
 
 }
