@@ -1,10 +1,8 @@
 package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 
-import edu.colostate.cs.cs414.StringCheese.src.Game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class GamePanel extends JPanel{
@@ -12,48 +10,59 @@ public class GamePanel extends JPanel{
 	private GameTile[][] gameTiles;
 	private UIController controller;
 	private ActiveGamesController activeGamesController;
+	private JoinGameController joinGameController;
+	private JTextField joinGameId;
+	private JButton joinGameButton;
 	private GameTile selectedTile;
 	JPanel gameBoard, games;
 	JComboBox activeGames;
 
-	public GamePanel(){
-		gameTiles = new GameTile[7][7];
+	public GamePanel(UIController uiController){
+		this.controller = uiController;
+		JPanel menuArea = new JPanel(new GridLayout(4,1));
+		menuArea.setSize(200,90);
+		menuArea.setMaximumSize(new Dimension(200,300));
 
+		JButton profile = new JButton("Profile");
+		profile.setMaximumSize(new Dimension(200,40));
+		profile.addActionListener(this.controller);
+		menuArea.add(profile);
+
+		JButton game = new JButton("Games");
+		game.setMaximumSize(new Dimension(200,30));
+		game.addActionListener(this.controller);
+		menuArea.add(game);
+
+		JButton invitation = new JButton("Send Invitation/Create Game");
+		invitation.setMaximumSize(new Dimension(200,30));
+		invitation.addActionListener(this.controller);
+		menuArea.add(invitation);
+
+		this.add(menuArea,BorderLayout.LINE_START);
+		gameTiles = new GameTile[7][7];
 		gameBoard = new JPanel();
 		gameBoard.setLayout(new GridLayout(7,7));
 		gameBoard.setPreferredSize(new Dimension(600,600));
         colorBoard();
 		this.add(gameBoard);
-
 	}
 
 	public void addActiveGames(){
-
 		activeGames = new JComboBox(activeGamesController.populateActiveGames().toArray());
 		activeGames.setVisible(true);
 		activeGames.addActionListener(activeGamesController);
 		this.add(activeGames);
-	   /*
-	     if(games != null && userName != null) {
-            //Pair<OpponentName, StartTime>
-            ArrayList<Pair<String, String>> gameList = new ArrayList<>();
-            for (Game game : games) {
-                if (userName.equalsIgnoreCase(game.getHost())) {
-                    //
-                    gameList.add(new Pair<>(game.getInvitee(), game.getStartTime()));
-                } else {
-                    gameList.add(new Pair<>(game.getHost(), game.getStartTime()));
-                }
-            }
-            activeGames = new JComboBox(gameList.toArray());
-            this.repaint();
-        }
-        else{
-            System.out.println("Null values");
-        }
-        //activeGames.addActionListener(controller);
-        */
     }
+
+    public void addJoinGame(JoinGameController joinGameController){
+		this.joinGameController = joinGameController;
+		joinGameId = new JTextField("Game ID:",10);
+		this.add(joinGameId,BorderLayout.PAGE_END);
+
+		joinGameButton = new JButton("Join Game");
+		joinGameButton.addActionListener(joinGameController);
+		this.add(joinGameButton,BorderLayout.PAGE_END);
+	}
 
     private void colorBoard() {
         for(int row = 0; row < 7;row++){
@@ -147,8 +156,7 @@ public class GamePanel extends JPanel{
 
 	}
 
-	public void setUIController(UIController controller){
-		this.controller = controller;
+	public void setUIController(){
 
 		for(int row = 0; row < 7;row++){
 			for(int col =0; col < 7;col++){

@@ -1,5 +1,6 @@
 package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 
+import edu.colostate.cs.cs414.StringCheese.src.Game;
 import edu.colostate.cs.cs414.StringCheese.src.GameFacade;
 
 import javax.swing.*;
@@ -21,14 +22,27 @@ public class UIController implements ActionListener, MouseListener {
 	private RegisterPanel registerPanel;
 	private  MenuPanel menuPanel;
 	private GamePanel gamePanel;
+	private ProfilePanel profilePanel;
+	private ProfileController profileController;
 	private GameFacade gameFacade;
 	private String selectedPosition;
 	private ActiveGamesController activeGamesController;
+	private JoinGameController joinGameController;
+	private InvitationPanel invitationPanel;
+	private InvitationPanelController invitationPanelController;
 
 	public UIController(MainWindow window){
 		this.window = window;
 		gameFacade = new GameFacade();
 		this.activeGamesController = new ActiveGamesController(gameFacade);
+		this.joinGameController = new JoinGameController(gameFacade);
+		this.gamePanel = new GamePanel(this);
+		gamePanel.setUIController();
+		gamePanel.setActiveGamesController(activeGamesController);
+		profileController = new ProfileController(gameFacade);
+		profilePanel= new ProfilePanel(profileController,this);
+		invitationPanelController = new InvitationPanelController(gameFacade);
+		invitationPanel = new InvitationPanel(invitationPanelController,this);
 	}
 
 	public void initializeScreen(){
@@ -57,29 +71,35 @@ public class UIController implements ActionListener, MouseListener {
 		else if(e.getActionCommand().equalsIgnoreCase("register")){
 			register();
 		}
-		else if (e.getActionCommand().equalsIgnoreCase("game")){
+		else if (e.getActionCommand().equalsIgnoreCase("games")){
 			game();
 		}
         else if (e.getActionCommand().equalsIgnoreCase("profile")){
             profile();
         }
+        else if(e.getActionCommand().equalsIgnoreCase("Send Invitation/Create Game")){
+        	invitationPage();
+		}
 
 	}
 
-    private void profile() {
-	    window.remove(menuPanel);
-	   // window.add();
+	private void invitationPage() {
+		window.getContentPane().removeAll();
+		window.add(invitationPanel);
+		window.revalidate();
+		window.repaint();
+	}
+
+	private void profile() {
+	    window.getContentPane().removeAll();
+	    window.add(profilePanel);
         window.revalidate();
         window.repaint();
     }
 
     private void game() {
-		gamePanel = new GamePanel();
-		gamePanel.setUIController(this);
-		gamePanel.setActiveGamesController(activeGamesController);
-		gamePanel.addActiveGames();
+		window.getContentPane().removeAll();
 		gamePanel.displayState();
-		window.remove(menuPanel);
 		window.add(gamePanel);
 		window.revalidate();
 		window.repaint();
@@ -160,6 +180,9 @@ public class UIController implements ActionListener, MouseListener {
 
 
 	private void goToMenu(String panelType){
+		gamePanel.addActiveGames();
+		gamePanel.addJoinGame(joinGameController);
+		invitationPanel.initializeMenu();
 		menuPanel = new MenuPanel(this);
 		if(panelType.equalsIgnoreCase("login")){
 			window.remove(loginPanel);
