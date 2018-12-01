@@ -22,6 +22,7 @@ public class MenuPanel extends JPanel{
 
 		JButton profile = new JButton("Profile");
 		profile.setMaximumSize(new Dimension(200,40));
+		profile.addActionListener(this.controller);
 		menuArea.add(profile);
 
 		JButton game = new JButton("Games");
