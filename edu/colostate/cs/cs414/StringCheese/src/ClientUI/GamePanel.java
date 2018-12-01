@@ -25,6 +25,7 @@ public class GamePanel extends JPanel{
 
 		JButton profile = new JButton("Profile");
 		profile.setMaximumSize(new Dimension(200,40));
+		profile.addActionListener(this.controller);
 		menuArea.add(profile);
 
 		JButton game = new JButton("Games");
@@ -34,6 +35,7 @@ public class GamePanel extends JPanel{
 
 		JButton invitation = new JButton("Send Invitation/Create Game");
 		invitation.setMaximumSize(new Dimension(200,30));
+		invitation.addActionListener(this.controller);
 		menuArea.add(invitation);
 
 		this.add(menuArea,BorderLayout.LINE_START);

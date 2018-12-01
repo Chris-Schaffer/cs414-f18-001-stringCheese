@@ -1,5 +1,6 @@
 package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 
+import edu.colostate.cs.cs414.StringCheese.src.Game;
 import edu.colostate.cs.cs414.StringCheese.src.GameFacade;
 
 import javax.swing.*;
@@ -21,6 +22,8 @@ public class UIController implements ActionListener, MouseListener {
 	private RegisterPanel registerPanel;
 	private  MenuPanel menuPanel;
 	private GamePanel gamePanel;
+	private ProfilePanel profilePanel;
+	private ProfileController profileController;
 	private GameFacade gameFacade;
 	private String selectedPosition;
 	private ActiveGamesController activeGamesController;
@@ -36,8 +39,10 @@ public class UIController implements ActionListener, MouseListener {
 		this.gamePanel = new GamePanel(this);
 		gamePanel.setUIController();
 		gamePanel.setActiveGamesController(activeGamesController);
+		profileController = new ProfileController(gameFacade);
+		profilePanel= new ProfilePanel(profileController,this);
 		invitationPanelController = new InvitationPanelController(gameFacade);
-		invitationPanel = new InvitationPanel(invitationPanelController);
+		invitationPanel = new InvitationPanel(invitationPanelController,this);
 	}
 
 	public void initializeScreen(){
@@ -79,25 +84,22 @@ public class UIController implements ActionListener, MouseListener {
 	}
 
 	private void invitationPage() {
-		window.remove(menuPanel);
-		invitationPanel.initializeMenu();
+		window.getContentPane().removeAll();
 		window.add(invitationPanel);
 		window.revalidate();
 		window.repaint();
 	}
 
 	private void profile() {
-	    window.remove(menuPanel);
-	   // window.add();
+	    window.getContentPane().removeAll();
+	    window.add(profilePanel);
         window.revalidate();
         window.repaint();
     }
 
     private void game() {
-		gamePanel.addActiveGames();
-		gamePanel.addJoinGame(joinGameController);
+		window.getContentPane().removeAll();
 		gamePanel.displayState();
-		window.remove(menuPanel);
 		window.add(gamePanel);
 		window.revalidate();
 		window.repaint();
@@ -178,6 +180,9 @@ public class UIController implements ActionListener, MouseListener {
 
 
 	private void goToMenu(String panelType){
+		gamePanel.addActiveGames();
+		gamePanel.addJoinGame(joinGameController);
+		invitationPanel.initializeMenu();
 		menuPanel = new MenuPanel(this);
 		if(panelType.equalsIgnoreCase("login")){
 			window.remove(loginPanel);
