@@ -6,10 +6,10 @@ import java.util.HashSet;
 
 public class InvitationPanel extends JPanel {
     private InvitationPanelController invitationPanelController;
-    JMenuBar menuBar;
-    JMenu selectRegisteredUsers;
-    JButton sendInvitations;
-    JMenuItem[] names;
+    private JMenuBar menuBar;
+    private JMenu selectRegisteredUsers;
+    private JButton sendInvitations;
+    private JMenuItem[] names;
 
     public InvitationPanel(InvitationPanelController invitationPanelController){
         this.invitationPanelController = invitationPanelController;
@@ -31,5 +31,8 @@ public class InvitationPanel extends JPanel {
         this.add(menuBar);
         menuBar.setVisible(true);
 
+        sendInvitations = new JButton("Send Invitations");
+        sendInvitations.addActionListener(invitationPanelController);
+        this.add(sendInvitations);
     }
 }
