@@ -73,6 +73,7 @@ public class Game implements Serializable {
         try {
             if(rs !=null && rs.next()) {
                 userID = rs.getInt("user_id");
+                rs.close();
                 return updateDatabase("UPDATE game SET invitee="+userID+" WHERE game_id="+gameID);
             }else {
                 System.out.println("Query went wrong");
@@ -91,6 +92,7 @@ public class Game implements Serializable {
         try{
             if(rs.next()){
                 String invitee = rs.getString("invitee");
+                rs.close();
                 return invitee==null;
             }else{
                 System.out.println("Something went wrong, resultSet is empty");
@@ -124,6 +126,7 @@ public class Game implements Serializable {
                 }else{
                     opponent = host;
                 }
+                rs.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -153,6 +156,7 @@ public class Game implements Serializable {
         try {
             if (rs != null && rs.next()) {
                 gameID = rs.getInt("game_id");
+                rs.close();
             }else{
                 //result set was null or empty
                 System.out.println("Query failed in setGameID");
@@ -160,7 +164,7 @@ public class Game implements Serializable {
             }
         }catch(SQLException se){
             System.out.println("Error in query");
-            //System.exit(1);
+            se.printStackTrace();
         }
     }
 
@@ -174,7 +178,6 @@ public class Game implements Serializable {
             conn = DBConnection.open();
             stmt = conn.createStatement();
             numRecordsAffected = stmt.executeUpdate(query);
-            DBConnection.close(conn);
         }catch(SQLException se){
             se.printStackTrace();
             System.exit(1);
@@ -189,7 +192,6 @@ public class Game implements Serializable {
             conn = DBConnection.open();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
-            DBConnection.close(conn);
         }catch(SQLException se){
             se.printStackTrace();
             System.exit(1);
@@ -253,6 +255,7 @@ public class Game implements Serializable {
         try{
             rs.next();
             time = rs.getTimestamp(1);
+            rs.close();
         }catch(SQLException se){
             se.printStackTrace();
         }

@@ -19,7 +19,6 @@ public class SerializedGame {
             data = bt.toByteArray();
 
             if (!con.isClosed()) {
-                //fixme don't understand the point of this
                 PreparedStatement ptst = con.prepareStatement("SELECT * from gameserialized where game_id=?");// For meet local db instance
                 // PreparedStatement ptst = con.prepareStatement("insert into gameSerialized values(?,?)");//for amazon aws
                 ptst.setInt(1, tmp.getGameID());
