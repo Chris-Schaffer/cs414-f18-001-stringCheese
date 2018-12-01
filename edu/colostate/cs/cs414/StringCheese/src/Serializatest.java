@@ -6,10 +6,10 @@ public class Serializatest  {
 
     public static void main(String args[]) throws IOException, ClassNotFoundException {
         String filename = "game.ser";
-        Game temp = new Game(1, "chris", "meet", "today", null, null);
+        //Game temp = new Game(1, "chris", "meet", "today", null, null);
         FileOutputStream file = new FileOutputStream(filename);
         ObjectOutputStream out = new ObjectOutputStream(file);
-        out.writeObject(temp);
+        //out.writeObject(temp);
         //ByteArrayOutputStream bt=new ByteArrayOutputStream();
         System.out.println("Serialized Object: " + out);
         FileInputStream f1 = new FileInputStream(filename);

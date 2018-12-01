@@ -96,7 +96,7 @@ public class UIController implements ActionListener, MouseListener {
 			passablePassword += c;
 		}
 
-		boolean loginSuccessful = true;//gameFacade.register(nickname,email,passablePassword);
+		boolean loginSuccessful = gameFacade.register(nickname,email,passablePassword);
 
 
 		if(loginSuccessful){
