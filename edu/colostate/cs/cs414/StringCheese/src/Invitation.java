@@ -85,8 +85,21 @@ public class Invitation {
     }
 
     public static void main(String args[]){
-        Invitation invitation = new Invitation("",2);
-        invitation.sendEmail(new String[0]);
+        User user = new User("chris","soccer.schaffer@yahoo.com");
+        Game game = new Game(user);
+        Invitation invitation = new Invitation(user.getName(), game.createGame(user.getName()));
+        ArrayList<User> users = new ArrayList<>();
+        users.add(user);
+        invitation.sendInvitation(users);
+
+/*
+        public boolean sendInvitation(ArrayList<User> users){
+            //first creates a game with host as user then creates invitation
+            //then sends invitation
+            invitation = new Invitation(user.getName(),createGame(user.getName()));
+            return invitation.sendInvitation(users);
+        }
+        */
     }
 
 }
