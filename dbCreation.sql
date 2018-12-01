@@ -33,6 +33,7 @@ drop table if exists gameserialized;
 Create table gameserialized (
     game_id SMALLINT UNSIGNED NOT NULL,
     game_object BLOB,
+    last_updated TIMESTAMP,
     FOREIGN KEY (game_id) references game(game_id)
 );
 

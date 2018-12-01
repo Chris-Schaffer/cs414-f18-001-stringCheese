@@ -2,10 +2,7 @@ package edu.colostate.cs.cs414.StringCheese.src;
 
 
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 /*
@@ -29,6 +26,7 @@ public class Game implements Serializable {
     private String whitePlayer;
     private ChessBoard board;
     private static final long serialVersionUID = -4618541295249374750L;
+    private Timestamp lastUpdated;
 
 
     //used to initially create a game in GameFacade
@@ -235,8 +233,29 @@ public class Game implements Serializable {
 
     public ChessBoard getBoard(){return board;}
 
-    public void updateDatabase() {
+    public void updateDBGameState() {
         SerializedGame sg = new SerializedGame();
         sg.write(new DBConnection(),this);
+    }
+
+    //returns newer version of serialized game object to replaced this game object
+    public Game getUpdatedGameState(){
+        SerializedGame sg=null;
+        return sg.read(new DBConnection(),gameID);
+    }
+
+    //checks DB to see if last time serialized object was updated is after this object was created
+    //returns true if DB has newer version of game object
+    public boolean checkGameStateUpdated(){
+        String query = "SELECT last_updated FROM gameserialized WHERE game_id="+gameID;
+        ResultSet rs = queryDatabase(query);
+        Timestamp time = null;
+        try{
+            rs.next();
+            time = rs.getTimestamp(1);
+        }catch(SQLException se){
+            se.printStackTrace();
+        }
+        return time.after(lastUpdated);
     }
 }

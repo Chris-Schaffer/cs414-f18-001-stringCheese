@@ -19,19 +19,24 @@ public class SerializedGame {
             data = bt.toByteArray();
 
             if (!con.isClosed()) {
+                //fixme don't understand the point of this
                 PreparedStatement ptst = con.prepareStatement("SELECT * from gameserialized where game_id=?");// For meet local db instance
                 // PreparedStatement ptst = con.prepareStatement("insert into gameSerialized values(?,?)");//for amazon aws
                 ptst.setInt(1, tmp.getGameID());
                 ResultSet rs = ptst.executeQuery();
                 if (!rs.next()) {
-                    ptst = con.prepareStatement("insert into gameserialized values(?,?)");
+                    //fixme when inserting/updating add the current timestamp
+                    //fixme need to test
+                    ptst = con.prepareStatement("insert into gameserialized values(?,?,?)");
                     ptst.setInt(1, tmp.getGameID());
                     ptst.setBytes(2, data);
+                    ptst.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
                     ptst.executeUpdate();
                 } else {
-                    ptst = con.prepareStatement("update gameserialized SET game_object=? where game_id=?");
+                    ptst = con.prepareStatement("update gameserialized SET game_object=?, last_updated=? where game_id=?");
                     ptst.setBytes(1, data);
-                    ptst.setInt(2, tmp.getGameID());
+                    ptst.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+                    ptst.setInt(3, tmp.getGameID());
                     ptst.executeUpdate();
                 }
                 rs.close();

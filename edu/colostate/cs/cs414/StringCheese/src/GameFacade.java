@@ -10,7 +10,6 @@ public class GameFacade {
     private Game game;
     private Invitation invitation;
 
-
     public GameFacade(){
         //remove these as board is set upon login()
         //currently needed when skipping login i.e. debugging
@@ -69,10 +68,33 @@ public class GameFacade {
 
     public void move(String from, String to) {
         board.move(from,to);
-        //game.updateDatabase();
+        //game.updateDBGameState();
     }
 
     public User getUser(){
         return user;
+    }
+    //fixme test
+    /*
+    at the end of a move the method updateDBGameState() is called
+    this serializes the game object and adds it along w/ current timestamp to DB
+    if checkGameStateUpdated() then replace the current game object with the newer version
+     */
+    public boolean callMethodEveryNSeconds(){
+        if(checkGameStateUpdated()){
+            game = game.getUpdatedGameState();
+            return true;
+        }
+        return false;
+        //repaint board
+    }
+
+
+
+    //fixme need to test
+    //returns true if DB has newer version of gamestate
+    public boolean checkGameStateUpdated(){
+        return game.checkGameStateUpdated();
+
     }
 }
