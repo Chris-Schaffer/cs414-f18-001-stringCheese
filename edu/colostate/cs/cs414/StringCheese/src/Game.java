@@ -68,13 +68,13 @@ public class Game implements Serializable {
             System.out.println("This game has already started");
             return false;
         }
-        int userID;
-        ResultSet rs = queryDatabase("SELECT user_id FROM user WHERE name='"+this.name+"'");
+        String name;
+        ResultSet rs = queryDatabase("SELECT name FROM user WHERE name='"+this.name+"'");
         try {
             if(rs !=null && rs.next()) {
-                userID = rs.getInt("user_id");
+                name = rs.getString("name");
                 rs.close();
-                return updateDatabase("UPDATE game SET invitee="+userID+" WHERE game_id="+gameID);
+                return updateDatabase("UPDATE game SET invitee="+name+" WHERE game_id="+gameID);
             }else {
                 System.out.println("Query went wrong");
                 System.exit(1);

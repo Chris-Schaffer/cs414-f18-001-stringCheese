@@ -9,6 +9,9 @@ public class ProfilePanel extends JPanel {
 
     public ProfilePanel(ProfileController profileController,UIController controller){
 
+        this.setLayout(new BorderLayout());
+
+
         JPanel menuArea = new JPanel(new GridLayout(4,1));
         menuArea.setSize(200,90);
         menuArea.setMaximumSize(new Dimension(200,300));
