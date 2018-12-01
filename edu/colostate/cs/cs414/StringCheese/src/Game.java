@@ -134,7 +134,7 @@ public class Game implements Serializable {
 
     //create new game with playerOne as host
     public int createGame(String playerOne){
-        String query = "INSERT INTO GAME (host, start_time) " +
+        String query = "INSERT INTO game (host, start_time) " +
                 "VALUES ('"+playerOne+"', CURRENT_TIMESTAMP() )";
         if(updateDatabase(query)) {
             setGameID(playerOne);
