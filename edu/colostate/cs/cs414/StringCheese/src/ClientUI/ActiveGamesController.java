@@ -22,6 +22,7 @@ public class ActiveGamesController implements ActionListener {
 
     public ArrayList<String> populateActiveGames(){
          ArrayList<Game> games  =  gameFacade.listActiveGames();
+         System.out.println("number of games: " + games.size());
          ArrayList<String> gameIdentifiers = new ArrayList<>();
         for(Game game: games){
             String identifier = "" + game.getGameID();
