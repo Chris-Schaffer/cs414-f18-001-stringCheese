@@ -38,14 +38,13 @@ public class Game implements Serializable {
         board = new ChessBoard();
         board.initialize();
     }
-    public Game(int gameID, String host, String invitee, String startTime,
-                      String endTime, String result){
+    public Game(int gameID, String host, String invitee, String startTime){
         this.gameID = gameID;
         this.host = host;
         this.invitee = invitee;
         this.startTime = startTime;
-        this.endTime = endTime;
-        this.result = result;
+        this.endTime = null;
+        this.result = null;
         board = new ChessBoard();
         board.initialize();
         board.setWhitePlayer(host);
@@ -74,7 +73,9 @@ public class Game implements Serializable {
             if(rs !=null && rs.next()) {
                 name = rs.getString("name");
                 rs.close();
-                return updateDatabase("UPDATE game SET invitee="+name+" WHERE game_id="+gameID);
+                boolean isUpdated =  updateDatabase("UPDATE game SET invitee='"+name+"' WHERE game_id="+gameID);
+                createSerializesGameObject(gameID,name);
+                return isUpdated;
             }else {
                 System.out.println("Query went wrong");
                 System.exit(1);
@@ -85,6 +86,27 @@ public class Game implements Serializable {
         }
         return false;
     }
+
+    private void createSerializesGameObject(int gameID, String invitee) {
+
+        String query = "select * from game where game_id=" + gameID;
+        ResultSet rs = queryDatabase(query);
+        String host;
+        String startTime;
+        try {
+            while (rs.next()){
+                startTime = rs.getString("start_time");
+                host = rs.getString("host");
+                Game game = new Game(gameID,host,invitee,startTime);
+                SerializedGame sg = new SerializedGame();
+                sg.write(new DBConnection(),game);
+            }
+
+        }catch (SQLException e){
+
+        }
+    }
+
     //FIXME NEED TO TEST
     //check if game table has null in invitee column
     private boolean isGameStarted(int gameID) {
@@ -93,7 +115,7 @@ public class Game implements Serializable {
             if(rs.next()){
                 String invitee = rs.getString("invitee");
                 rs.close();
-                return invitee==null;
+                return invitee != null;
             }else{
                 System.out.println("Something went wrong, resultSet is empty");
                 System.exit(1);
@@ -212,7 +234,7 @@ public class Game implements Serializable {
         this.endTime = endTime;
     }
 
-    public int getGameID() {
+    public int  getGameID() {
         //FIXME only works if createGame was called otherwise returns -1.
         return gameID;
     }

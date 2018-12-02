@@ -29,7 +29,7 @@ public class SerializedGame {
                     ptst = con.prepareStatement("insert into gameserialized values(?,?,?)");
                     ptst.setInt(1, tmp.getGameID());
                     ptst.setBytes(2, data);
-                    ptst.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+                    ptst.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
                     ptst.executeUpdate();
                 } else {
                     ptst = con.prepareStatement("update gameserialized SET game_object=?, last_updated=? where game_id=?");
