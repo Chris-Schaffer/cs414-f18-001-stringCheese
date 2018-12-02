@@ -280,9 +280,11 @@ public class Game implements Serializable {
     {
         return board.getPieceType(position);
     }
-    public void move(String from, String to) {
-        board.move(from,to);
+ //changed Signture 
+    public String move(String from, String to) {
+       String str=board.move(from,to);
         updateDBGameState();
+      return str;
     }
     public void updateDBGameState() {
         SerializedGame sg = new SerializedGame();
