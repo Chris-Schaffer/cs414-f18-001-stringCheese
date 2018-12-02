@@ -34,7 +34,7 @@ public class Game implements Serializable {
     //then game object is changed to a game chosen from listActiveGames()
     public Game(String name){
         this.name = name;
-        gameID = 5;//fixme changed for testing -1;
+        gameID = -1;//changed for testing to 5;
         host = "chris2";
         board = new ChessBoard();
         board.initialize();
