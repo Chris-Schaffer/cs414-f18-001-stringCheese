@@ -118,6 +118,7 @@ public class ChessBoard implements Serializable {
                     turn= ChessPiece.Color.White;
                 }
             }
+		return new String();
 		
         }
 	    return new String();
