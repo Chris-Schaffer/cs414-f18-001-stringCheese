@@ -4,6 +4,7 @@ package edu.colostate.cs.cs414.StringCheese.src;
 import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /*
 NOTE: flow of creating a game
@@ -283,7 +284,7 @@ public class Game implements Serializable {
         }
         return time.after(lastUpdated);
     }
-   public HashSet<String> getValidMoves(String position,String name)
+   public HashSet<String> getValidMoves(String position, String name)
     {
         ChessPiece.Color temp;
         if(name.equals(host))
