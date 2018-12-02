@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 public class Test {
 
-    public static void main(String str[])
+   /* public static void main(String str[])
     {
         GameFacade gf =new GameFacade();
         gf.user=new User("meetkumar");
@@ -20,7 +20,7 @@ public class Test {
       //  System.out.println(gf.board.getPiece("e2").getColor());
        // System.out.println(gf.board.getPiece("e6").getColor());
         System.out.println(s.size());
-    }
+    }*/
 
 
 
