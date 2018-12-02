@@ -25,14 +25,14 @@ public class ActiveGamesController implements ActionListener {
          System.out.println("number of games: " + games.size());
          ArrayList<String> gameIdentifiers = new ArrayList<>();
         for(Game game: games){
-            String identifier = "" + game.getGameID();
-            if(game.getInvitee() != null){
-                identifier += game.getInvitee();
+            if(game == null){
+
             }
             else{
-                identifier += "No opponent yet";
+                String identifier = "" + game.getGameID();
+                gameIdentifiers.add(identifier);
             }
-            gameIdentifiers.add(identifier);
+
         }
         return gameIdentifiers;
     }

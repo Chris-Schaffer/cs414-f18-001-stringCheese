@@ -62,7 +62,7 @@ public class User {
         Game game = null;
         String startTime, endTime, result;
         SerializedGame sg = new SerializedGame();
-        ResultSet rs = queryDatabase("SELECT * FROM game WHERE (host='"+name+"' OR invitee='"+name+"') AND (result = 'UNFINISHED' AND invitee is NOT NULL)");
+        ResultSet rs = queryDatabase("SELECT * FROM game WHERE (host='"+name+"' OR invitee='"+name+"') AND (result is NULL AND invitee is NOT NULL)");
         ArrayList<Integer> gameids = new ArrayList<>();
         if(rs != null){
             try {
@@ -71,6 +71,7 @@ public class User {
                 }
                 rs.close();
                 for(int i: gameids){
+                    System.out.println("Game Id: " +i);
                     game = sg.read(new DBConnection(),i);
                     games.add(game);
                 }
