@@ -66,8 +66,8 @@ public class GameFacade {
        return game.getType(position);
     }
 
-    public void move(String from, String to) {
-        game.move(from,to);
+    public String move(String from, String to) {
+        return game.move(from,to);
         //game.updateDBGameState();
     }
 
