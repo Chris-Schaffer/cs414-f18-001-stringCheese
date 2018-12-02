@@ -10,6 +10,7 @@ public class ChessBoard implements Serializable {
     public ArrayList<String> innerRing, outerRing;
     private ChessPiece selectedPiece;
     private HashSet<String> selectedPieceMoves;
+    private ArrayList<String> promotion=new ArrayList<>(Arrays.asList("c1","c2","e6","e7","d6","d2"));
     private ChessPiece.Color turn = ChessPiece.Color.White; //who's turn is it next
     private String whitePlayer;
     //private boolean whiteTurn = true;
@@ -81,8 +82,31 @@ public class ChessBoard implements Serializable {
             return false;
     }
 
-    public void move(String fromPosition, String toPosition) {//throws IllegalPositionException {
+    public String move(String fromPosition, String toPosition) {//throws IllegalPositionException {
         if(selectedPiece.getPosition().equals(fromPosition)){
+	 if(promotion.contains(toPosition))
+            {
+                ChessPiece piece=getPiece(fromPosition);
+                if(piece instanceof Pawn)
+                {
+                    if(!toPosition.equals("d6") && !toPosition.equals("d2"))
+                    {
+                        return "promotion";
+                    }
+
+                }
+                else if(piece instanceof King)
+                {
+                    if(toPosition.equals("d6") || toPosition.equals("d2"))
+                    {
+                        return "Winner";
+                    }
+                    return new String();
+
+                }
+            }
+		
+		
             if(selectedPieceMoves.contains(toPosition)){
                 ChessPiece piece = getPiece(fromPosition);
                 piece.setPosition(toPosition);
@@ -94,7 +118,9 @@ public class ChessBoard implements Serializable {
                     turn= ChessPiece.Color.White;
                 }
             }
+		
         }
+	    return new String();
     }
 
     public ArrayList<String> getInnerRing() { return innerRing; }
