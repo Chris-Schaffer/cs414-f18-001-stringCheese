@@ -37,6 +37,7 @@ public class SerializedGame {
                     ptst.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
                     ptst.setInt(3, tmp.getGameID());
                     ptst.executeUpdate();
+
                 }
                 rs.close();
             }
