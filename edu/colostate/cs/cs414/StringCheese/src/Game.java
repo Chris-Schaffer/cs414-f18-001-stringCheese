@@ -261,4 +261,33 @@ public class Game implements Serializable {
         }
         return time.after(lastUpdated);
     }
+   public HashSet<String> getValidMoves(String position,String name)
+    {
+        ChessPiece.Color temp;
+        if(name.equals(host))
+        {
+            temp= ChessPiece.Color.White;
+        }
+        else
+        {
+            temp= ChessPiece.Color.Black;
+           // return new HashSet<String>();
+        }
+        if(temp.equals(board.getPiece(position).getColor())){
+            return board.selectPiece(position);
+        }
+        return new HashSet<String>();
+
+      //  return board.selectPiece(posotion);
+    }
+    public String getType(String position)
+    {
+        return board.getPieceType(position);
+    }
+    public void move(String from, String to) {
+
+
+        board.move(from,to);
+        //game.updateDBGameState();
+    }
 }
