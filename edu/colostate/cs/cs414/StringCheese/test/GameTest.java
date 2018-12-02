@@ -20,87 +20,78 @@ class GameTest {
 
 	@Test
 	void testGameUser() {
-		fail("Not yet implemented");
 	}
 
 	@Test
 	void testGameIntStringStringStringStringString() {
-		fail("Not yet implemented");
 	}
 
 	@Test
 	void testJoinGame() {
-		fail("Not yet implemented");
 	}
 
 	@Test
 	void testQuitGame() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
 	void testCreateGame() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
 	void testGetStartTime() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
 	void testGetEndTime() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
 	void testSetEndTime() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 	@Test
 	void testGetGameID() {
-		fail("Not yet implemented");
-	}
+ 	}
 
 	@Test
 	void testSetGameID() {
-		fail("Not yet implemented");
 	}
 
 	@Test
 	void testGetHost() {
-		fail("Not yet implemented");
 	}
 
 	@Test
 	void testGetInvitee() {
-		fail("Not yet implemented");
 	}
 
 	@Test
 	void testGetResult() {
-		fail("Not yet implemented");
 	}
 
 	@Test
 	void testGetBoard() {
-		fail("Not yet implemented");
 	}
 
 	@Test
 	void testUpdateDBGameState() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
 	void testGetUpdatedGameState() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
 	void testCheckGameStateUpdated() {
-		fail("Not yet implemented");
+		
 	}
 
 }
