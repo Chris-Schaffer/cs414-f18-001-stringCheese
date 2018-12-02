@@ -59,17 +59,18 @@ public class GameFacade {
     }
 
     public HashSet<String> getValidMoves(String position) {
-        return board.selectPiece(position);
+        return game.getValidMoves(position, user.getName());
     }
 
     public String getType(String position) {
-       return board.getPieceType(position);
+       return game.getType(position);
     }
 
     public void move(String from, String to) {
-        board.move(from,to);
+        game.move(from,to);
         //game.updateDBGameState();
     }
+
 
     public User getUser(){
         return user;

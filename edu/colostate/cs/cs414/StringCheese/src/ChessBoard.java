@@ -56,7 +56,7 @@ public class ChessBoard implements Serializable {
     public HashSet<String> selectPiece(String position){
         HashSet<String> moves = new HashSet<>();
             ChessPiece piece = getPiece(position);
-            if(piece == null || piece.getColor() != turn ){ return moves; }
+            if(piece == null){ return moves; }
             moves = piece.legalMoves();
             selectedPiece = piece;
             selectedPieceMoves = moves;
