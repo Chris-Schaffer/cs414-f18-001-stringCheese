@@ -20,7 +20,7 @@ public class GameFacade {
     public boolean login(String name, String password){
         if(User.login(name,password)){
             user = new User(name);
-            game = new Game(user);
+            game = new Game(user.getName());
             board = game.getBoard();
             return true;
         }
@@ -92,9 +92,8 @@ public class GameFacade {
 
 
 
-    //fixme need to test
     //returns true if DB has newer version of gamestate
-    public boolean checkGameStateUpdated(){
+    private boolean checkGameStateUpdated(){
         return game.checkGameStateUpdated();
 
     }

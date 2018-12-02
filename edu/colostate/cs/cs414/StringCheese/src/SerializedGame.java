@@ -19,10 +19,12 @@ public class SerializedGame {
             data = bt.toByteArray();
 
             if (!con.isClosed()) {
+                //check if game object is in DB already
                 PreparedStatement ptst = con.prepareStatement("SELECT * from gameserialized where game_id=?");// For meet local db instance
                 // PreparedStatement ptst = con.prepareStatement("insert into gameSerialized values(?,?)");//for amazon aws
                 ptst.setInt(1, tmp.getGameID());
                 ResultSet rs = ptst.executeQuery();
+                //if game not already in DB insert it
                 if (!rs.next()) {
                     //fixme when inserting/updating add the current timestamp
                     //fixme need to test
@@ -31,6 +33,7 @@ public class SerializedGame {
                     ptst.setBytes(2, data);
                     ptst.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
                     ptst.executeUpdate();
+                    //else game already in DB so update it
                 } else {
                     ptst = con.prepareStatement("update gameserialized SET game_object=?, last_updated=? where game_id=?");
                     ptst.setBytes(1, data);

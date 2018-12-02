@@ -27,8 +27,6 @@ public class ChessBoard implements Serializable {
         // This method should use the constructors of the appropriate pieces, and call placePiece below to place the
         // newly constructed pieces in the right position.
         // a = 0, b = 1, ..., h = 7
-        //FIXME Swapped black and white pieces so that they show up in the correct place.
-        //FIXME swap back and find bug
         placePiece( new Rook(this, ChessPiece.Color.White), "e1");
 		placePiece( new Rook(this, ChessPiece.Color.White), "e2");
         placePiece( new Bishop(this, ChessPiece.Color.White), "d1");

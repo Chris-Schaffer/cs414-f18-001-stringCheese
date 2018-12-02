@@ -86,7 +86,7 @@ public class Invitation {
 
     public static void main(String args[]){
         User user = new User("chris","soccer.schaffer@yahoo.com");
-        Game game = new Game(user);
+        Game game = new Game(user.getName());
         Invitation invitation = new Invitation(user.getName(), game.createGame(user.getName()));
         ArrayList<User> users = new ArrayList<>();
         users.add(user);
