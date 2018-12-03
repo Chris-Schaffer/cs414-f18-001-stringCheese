@@ -215,17 +215,41 @@ public class UIController implements ActionListener, MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		Component c = e.getComponent();
 		GameTile tile;
+		String specialMove = "";
+		String position;
 		if(c instanceof GameTile){
 			tile = (GameTile) c;
-
+			position = tile.getPosition();
 			if((tile.getBackground()) == Color.GREEN){
-				gameFacade.move(selectedPosition, tile.getPosition());
+				specialMove = gameFacade.move(selectedPosition, position);
 				gamePanel.displayState();
 			}
 			else{
 				selectedPosition = tile.getPosition();
 				HashSet<String> moves = gameFacade.getValidMoves(selectedPosition);
 				gamePanel.displayValidMoves(moves);
+			}
+
+			if(specialMove.equalsIgnoreCase("promotion")){
+				String choice= "";
+				//displayPopUp
+				Object[] options = {"Bishop",
+						"Rook"};
+				int n = JOptionPane.showOptionDialog(window,
+						"Which piece would you like to promote to?",
+						"Promotion Choice",
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE,
+						null,
+						options,
+						options[0]);
+				if(n == JOptionPane.YES_OPTION){
+					choice = "Bishop";
+				}
+				else{
+					choice = "Rook";
+				}
+				gameFacade.promote(position,choice);
 			}
 
 		}

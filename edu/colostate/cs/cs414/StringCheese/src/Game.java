@@ -319,4 +319,14 @@ public class Game implements Serializable {
         game1.move("e6","f6");
         System.out.println(game1.board);
     }
+
+    public void promote(String position, String choice) {
+       ChessPiece.Color color = board.getPiece(position).getColor();
+        if(choice.equalsIgnoreCase("rook")){
+            board.placePiece(new Rook(board,color),position);
+        }
+        else{
+            board.placePiece(new Bishop(board,color),position);
+        }
+    }
 }
