@@ -10,7 +10,7 @@ public class MainPanel extends JPanel {
     public MainPanel(UIController controller) {
 
         this.controller = controller;
-        this.setLayout(new BorderLayout());
+        //this.setLayout(new BorderLayout());
 
         JPanel menuArea = new JPanel(new GridLayout(4, 1));
         menuArea.setSize(200, 90);
