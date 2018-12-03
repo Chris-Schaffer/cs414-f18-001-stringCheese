@@ -60,23 +60,11 @@ public class UserProfile {
 
     private void setTotalGamesPlayed(){
         String query = "SELECT COUNT(*) as total FROM game WHERE host='"+userName+"' OR invitee='"+userName+"' AND result IS NOT NULL";
-        ResultSet rs = queryDatabase(query);
-        try{
-            rs.next();
-            gamesPlayed = rs.getInt(1);
-        }catch(SQLException se){
-            se.printStackTrace();
-        }
+        gamesPlayed = getResult(query);
     }
     private void setTotalGamesWon(){
         String query = "SELECT COUNT(*) as total FROM game WHERE host='"+userName+"' OR invitee='"+userName+"' AND result='"+userName+"'";
-        ResultSet rs = queryDatabase(query);
-        try{
-            rs.next();
-            gamesWon = rs.getInt(1);
-        }catch(SQLException se){
-            se.printStackTrace();
-        }
+        gamesWon = getResult(query);
     }
     private void setTotalGamesLost(){ gamesLost = gamesPlayed - gamesWon; }
     private void setWinPercentage(){ winPercentage = gamesWon/gamesPlayed * 100; }
@@ -92,5 +80,15 @@ public class UserProfile {
             System.exit(1);
         }
         return rs;
+    }
+    private int getResult(String query) {
+        ResultSet rs = queryDatabase(query);
+        try{
+            rs.next();
+            return rs.getInt(1);
+        }catch(SQLException se){
+            se.printStackTrace();
+        }
+        return -1;
     }
 }
