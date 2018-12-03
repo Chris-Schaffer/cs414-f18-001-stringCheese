@@ -62,7 +62,47 @@ public class ChessBoard implements Serializable {
             //if whites turn then call legalMoves() on all black pieces and see if they contain the square that white king is on
             //method(moves)
             return moves;
+	    
+	  
     }
+	
+ private HashSet<String> removeKingUnderAttack(HashSet<String> moves) {
+                    if(selectedPiece instanceof King){
+                        return moves;
+                    }
+                    HashSet<String> newSet = new HashSet<>();
+                    String currentPos = selectedPiece.getPosition();
+                     ArrayList<String> allPostions = new ArrayList<>();
+                    allPostions.addAll(innerRing);
+                    allPostions.addAll(outerRing);
+                    String kingPos = null;
+                    for (String pos : allPostions) {
+                        ChessPiece p = getPiece(pos);
+                        if(p!=null && p instanceof King && p.getColor()==selectedPiece.getColor()){
+                            kingPos = pos;
+                            break;
+                        }
+                    }
+                    for(String newPos: moves) {
+                        placePiece(selectedPiece,newPos);
+                        boolean flag = true;
+                        for(String pos: allPostions){
+                            ChessPiece p = getPiece(pos);
+                            if(p!=null && p.getColor()!=selectedPiece.getColor()){
+                                if(p.legalMoves().contains(kingPos)){
+                                    flag = false;
+                                    break;
+                                }
+                            }
+            }
+            if(flag){
+                newSet.add(newPos);
+            }
+            placePiece(selectedPiece,currentPos);
+        }
+        return newSet;
+     }
+	
 
     // This method tries to place the given piece at a given position, and returns true if successful, and false if
     // the position was illegal.
