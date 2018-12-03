@@ -66,7 +66,7 @@ public class ChessBoard implements Serializable {
             }
 
             //if whites turn then call legalMoves() on all black pieces and see if they contain the square that white king is on
-            //method(moves)
+            selectedPieceMoves = removeKingUnderAttack(moves);
             return moves;
 	    
 	  
@@ -127,7 +127,7 @@ public class ChessBoard implements Serializable {
             }
             return false;
     }
-    
+
     //FIXME  needs isCheck() method
     public String move(String fromPosition, String toPosition) {
         String message = "";
@@ -137,10 +137,10 @@ public class ChessBoard implements Serializable {
                 piece.setPosition(toPosition);
                 board[getRow(toPosition)][getCol(toPosition)] = piece;
                 board[getRow(fromPosition)][getCol(fromPosition)] = null;
-                if (turn == ChessPiece.Color.White) {
+                if(turn == ChessPiece.Color.White){
                     turn = ChessPiece.Color.Black;
-                } else {
-                    turn = ChessPiece.Color.White;
+                }else{
+                    turn= ChessPiece.Color.White;
                 }
             }
         }
@@ -163,7 +163,6 @@ public class ChessBoard implements Serializable {
         }
         return message;
     }
-
 
     public ArrayList<String> getInnerRing() { return innerRing; }
 
@@ -252,4 +251,3 @@ public class ChessBoard implements Serializable {
         }
     }
 }
-
