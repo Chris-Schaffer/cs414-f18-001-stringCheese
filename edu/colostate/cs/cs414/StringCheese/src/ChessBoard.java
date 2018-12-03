@@ -10,8 +10,8 @@ public class ChessBoard implements Serializable {
     public ArrayList<String> innerRing, outerRing;
     private ChessPiece selectedPiece;
     private HashSet<String> selectedPieceMoves;
-    private ArrayList<String> promotion=new ArrayList<>(Arrays.asList("c1","c2","e6","e7","d6","d2"));
-    private ChessPiece.Color turn = ChessPiece.Color.White; //who's turn is it next
+    private ArrayList<String> whitePromotion, blackPromotion;
+    private ChessPiece.Color turn; //who's turn is it next
     private String whitePlayer;
     //private boolean whiteTurn = true;
 
@@ -21,6 +21,9 @@ public class ChessBoard implements Serializable {
         innerRing = new ArrayList<>(Arrays.asList("b2", "b3", "b4", "b5", "b6", "c6", "d6", "e6", "f6", "f5", "f4", "f3", "f2", "e2", "d2", "c2"));
         selectedPiece = null;
         selectedPieceMoves = new HashSet<>();
+        turn = ChessPiece.Color.White;
+        whitePromotion=new ArrayList<>(Arrays.asList("e6","e7","d6"));
+        blackPromotion=new ArrayList<>(Arrays.asList("c1","c2","d2"));
     }
 
     public void initialize() {
@@ -124,63 +127,43 @@ public class ChessBoard implements Serializable {
             }
             return false;
     }
-
-//	    public void move(String fromPosition, String toPosition) {//throws IllegalPositionException {
-//        if(selectedPiece.getPosition().equals(fromPosition)){
-//            if(selectedPieceMoves.contains(toPosition)){
-//                ChessPiece piece = getPiece(fromPosition);
-//                piece.setPosition(toPosition);
-//                board[getRow(toPosition)][getCol(toPosition)] = piece;
-//                board[getRow(fromPosition)][getCol(fromPosition)] = null;
-//                if(turn == ChessPiece.Color.White){
-//                    turn = ChessPiece.Color.Black;
-//                }else{
-//                    turn= ChessPiece.Color.White;
-//                }
-//            }
-//        }
-//    }
-    public String move(String fromPosition, String toPosition) {//throws IllegalPositionException {
-        if(selectedPiece.getPosition().equals(fromPosition)){
-	/* if(promotion.contains(toPosition))
-            {
-                ChessPiece piece=getPiece(fromPosition);
-                if(piece instanceof Pawn)
-                {
-                    if(!toPosition.equals("d6") && !toPosition.equals("d2"))
-                    {
-                        return "promotion";
-                    }
-
-                }
-                else if(piece instanceof King)
-                {
-                    if(toPosition.equals("d6") || toPosition.equals("d2"))
-                    {
-                        return "Winner";
-                    }
-                    return new String();
-
-                }
-            }*/
-		
-		
-            if(selectedPieceMoves.contains(toPosition)){
+    
+    //FIXME  needs isCheck() method
+    public String move(String fromPosition, String toPosition) {
+        String message = "";
+        if(selectedPiece.getPosition().equals(fromPosition)) {
+            if (selectedPieceMoves.contains(toPosition)) {
                 ChessPiece piece = getPiece(fromPosition);
                 piece.setPosition(toPosition);
                 board[getRow(toPosition)][getCol(toPosition)] = piece;
                 board[getRow(fromPosition)][getCol(fromPosition)] = null;
-                if(turn == ChessPiece.Color.White){
+                if (turn == ChessPiece.Color.White) {
                     turn = ChessPiece.Color.Black;
-                }else{
-                    turn= ChessPiece.Color.White;
+                } else {
+                    turn = ChessPiece.Color.White;
                 }
             }
-		return new String();
-		
         }
-	    return new String();
+        ChessPiece piece = getPiece(fromPosition);
+        ChessPiece.Color color = piece.getColor();
+        //if in a location that white can get a promotion
+	    if(whitePromotion.contains(toPosition) && color == ChessPiece.Color.White) {
+            if(piece instanceof Pawn) {
+                if(toPosition.equals("e6")||toPosition.equals("e7")){ message="Promotion"; }
+            } else if(piece instanceof King) {
+                if(toPosition.equals("d6")){ message = "Winner"; }
+            }
+        //if in a location that black can get a promotion
+        }else if(blackPromotion.contains(toPosition) && color == ChessPiece.Color.Black) {
+            if(piece instanceof Pawn) {
+                if(toPosition.equals("c1")||toPosition.equals("c2")){ message="Promotion"; }
+            } else if(piece instanceof King) {
+                if(toPosition.equals("d2")){ message = "Winner"; }
+            }
+        }
+        return message;
     }
+
 
     public ArrayList<String> getInnerRing() { return innerRing; }
 
