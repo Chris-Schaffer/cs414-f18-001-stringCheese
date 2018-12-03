@@ -271,6 +271,10 @@ public class Game implements Serializable {
             temp= ChessPiece.Color.Black;
            // return new HashSet<String>();
         }
+        if(board.getPiece(position) == null){
+            return new HashSet<>();
+        }
+
         if(temp.equals(board.getPiece(position).getColor())){
             return board.selectPiece(position);
         }

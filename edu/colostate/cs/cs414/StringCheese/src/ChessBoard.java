@@ -56,9 +56,12 @@ public class ChessBoard implements Serializable {
         HashSet<String> moves = new HashSet<>();
             ChessPiece piece = getPiece(position);
             if(piece == null){ return moves; }
-            moves = piece.legalMoves();
-            selectedPiece = piece;
-            selectedPieceMoves = moves;
+            if(piece.getColor() == turn){
+                moves = piece.legalMoves();
+                selectedPiece = piece;
+                selectedPieceMoves = moves;
+            }
+
             //if whites turn then call legalMoves() on all black pieces and see if they contain the square that white king is on
             //method(moves)
             return moves;
@@ -84,7 +87,7 @@ public class ChessBoard implements Serializable {
 
     public String move(String fromPosition, String toPosition) {//throws IllegalPositionException {
         if(selectedPiece.getPosition().equals(fromPosition)){
-	 if(promotion.contains(toPosition))
+	/* if(promotion.contains(toPosition))
             {
                 ChessPiece piece=getPiece(fromPosition);
                 if(piece instanceof Pawn)
@@ -104,7 +107,7 @@ public class ChessBoard implements Serializable {
                     return new String();
 
                 }
-            }
+            }*/
 		
 		
             if(selectedPieceMoves.contains(toPosition)){
