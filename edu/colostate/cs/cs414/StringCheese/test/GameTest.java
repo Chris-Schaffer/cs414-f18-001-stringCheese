@@ -3,6 +3,7 @@ package edu.colostate.cs.cs414.StringCheese.test;
 import edu.colostate.cs.cs414.StringCheese.src.Game;
 import edu.colostate.cs.cs414.StringCheese.src.User;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,19 +13,18 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GameTest {
-    User user;
-    int gameID = 20;
-    Game game;
-    
-    @BeforeEach
-    void setUp() throws Exception {
+    User user = new User("sunny", "sunny@yahoo.com");
+    Game game = new Game(user.getName());
+    int gameID = game.createGame("sunny");;
+
+    @BeforeAll
+    static void setUp() throws Exception {
         String host = "john";
         String invite = "chris";
         String startTime = LocalDate.now().toString();
-        
         ArrayList<Game> games = new ArrayList<>();
-        user = new User("joey123", "joey123@yahoo.com");
-        game = new Game(user);
+        User.registerUser("sunny","sunny@yahoo.com","123456");
+
     }
     
     @AfterEach
@@ -34,25 +34,25 @@ class GameTest {
     
     @Test
     void testGameUser() {
-        String expectedName = "joey123";
-        String expectedEmail = "joey123@yahoo.com";
+        String expectedName = "sunny";
+        String expectedEmail = "sunny@yahoo.com";
         
         assertEquals(true, expectedName == user.getName() && expectedEmail == user.getEmail());
     }
-    
-    @Test
-    void testGameIntStringStringStringStringString() {
-    }
-    
+
     @Test
     void testJoinGame() {
+        user = new User("sunny1", "sunny1@yahoo.com");
+        game = new Game(user.getName());
+        User.registerUser("sunny1","sunny1@yahoo.com","1234567");
         boolean result = game.joinGame(gameID);
         assertEquals(true, result);
     }
     
     @Test
     void testQuitGame() {
-        
+        boolean result = game.quitGame(user.getName());
+        assertEquals(true, result);
     }
     
     @Test
