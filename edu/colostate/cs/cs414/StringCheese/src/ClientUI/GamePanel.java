@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class GamePanel extends JPanel{
+public class GamePanel extends MainPanel{
 
 	private GameTile[][] gameTiles;
 	private UIController controller;
@@ -21,34 +21,8 @@ public class GamePanel extends JPanel{
 	private static final Color darkBrown = new Color(139,69,19);
 
 	public GamePanel(UIController uiController){
+		super(uiController);
 		this.controller = uiController;
-		//this.setLayout(new BorderLayout());
-
-		JPanel menuArea = new JPanel(new GridLayout(4,1));
-		menuArea.setSize(200,90);
-		menuArea.setMaximumSize(new Dimension(200,300));
-
-		JButton profile = new JButton("Profile");
-		profile.setMaximumSize(new Dimension(200,40));
-		profile.addActionListener(this.controller);
-		menuArea.add(profile);
-
-		JButton game = new JButton("Games");
-		game.setMaximumSize(new Dimension(200,30));
-		game.addActionListener(this.controller);
-		menuArea.add(game);
-
-		JButton invitation = new JButton("Send Invitation/Create Game");
-		invitation.setMaximumSize(new Dimension(200,30));
-		invitation.addActionListener(this.controller);
-		menuArea.add(invitation);
-
-		JButton logout = new JButton("Log Out");
-		logout.setMaximumSize(new Dimension(200,30));
-		logout.addActionListener(this.controller);
-		menuArea.add(logout);
-
-		this.add(menuArea,BorderLayout.LINE_START);
 		gameTiles = new GameTile[7][7];
 		gameBoard = new JPanel();
 		gameBoard.setLayout(new GridLayout(7,7));
