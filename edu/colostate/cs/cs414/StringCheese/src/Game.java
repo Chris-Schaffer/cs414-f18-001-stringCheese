@@ -262,24 +262,33 @@ public class Game implements Serializable {
     public HashSet<String> getValidMoves(String position, String name)
     {
         ChessPiece.Color temp;
-        if(name.equals(host)) { temp= ChessPiece.Color.White; }
-        else { temp= ChessPiece.Color.Black; }
+        if(name.equals(host))
+        {
+            temp= ChessPiece.Color.White;
+        }
+        else
+        {
+            temp= ChessPiece.Color.Black;
+           // return new HashSet<String>();
+        }
+        if(board.getPiece(position) == null){
+            return new HashSet<>();
+        }
 
         if(temp.equals(board.getPiece(position).getColor())){
             return board.selectPiece(position);
-        }else{
-            return new HashSet<String>();
         }
-
+        return new HashSet<String>();
     }
     public String getType(String position)
     {
         return board.getPieceType(position);
     }
+ //changed Signture 
     public String move(String from, String to) {
-        String message = board.move(from,to);
+       String str=board.move(from,to);
         updateDBGameState();
-        return message;
+      return str;
     }
     public void updateDBGameState() {
         SerializedGame sg = new SerializedGame();
