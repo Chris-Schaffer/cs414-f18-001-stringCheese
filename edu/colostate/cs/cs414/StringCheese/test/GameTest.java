@@ -8,22 +8,30 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GameTest {
+
     User user = new User("sunny", "sunny@yahoo.com");
     Game game = new Game(user.getName());
     int gameID = game.createGame("sunny");;
+    String host = "sunny";
+    String invitee = "sunny1";
+
+    String startTime = LocalDate.now().toString();
 
     @BeforeAll
     static void setUp() throws Exception {
-        String host = "john";
-        String invite = "chris";
-        String startTime = LocalDate.now().toString();
+
         ArrayList<Game> games = new ArrayList<>();
         User.registerUser("sunny","sunny@yahoo.com","123456");
+
     }
 
     @AfterEach
@@ -45,6 +53,7 @@ class GameTest {
         game = new Game(user.getName());
         User.registerUser("sunny1","sunny1@yahoo.com","1234567");
         boolean result = game.joinGame(gameID);
+        System.out.println("gameId:"+gameID);
         assertEquals(true, result);
     }
 
@@ -56,12 +65,22 @@ class GameTest {
 
     @Test
     void testCreateGame() {
-
+        System.out.println("gameM:"+game.getGameID()+" tG:"+gameID);
+        assertEquals(game.getGameID(), gameID);
     }
 
     @Test
     void testGetStartTime() {
 
+        SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        Date date = new Date();
+
+        //System.out.println(strDate);
+
+        String startTime = sdFormat.format(date).toString();
+        String tTime = game.getStartTime().toString();
+        System.out.println(startTime);
+        assertEquals(startTime, game.getStartTime());
     }
 
     @Test
@@ -80,14 +99,21 @@ class GameTest {
 
     @Test
     void testSetGameID() {
+        testCreateGame();
+        assertEquals(game.createGame("sunny")-1, gameID);
     }
 
     @Test
     void testGetHost() {
+        assertEquals(host,user.getName());
     }
 
     @Test
     void testGetInvitee() {
+        user = new User("sunny1", "sunny1@yahoo.com");
+        game = new Game(user.getName());
+        User.registerUser("sunny1","sunny1@yahoo.com","1234567");
+        assertEquals(invitee,this.user.getName());
     }
 
     @Test
