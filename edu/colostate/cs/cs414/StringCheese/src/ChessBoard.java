@@ -29,18 +29,18 @@ public class ChessBoard implements Serializable {
         // newly constructed pieces in the right position.
         // a = 0, b = 1, ..., h = 7
         placePiece( new Rook(this, ChessPiece.Color.White), "e1");
-		placePiece( new Rook(this, ChessPiece.Color.White), "e2");
+        placePiece( new Rook(this, ChessPiece.Color.White), "e2");
         placePiece( new Bishop(this, ChessPiece.Color.White), "d1");
         placePiece( new King(this, ChessPiece.Color.White), "d2");
         placePiece( new Pawn(this, ChessPiece.Color.White),"c1");
-		placePiece( new Pawn(this, ChessPiece.Color.White),"c2");
+        placePiece( new Pawn(this, ChessPiece.Color.White),"c2");
 
-		placePiece( new Rook(this, ChessPiece.Color.Black), "c7");
-		placePiece( new Rook(this, ChessPiece.Color.Black), "c6");
-		placePiece( new Bishop(this, ChessPiece.Color.Black), "d7");
-		placePiece( new King(this, ChessPiece.Color.Black), "d6");
-		placePiece( new Pawn(this, ChessPiece.Color.Black),"e6");
-		placePiece( new Pawn(this, ChessPiece.Color.Black),"e7");
+        placePiece( new Rook(this, ChessPiece.Color.Black), "c7");
+        placePiece( new Rook(this, ChessPiece.Color.Black), "c6");
+        placePiece( new Bishop(this, ChessPiece.Color.Black), "d7");
+        placePiece( new King(this, ChessPiece.Color.Black), "d6");
+        placePiece( new Pawn(this, ChessPiece.Color.Black),"e6");
+        placePiece( new Pawn(this, ChessPiece.Color.Black),"e7");
 
     }
 
@@ -56,47 +56,43 @@ public class ChessBoard implements Serializable {
         HashSet<String> moves = new HashSet<>();
             ChessPiece piece = getPiece(position);
             if(piece == null){ return moves; }
-            if(piece.getColor() == turn){
-                moves = piece.legalMoves();
-                selectedPiece = piece;
-                selectedPieceMoves = moves;
-            }
-
+            moves = piece.legalMoves();
+            selectedPiece = piece;
+            selectedPieceMoves = moves;
             //if whites turn then call legalMoves() on all black pieces and see if they contain the square that white king is on
-            //method(moves)
+            selectedPieceMoves = removeKingUnderAttack(moves);
             return moves;
-	    
-	  
     }
-	
- private HashSet<String> removeKingUnderAttack(HashSet<String> moves) {
-                    if(selectedPiece instanceof King){
-                        return moves;
+    
+    private HashSet<String> removeKingUnderAttack(HashSet<String> moves) {
+        if(selectedPiece instanceof King){
+            return moves;
+        }
+        HashSet<String> newSet = new HashSet<>();
+        String currentPos = selectedPiece.getPosition();
+
+        ArrayList<String> allPostions = new ArrayList<>();
+        allPostions.addAll(innerRing);
+        allPostions.addAll(outerRing);
+        String kingPos = null;
+        for (String pos : allPostions) {
+            ChessPiece p = getPiece(pos);
+            if(p!=null && p instanceof King && p.getColor()==selectedPiece.getColor()){
+                kingPos = pos;
+                break;
+            }
+        }
+        for(String newPos: moves) {
+            placePiece(selectedPiece,newPos);
+            boolean flag = true;
+            for(String pos: allPostions){
+                ChessPiece p = getPiece(pos);
+                if(p!=null && p.getColor()!=selectedPiece.getColor()){
+                    if(p.legalMoves().contains(kingPos)){
+                        flag = false;
+                        break;
                     }
-                    HashSet<String> newSet = new HashSet<>();
-                    String currentPos = selectedPiece.getPosition();
-                     ArrayList<String> allPostions = new ArrayList<>();
-                    allPostions.addAll(innerRing);
-                    allPostions.addAll(outerRing);
-                    String kingPos = null;
-                    for (String pos : allPostions) {
-                        ChessPiece p = getPiece(pos);
-                        if(p!=null && p instanceof King && p.getColor()==selectedPiece.getColor()){
-                            kingPos = pos;
-                            break;
-                        }
-                    }
-                    for(String newPos: moves) {
-                        placePiece(selectedPiece,newPos);
-                        boolean flag = true;
-                        for(String pos: allPostions){
-                            ChessPiece p = getPiece(pos);
-                            if(p!=null && p.getColor()!=selectedPiece.getColor()){
-                                if(p.legalMoves().contains(kingPos)){
-                                    flag = false;
-                                    break;
-                                }
-                            }
+                }
             }
             if(flag){
                 newSet.add(newPos);
@@ -104,8 +100,9 @@ public class ChessBoard implements Serializable {
             placePiece(selectedPiece,currentPos);
         }
         return newSet;
-     }
-	
+
+    }
+    
 
     // This method tries to place the given piece at a given position, and returns true if successful, and false if
     // the position was illegal.
@@ -125,7 +122,7 @@ public class ChessBoard implements Serializable {
             return false;
     }
 
-//	    public void move(String fromPosition, String toPosition) {//throws IllegalPositionException {
+//      public void move(String fromPosition, String toPosition) {//throws IllegalPositionException {
 //        if(selectedPiece.getPosition().equals(fromPosition)){
 //            if(selectedPieceMoves.contains(toPosition)){
 //                ChessPiece piece = getPiece(fromPosition);
@@ -142,7 +139,7 @@ public class ChessBoard implements Serializable {
 //    }
     public String move(String fromPosition, String toPosition) {//throws IllegalPositionException {
         if(selectedPiece.getPosition().equals(fromPosition)){
-	/* if(promotion.contains(toPosition))
+    /* if(promotion.contains(toPosition))
             {
                 ChessPiece piece=getPiece(fromPosition);
                 if(piece instanceof Pawn)
@@ -151,7 +148,6 @@ public class ChessBoard implements Serializable {
                     {
                         return "promotion";
                     }
-
                 }
                 else if(piece instanceof King)
                 {
@@ -160,11 +156,10 @@ public class ChessBoard implements Serializable {
                         return "Winner";
                     }
                     return new String();
-
                 }
             }*/
-		
-		
+        
+        
             if(selectedPieceMoves.contains(toPosition)){
                 ChessPiece piece = getPiece(fromPosition);
                 piece.setPosition(toPosition);
@@ -176,10 +171,10 @@ public class ChessBoard implements Serializable {
                     turn= ChessPiece.Color.White;
                 }
             }
-		return new String();
-		
+        return new String();
+        
         }
-	    return new String();
+        return new String();
     }
 
     public ArrayList<String> getInnerRing() { return innerRing; }
@@ -209,18 +204,18 @@ public class ChessBoard implements Serializable {
         for( row = 0; row < 7; row++){
             s += Integer.toString(7 - row) + " ";
             for(col = 0; col < 7; col++){
-            	if(board[row][col] == null){
-            	    if(row >= 2 && col >= 2 && row <= 4 && col <=4){
+                if(board[row][col] == null){
+                    if(row >= 2 && col >= 2 && row <= 4 && col <=4){
                         s += "X" + " | ";
                     }
                     else {
                         s += "\u25A1" + " | ";
                     }
-            	}
-				else {
-					s += board[row][col] + " | ";
-				}
-            	}
+                }
+                else {
+                    s += board[row][col] + " | ";
+                }
+                }
             s += '\n';
         }
         s += "  A   B   C   D   E   F   G  \n";
@@ -269,4 +264,3 @@ public class ChessBoard implements Serializable {
         }
     }
 }
-
