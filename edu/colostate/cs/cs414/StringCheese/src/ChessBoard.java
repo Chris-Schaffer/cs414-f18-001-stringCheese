@@ -122,6 +122,21 @@ public class ChessBoard implements Serializable {
             return false;
     }
 
+//	    public void move(String fromPosition, String toPosition) {//throws IllegalPositionException {
+//        if(selectedPiece.getPosition().equals(fromPosition)){
+//            if(selectedPieceMoves.contains(toPosition)){
+//                ChessPiece piece = getPiece(fromPosition);
+//                piece.setPosition(toPosition);
+//                board[getRow(toPosition)][getCol(toPosition)] = piece;
+//                board[getRow(fromPosition)][getCol(fromPosition)] = null;
+//                if(turn == ChessPiece.Color.White){
+//                    turn = ChessPiece.Color.Black;
+//                }else{
+//                    turn= ChessPiece.Color.White;
+//                }
+//            }
+//        }
+//    }
     public String move(String fromPosition, String toPosition) {//throws IllegalPositionException {
         if(selectedPiece.getPosition().equals(fromPosition)){
 	 if(promotion.contains(toPosition))
