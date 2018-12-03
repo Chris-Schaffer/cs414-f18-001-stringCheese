@@ -41,6 +41,11 @@ public class GamePanel extends JPanel{
 		invitation.addActionListener(this.controller);
 		menuArea.add(invitation);
 
+		JButton logout = new JButton("Log Out");
+		logout.setMaximumSize(new Dimension(200,30));
+		logout.addActionListener(this.controller);
+		menuArea.add(logout);
+
 		this.add(menuArea,BorderLayout.LINE_START);
 		gameTiles = new GameTile[7][7];
 		gameBoard = new JPanel();
@@ -222,5 +227,16 @@ public class GamePanel extends JPanel{
 	private int getCol(String position){
 		return position.charAt(0) - 'a';
 
+	}
+
+	public void showSuccessMsg(){
+		MainWindow.infoBox("Joined Game!\n" +
+				"Press the game button to the left to reload page.", "");
+	}
+
+	public void showFailureMsg(){
+		MainWindow.infoBox("Failure.\n" +
+				"It looks like someone else is playing this game.\n" +
+				"To create a game choose create game to the left.\n","");
 	}
 }

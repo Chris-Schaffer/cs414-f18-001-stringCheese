@@ -15,6 +15,7 @@ public class InvitationPanel extends JPanel {
 
     public InvitationPanel(InvitationPanelController invitationPanelController,UIController controller){
         this.controller = controller;
+        this.invitationPanelController = invitationPanelController;
         //this.setLayout(new BorderLayout());
 
         JPanel menuArea = new JPanel(new GridLayout(4,1));
@@ -36,7 +37,14 @@ public class InvitationPanel extends JPanel {
         invitation.addActionListener(this.controller);
         menuArea.add(invitation);
         this.add(menuArea);
-        this.invitationPanelController = invitationPanelController;
+
+        JButton logout = new JButton("Log Out");
+        logout.setMaximumSize(new Dimension(200,30));
+        logout.addActionListener(this.controller);
+        menuArea.add(logout);
+
+
+
     }
 
     public void initializeMenu(){

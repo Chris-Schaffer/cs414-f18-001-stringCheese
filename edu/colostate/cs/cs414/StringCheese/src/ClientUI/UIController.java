@@ -81,7 +81,17 @@ public class UIController implements ActionListener, MouseListener {
         else if(e.getActionCommand().equalsIgnoreCase("Send Invitation/Create Game")){
         	invitationPage();
 		}
+		else if(e.getActionCommand().equalsIgnoreCase("Log Out")){
+			logout();
+		}
 
+	}
+
+	private void logout() {
+		window.getContentPane().removeAll();
+		window.add(loginPanel);
+		window.revalidate();
+		window.repaint();
 	}
 
 	private void invitationPage() {
