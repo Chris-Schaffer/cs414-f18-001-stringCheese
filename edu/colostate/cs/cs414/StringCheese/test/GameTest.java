@@ -26,17 +26,17 @@ class GameTest {
         User.registerUser("sunny","sunny@yahoo.com","123456");
 
     }
-    
+
     @AfterEach
     void tearDown() throws Exception {
-        
+
     }
-    
+
     @Test
     void testGameUser() {
         String expectedName = "sunny";
         String expectedEmail = "sunny@yahoo.com";
-        
+
         assertEquals(true, expectedName == user.getName() && expectedEmail == user.getEmail());
     }
 
@@ -48,70 +48,70 @@ class GameTest {
         boolean result = game.joinGame(gameID);
         assertEquals(true, result);
     }
-    
+
     @Test
     void testQuitGame() {
         boolean result = game.quitGame(user.getName());
         assertEquals(true, result);
     }
-    
+
     @Test
     void testCreateGame() {
-        
+
     }
-    
+
     @Test
     void testGetStartTime() {
-        
+
     }
-    
+
     @Test
     void testGetEndTime() {
-        
+
     }
-    
+
     @Test
     void testSetEndTime() {
         //fail("Not yet implemented");
     }
-    
+
     @Test
     void testGetGameID() {
     }
-    
+
     @Test
     void testSetGameID() {
     }
-    
+
     @Test
     void testGetHost() {
     }
-    
+
     @Test
     void testGetInvitee() {
     }
-    
+
     @Test
     void testGetResult() {
     }
-    
+
     @Test
     void testGetBoard() {
     }
-    
+
     @Test
     void testUpdateDBGameState() {
-        
+
     }
-    
+
     @Test
     void testGetUpdatedGameState() {
-        
+
     }
-    
+
     @Test
     void testCheckGameStateUpdated() {
-        
+
     }
-    
+
 }
