@@ -35,7 +35,7 @@ public class Game implements Serializable {
     public Game(String name){
         this.name = name;
         gameID = -1;//changed for testing to 5;
-        host = "chris2";
+        //host = "chris2";
         board = new ChessBoard();
         board.initialize();
         this.lastUpdated = new Timestamp(System.currentTimeMillis());

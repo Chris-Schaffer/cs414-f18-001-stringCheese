@@ -6,6 +6,7 @@ import java.awt.*;
 public class ProfilePanel extends JPanel {
     GridLayout layout = new GridLayout(3,4);
     ProfileController profileController;
+    UIController controller;
 
     public ProfilePanel(ProfileController profileController,UIController controller){
 
@@ -30,6 +31,12 @@ public class ProfilePanel extends JPanel {
         invitation.setMaximumSize(new Dimension(200,30));
         invitation.addActionListener(controller);
         menuArea.add(invitation);
+
+
+        JButton logout = new JButton("Log Out");
+        logout.setMaximumSize(new Dimension(200,30));
+        logout.addActionListener(this.controller);
+        menuArea.add(logout);
 
         this.add(menuArea,BorderLayout.LINE_START);
         this.profileController = profileController;

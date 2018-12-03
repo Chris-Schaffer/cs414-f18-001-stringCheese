@@ -22,7 +22,9 @@ public class JoinGameController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equalsIgnoreCase("Join Game")){
             String joinGameId = gamePanel.getJoinGameId().getText();
-            gameFacade.joinGame(Integer.parseInt(joinGameId));
+            boolean gameJoined = gameFacade.joinGame(Integer.parseInt(joinGameId));
+            if(gameJoined){gamePanel.showSuccessMsg();}
+            else{gamePanel.showFailureMsg();}
         }
     }
 
