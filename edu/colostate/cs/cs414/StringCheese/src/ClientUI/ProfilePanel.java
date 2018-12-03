@@ -1,6 +1,5 @@
 package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 
-import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.*;

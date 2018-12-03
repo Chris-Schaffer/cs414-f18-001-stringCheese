@@ -92,6 +92,7 @@ public class Invitation {
         users.add(user);
         invitation.sendInvitation(users);
 
+
 /*
         public boolean sendInvitation(ArrayList<User> users){
             //first creates a game with host as user then creates invitation

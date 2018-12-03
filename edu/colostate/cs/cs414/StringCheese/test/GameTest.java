@@ -4,11 +4,9 @@ import edu.colostate.cs.cs414.StringCheese.src.Game;
 import edu.colostate.cs.cs414.StringCheese.src.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import java.util.Date;
@@ -52,7 +50,7 @@ class GameTest {
         user = new User("sunny1", "sunny1@yahoo.com");
         game = new Game(user.getName());
         User.registerUser("sunny1","sunny1@yahoo.com","1234567");
-        boolean result = game.joinGame(gameID);
+        boolean result = game.joinGame(gameID, user.getName());
         System.out.println("gameId:"+gameID);
         assertEquals(true, result);
     }

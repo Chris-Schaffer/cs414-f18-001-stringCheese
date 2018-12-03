@@ -45,4 +45,12 @@ public class InvitationPanel extends MainPanel {
         this.repaint();
 
     }
+
+    public void showSuccessMsg(){
+        MainWindow.infoBox("Invitation Sent!\n", "");
+    }
+
+    public void showFailureMsg(){
+        MainWindow.infoBox("Error Sending Invitation","");
+    }
 }

@@ -16,6 +16,7 @@ public class InvitationPanelController implements ActionListener, ItemListener {
     private ArrayList<String> addedUsernameInvites;
     private ArrayList<User> registeredUsers;
     private ArrayList<User> invitees;
+    private InvitationPanel invitationPanel;
 
     public InvitationPanelController(GameFacade gameFacade){
         this.gameFacade = gameFacade;
@@ -39,7 +40,12 @@ public class InvitationPanelController implements ActionListener, ItemListener {
                     }
                 }
 
-                gameFacade.sendInvitation(invitees);
+                boolean sent = gameFacade.sendInvitation(invitees);
+                if(sent){
+                    showSuccessMsg();
+                }else{
+                    showFailureMsg();
+                }
             }
 
 
@@ -70,5 +76,13 @@ public class InvitationPanelController implements ActionListener, ItemListener {
             System.out.println(item.getName());
             System.out.println(addedUsernameInvites.size());
         }
+    }
+
+    public void showSuccessMsg(){
+        MainWindow.infoBox("Invitation Sent!\n", "");
+    }
+
+    public void showFailureMsg(){
+        MainWindow.infoBox("Error Sending Invitation","");
     }
 }

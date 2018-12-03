@@ -1,11 +1,13 @@
 package edu.colostate.cs.cs414.StringCheese.src;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 
-public class King extends ChessPiece {
+public class King extends ChessPiece implements Serializable {
 
     private HashSet<String> legalMoves;
+    private static final long serialVersionUID = -5130928689559383866L;
 
     public King(ChessBoard board, Color color) {
         super(board, color);
@@ -13,57 +15,40 @@ public class King extends ChessPiece {
     }
 
     public HashSet<String> legalMoves() {
-        //FIXME currently doesn't check if the move places the king into check
+        legalMoves.clear();
+        legalMoves.addAll(getNextDiagonals(getPosition(), getColor()));
+        legalMoves.addAll(getNextForward(getPosition(), getColor()));
+        legalMoves.addAll(getPrevBackward(getPosition(), getColor()));
+        legalMoves.addAll(getPrevDiagonals(getPosition(), getColor()));
+        legalMoves.addAll(getSideways(getPosition(), getColor()));
+        if (isInnerCorner(getPosition())) {
+            addOuterCorner();
+        }
+        legalMoves = removePositionsWithSameColorPiece(legalMoves, getColor());
+        return legalMoves;
         //Check if the king is under attack
-        if(isUnderAttack()){
+
+        /*
+        if (isUnderAttack()) {
             //If so, choose king to move or move another piece to let King not be attacked, otherwise it is checkmate.
             // (The same logic as below, find a movable point, so that the moved king is not attacked. Another piece moves beyond the scope of this function)
-            legalMoves.clear();
-            legalMoves.addAll(getNextDiagonals(getPosition(), getColor()));
-            legalMoves.addAll(getNextForward(getPosition(), getColor()));
-            legalMoves.addAll(getPrevBackward(getPosition(), getColor()));
-            legalMoves.addAll(getPrevDiagonals(getPosition(), getColor()));
-            legalMoves.addAll(getSideways(getPosition(), getColor()));
-            if (isInnerCorner(getPosition())) {
-                addOuterCorner();
-            }
-            HashSet<String> tmpLegalMoves = removePositionsWithSameColorPiece(legalMoves, getColor());
+
             //Make sure that king is not in the attack range after moving
             HashSet<String> res = new HashSet<>();
             String pos = getPosition();
-            for(String move: tmpLegalMoves) {
-                board.placePiece(this,move);
-                if(!isUnderAttack()) {
+            for (String move : legalMoves) {
+                //pseudo move king then see if in check
+                setPosition(move);
+                if (!isUnderAttack()) {
                     res.add(move);
                 }
-                board.placePiece(this,pos);
             }
-            return res;
-        }else {
-            //If not, as long as the normal legalmove is fine.
-            legalMoves.clear();
-            legalMoves.addAll(getNextDiagonals(getPosition(), getColor()));
-            legalMoves.addAll(getNextForward(getPosition(), getColor()));
-            legalMoves.addAll(getPrevBackward(getPosition(), getColor()));
-            legalMoves.addAll(getPrevDiagonals(getPosition(), getColor()));
-            legalMoves.addAll(getSideways(getPosition(), getColor()));
-            if (isInnerCorner(getPosition())) {
-                addOuterCorner();
-            }
-            HashSet<String> tmpLegalMoves = removePositionsWithSameColorPiece(legalMoves, getColor());
-            //Make sure that king is not in the attack range after moving
-            HashSet<String> res = new HashSet<>();
-            String pos = getPosition();
-            for(String move: tmpLegalMoves) {
-                board.placePiece(this,move);
-                if(!isUnderAttack()) {
-                    res.add(move);
-                }
-                board.placePiece(this,pos);
-            }
+            setPosition(pos);
             return res;
         }
-}
+        return legalMoves;
+*/
+    }
 
     private HashSet<String> addOuterCorner() {
         switch (getPosition()) {
@@ -84,11 +69,12 @@ public class King extends ChessPiece {
         return legalMoves;
     }
 
-    private boolean isUnderAttack(){
+    public boolean isUnderAttack(){
         String position = getPosition();
         for(String pos: board.innerRing){
             ChessPiece p = board.getPiece(pos);
-            if(p!=null && p.getColor()!=getColor()){
+            //check if any piece of the opposite color contains the square the king is on
+            if(p!=null && p.getColor()!=getColor() && !p.getPosition().equals(getPosition())){
                 if(p.legalMoves().contains(position)){
                     return true;
                 }
@@ -96,7 +82,7 @@ public class King extends ChessPiece {
         }
         for(String pos: board.outerRing){
             ChessPiece p = board.getPiece(pos);
-            if(p!=null && p.getColor()!=getColor()){
+            if(p!=null && p.getColor()!=getColor() && !p.getPosition().equals(getPosition())){
                 if(p.legalMoves().contains(position)){
                     return true;
                 }

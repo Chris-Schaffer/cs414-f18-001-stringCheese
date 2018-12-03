@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 public class GameFacade {
 
-    private ChessBoard board;   //should access board in the game object, not create a new one
+    //private ChessBoard board;   //should access board in the game object, not create a new one
     private User user;
     private Game game;
     private Invitation invitation;
@@ -13,15 +13,15 @@ public class GameFacade {
     public GameFacade(){
         //remove these as board is set upon login()
         //currently needed when skipping login i.e. debugging
-        board = new ChessBoard();
-        board.initialize();
+        //board = new ChessBoard();
+        //board.initialize();
     }
 
     public boolean login(String name, String password){
         if(User.login(name,password)){
             user = new User(name);
             game = new Game(user.getName());
-            board = game.getBoard();
+            //board = game.getBoard();
             return true;
         }
         return false;
@@ -40,7 +40,7 @@ public class GameFacade {
         return user.listActiveGames();
     }
     public boolean joinGame(int gameID){
-        return game.joinGame(gameID);
+        return game.joinGame(gameID, user.getName());
     }
     //needs username to set result to opponent name
     public boolean quitGame(String username){

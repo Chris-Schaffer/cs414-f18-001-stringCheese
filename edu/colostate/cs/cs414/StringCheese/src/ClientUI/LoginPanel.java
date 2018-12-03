@@ -8,8 +8,6 @@ public class LoginPanel extends JPanel{
 	private UIController controller;
 	private JTextField nickname;//email;
 	private JPasswordField password;
-	private JLabel successMsgLabel;
-	private JLabel failureMsgLabel;
 
 	public LoginPanel(UIController controller){
 		this.controller = controller;
@@ -51,13 +49,6 @@ public class LoginPanel extends JPanel{
 		this.add(register, BorderLayout.PAGE_END);
 
 
-		successMsgLabel = new JLabel("Login Successful");
-		successMsgLabel.setVisible(false);
-		this.add(successMsgLabel, BorderLayout.CENTER);
-
-		failureMsgLabel = new JLabel("Login Failure");
-		failureMsgLabel.setVisible(false);
-		this.add(failureMsgLabel, BorderLayout.CENTER);
 	}
 
 	/*
@@ -74,13 +65,10 @@ public class LoginPanel extends JPanel{
 	}
 
 	public void showSuccessMsg(){
-		failureMsgLabel.setVisible(false);
-		successMsgLabel.setVisible(true);
 		MainWindow.infoBox("Login Successful\n", "");
 	}
 
 	public void showFailureMsg(){
-		failureMsgLabel.setVisible(true);
 		MainWindow.infoBox("Error logging in.\n" +
 				"Ensure nickname and password are correct.\n" +
 				"Nickname and password both must be at least 5 characters long.","");

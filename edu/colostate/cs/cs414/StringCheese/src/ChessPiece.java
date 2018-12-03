@@ -23,7 +23,7 @@ public abstract class ChessPiece implements Serializable {
 
     public String getPosition() { return position; }
 
-    public void setPosition(String position) { //throws IllegalPositionException {
+    public void setPosition(String position) {
 
         if(position.charAt(0) < 'a' || position.charAt(0) > 'h' ||
            position.charAt(1) < '1' || position.charAt(1) > '8' ||
@@ -38,7 +38,7 @@ public abstract class ChessPiece implements Serializable {
     }
     //returns zero if previous backward has piece of same color
     //returns set of size one if not
-     public HashSet<String> getNextForward(String position,Color color) { //throws IllegalPositionException {
+     public HashSet<String> getNextForward(String position,Color color) {
         int index;
         String newPos = "";
         HashSet<String> moves = new HashSet<>();
@@ -250,16 +250,13 @@ public abstract class ChessPiece implements Serializable {
         return removePositionsWithSameColorPiece(legalMoves, color);
     }
     //package private
-
     HashSet<String> removePositionsWithSameColorPiece(HashSet<String> legalMoves, Color origionalColor) {
         HashSet<String> newSet = new HashSet<>();
-
          for(String move: legalMoves) {
             if (board.getPiece(move) == null || board.getPiece(move).color != origionalColor) {
                 newSet.add(move);
             }
         }
-
         return newSet;
     }
     //package private

@@ -3,7 +3,6 @@ package edu.colostate.cs.cs414.StringCheese.src;
 
 import java.io.Serializable;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 /*
@@ -22,7 +21,6 @@ public class Game implements Serializable {
     private Connection conn;
     private int gameID;
     private String result, endTime, host, invitee;
-    //private User user1, user2;
     private String name;
     private String whitePlayer;
     private ChessBoard board;
@@ -64,30 +62,15 @@ public class Game implements Serializable {
     //Game game = new Game(user);
     //game.listActiveGames();
     //game.joinGame(gameID);
-    public boolean joinGame(int gameID){
+    public boolean joinGame(int gameID, String invitee){
         //check if game has invitee before joining
         if(isGameStarted(gameID)){
             System.out.println("This game has already started");
             return false;
         }
-        String name;
-        ResultSet rs = queryDatabase("SELECT name FROM user WHERE name='"+this.name+"'");
-        try {
-            if(rs !=null && rs.next()) {
-                name = rs.getString("name");
-                rs.close();
-                boolean isUpdated =  updateDatabase("UPDATE game SET invitee='"+name+"' WHERE game_id="+gameID);
-                createSerializesGameObject(gameID,name);
-                return isUpdated;
-            }else {
-                System.out.println("Query went wrong");
-                System.exit(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
-        return false;
+        boolean isUpdated =  updateDatabase("UPDATE game SET invitee='"+ invitee +"' WHERE game_id="+gameID);
+        createSerializesGameObject(gameID, invitee);
+        return isUpdated;
     }
 
     private void createSerializesGameObject(int gameID, String invitee) {
@@ -175,7 +158,7 @@ public class Game implements Serializable {
     //createGame() helper function
     private void setGameID(String playerOne) {
         //get gameID of newest game started by playerOne - called from createGame()
-        String query = "SELECT * FROM game WHERE host='"+playerOne+"' ORDER BY start_time desc limit 1";
+        String query = "SELECT game_id FROM game WHERE host='"+playerOne+"' ORDER BY start_time desc limit 1";
         ResultSet rs = queryDatabase(query);
         try {
             if (rs != null && rs.next()) {
@@ -259,36 +242,23 @@ public class Game implements Serializable {
 
     public ChessBoard getBoard(){return board;}
 
-    public HashSet<String> getValidMoves(String position, String name)
-    {
-        ChessPiece.Color temp;
-        if(name.equals(host))
-        {
-            temp= ChessPiece.Color.White;
-        }
-        else
-        {
-            temp= ChessPiece.Color.Black;
-           // return new HashSet<String>();
-        }
-        if(board.getPiece(position) == null){
-            return new HashSet<>();
-        }
+    public HashSet<String> getValidMoves(String position, String name) {
+        ChessPiece.Color myColor;
+        if(name.equals(host)) { myColor= ChessPiece.Color.White; }
+        else { myColor= ChessPiece.Color.Black; }
 
-        if(temp.equals(board.getPiece(position).getColor())){
+        if(board.getPiece(position) == null){ return new HashSet<>(); }
+
+        if(myColor.equals(board.getPiece(position).getColor())){
             return board.selectPiece(position);
         }
         return new HashSet<String>();
     }
-    public String getType(String position)
-    {
-        return board.getPieceType(position);
-    }
- //changed Signture 
+    public String getType(String position) { return board.getPieceType(position); }
     public String move(String from, String to) {
-       String str=board.move(from,to);
+        String message = board.move(from,to);
         updateDBGameState();
-      return str;
+        return message;
     }
     public void updateDBGameState() {
         SerializedGame sg = new SerializedGame();
