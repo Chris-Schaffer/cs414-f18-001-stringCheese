@@ -1,18 +1,21 @@
 package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 
+import sun.applet.Main;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class ProfilePanel extends JPanel {
+public class ProfilePanel extends MainPanel {
     GridLayout layout = new GridLayout(3,4);
     ProfileController profileController;
     UIController controller;
 
     public ProfilePanel(ProfileController profileController,UIController controller){
-
+        super(controller);
         this.setLayout(new BorderLayout());
-
-
+        this.profileController = profileController;
+        this.controller = controller;
+        /*
         JPanel menuArea = new JPanel(new GridLayout(4,1));
         menuArea.setSize(200,90);
         menuArea.setMaximumSize(new Dimension(200,300));
@@ -39,6 +42,7 @@ public class ProfilePanel extends JPanel {
         menuArea.add(logout);
 
         this.add(menuArea,BorderLayout.LINE_START);
-        this.profileController = profileController;
+        */
+
     }
 }

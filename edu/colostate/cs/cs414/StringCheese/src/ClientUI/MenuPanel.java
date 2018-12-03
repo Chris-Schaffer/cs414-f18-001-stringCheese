@@ -3,12 +3,13 @@ package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class MenuPanel extends JPanel{
+public class MenuPanel extends MainPanel {
 
 	UIController controller;
 
 	public MenuPanel(UIController controller){
-		this.setLayout(new BorderLayout());
+        super(controller);
+	    this.setLayout(new BorderLayout());
 		this.controller = controller;
 
 		JLabel title = new JLabel("Rollerball",JLabel.CENTER);
@@ -16,6 +17,9 @@ public class MenuPanel extends JPanel{
 		title.setFont(new Font(Font.SANS_SERIF, Font.BOLD,100));
 		this.add(title,BorderLayout.PAGE_START);
 
+
+
+		/*
 		JPanel menuArea = new JPanel(new GridLayout(4,1));
 		menuArea.setSize(200,90);
 		menuArea.setMaximumSize(new Dimension(200,300));
@@ -41,6 +45,7 @@ public class MenuPanel extends JPanel{
 		menuArea.add(logout);
 		
 		this.add(menuArea,BorderLayout.LINE_START);
+		*/
 	}
 
 }
