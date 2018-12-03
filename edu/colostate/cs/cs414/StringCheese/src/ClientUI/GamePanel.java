@@ -17,6 +17,8 @@ public class GamePanel extends JPanel{
 	private GameTile selectedTile;
 	JPanel gameBoard, games;
 	JComboBox<String> activeGames;
+	private static final Color lightBrown = new Color(210,180,140);
+	private static final Color darkBrown = new Color(139,69,19);
 
 	public GamePanel(UIController uiController){
 		this.controller = uiController;
@@ -93,15 +95,15 @@ public class GamePanel extends JPanel{
 
                 }
                 else if(col %2 == 0 && row %2 == 0){
-                    currentPanel.setBackground(new Color(139,69,19));
+                    currentPanel.setBackground(darkBrown);
                     currentPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 }
                 else if(col %2 !=0 && row %2 != 0){
-                    currentPanel.setBackground(new Color(139,69,19));
+                    currentPanel.setBackground(darkBrown);
                     currentPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 }
                 else{
-                    currentPanel.setBackground(new Color(210,180,140));
+                    currentPanel.setBackground(lightBrown);
                     currentPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 }
                 gameBoard.add(currentPanel);
@@ -206,9 +208,9 @@ public class GamePanel extends JPanel{
 
 				}else{
 					if((col %2 == 0 && row %2 == 0) || (col %2 !=0 && row %2 != 0)){
-						gameTiles[row][col].setBackground(new Color(139,69,19));
+						gameTiles[row][col].setBackground(darkBrown);
 					}else{
-						gameTiles[row][col].setBackground(new Color(210,180,140));
+						gameTiles[row][col].setBackground(lightBrown);
 					}
 					//gameTiles[row][col].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				}

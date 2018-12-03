@@ -24,7 +24,7 @@ class GameTest {
         
         ArrayList<Game> games = new ArrayList<>();
         user = new User("joey123", "joey123@yahoo.com");
-        game = new Game(user);
+        game = new Game(user.getName());
     }
     
     @AfterEach
