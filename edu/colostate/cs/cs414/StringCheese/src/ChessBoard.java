@@ -129,6 +129,7 @@ public class ChessBoard implements Serializable {
     }
 
     //FIXME  needs isCheck() method
+    //returns Promotion, Winner, or empty String indicating nothing special happened
     public String move(String fromPosition, String toPosition) {
         String message = "";
         if(selectedPiece.getPosition().equals(fromPosition)) {
