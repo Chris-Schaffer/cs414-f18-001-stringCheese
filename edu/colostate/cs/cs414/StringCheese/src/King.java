@@ -14,10 +14,10 @@ public class King extends ChessPiece {
 
     public HashSet<String> legalMoves() {
         //FIXME currently doesn't check if the move places the king into check
-        //先检查king是不是处于被攻击状态
+        //Check if the king is under attack
         if(isUnderAttack()){
-            //是的话选择king移动或者另一个棋子移动过来让king不受攻击，不然就是checkmate了
-            // (和下面逻辑是一模一样的，找到一个可移动的点，让移动后的king不受攻击。另一个棋子移动过来不在这个函数考察范围)
+            //If so, choose king to move or move another piece to let King not be attacked, otherwise it is checkmate.
+            // (The same logic as below, find a movable point, so that the moved king is not attacked. Another piece moves beyond the scope of this function)
             legalMoves.clear();
             legalMoves.addAll(getNextDiagonals(getPosition(), getColor()));
             legalMoves.addAll(getNextForward(getPosition(), getColor()));
@@ -28,7 +28,7 @@ public class King extends ChessPiece {
                 addOuterCorner();
             }
             HashSet<String> tmpLegalMoves = removePositionsWithSameColorPiece(legalMoves, getColor());
-            //确保移动后king不处于被攻击范围
+            //Make sure that king is not in the attack range after moving
             HashSet<String> res = new HashSet<>();
             String pos = getPosition();
             for(String move: tmpLegalMoves) {
@@ -40,7 +40,7 @@ public class King extends ChessPiece {
             }
             return res;
         }else {
-            //不是的话只要正常的legalmove就好了，
+            //If not, as long as the normal legalmove is fine.
             legalMoves.clear();
             legalMoves.addAll(getNextDiagonals(getPosition(), getColor()));
             legalMoves.addAll(getNextForward(getPosition(), getColor()));
@@ -51,7 +51,7 @@ public class King extends ChessPiece {
                 addOuterCorner();
             }
             HashSet<String> tmpLegalMoves = removePositionsWithSameColorPiece(legalMoves, getColor());
-            //确保移动后king不处于被攻击范围
+            //Make sure that king is not in the attack range after moving
             HashSet<String> res = new HashSet<>();
             String pos = getPosition();
             for(String move: tmpLegalMoves) {
