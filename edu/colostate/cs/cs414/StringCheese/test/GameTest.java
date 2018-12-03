@@ -24,7 +24,6 @@ class GameTest {
         String startTime = LocalDate.now().toString();
         ArrayList<Game> games = new ArrayList<>();
         User.registerUser("sunny","sunny@yahoo.com","123456");
-
     }
 
     @AfterEach

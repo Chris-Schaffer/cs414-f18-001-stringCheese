@@ -81,13 +81,17 @@ public class GameFacade {
     this serializes the game object and adds it along w/ current timestamp to DB
     if checkGameStateUpdated() then replace the current game object with the newer version
      */
-    public boolean callMethodEveryNSeconds(){
+    public boolean loadGame(){
         if(checkGameStateUpdated()){
             game = game.getUpdatedGameState();
             return true;
         }
         return false;
         //repaint board
+    }
+
+    public void setGame(Game game){
+        this.game = game;
     }
 
 
