@@ -1,140 +1,134 @@
 package edu.colostate.cs.cs414.StringCheese.test;
 
+import edu.colostate.cs.cs414.StringCheese.src.ChessBoard;
+import edu.colostate.cs.cs414.StringCheese.src.ChessPiece;
+import edu.colostate.cs.cs414.StringCheese.src.DBConnection;
 import edu.colostate.cs.cs414.StringCheese.src.Game;
-import edu.colostate.cs.cs414.StringCheese.src.User;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.HashSet;
 
-import java.util.Date;
-import java.text.SimpleDateFormat;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
-    User user = new User("sunny", "sunny@yahoo.com");
-    Game game = new Game(user.getName());
-    int gameID = game.createGame("sunny");;
-    String host = "sunny";
-    String invitee = "sunny1";
 
-    String startTime = LocalDate.now().toString();
 
-    @BeforeAll
-    static void setUp() throws Exception {
+    static Game g=new Game("meetkumar");
+    static int id=g.createGame("meetkumar");
 
-        ArrayList<Game> games = new ArrayList<>();
-        User.registerUser("sunny","sunny@yahoo.com","123456");
-
-    }
-
-    @AfterEach
-    void tearDown() throws Exception {
+     Game game=new Game(id,"meetkumar","chris",new Timestamp(System.currentTimeMillis()));;
+    @AfterAll
+    static void tearDown() throws SQLException {
+        Connection con=DBConnection.open();
+        PreparedStatement ptst=con.prepareStatement("DELETE from gameserialized where game_id=?");
+        ptst.setInt(1,id);
+        ptst.executeUpdate();
+        PreparedStatement ptst1=con.prepareStatement("DELETE from game where game_id=?");
+        ptst1.setInt(1,id);
+        ptst1.executeUpdate();
 
     }
 
     @Test
-    void testGameUser() {
-        String expectedName = "sunny";
-        String expectedEmail = "sunny@yahoo.com";
-
-        assertEquals(true, expectedName == user.getName() && expectedEmail == user.getEmail());
+    void joinGame() {
+        assertTrue(game.joinGame(id,"chris"));
     }
 
     @Test
-    void testJoinGame() {
-        user = new User("sunny1", "sunny1@yahoo.com");
-        game = new Game(user.getName());
-        User.registerUser("sunny1","sunny1@yahoo.com","1234567");
-        boolean result = game.joinGame(gameID, user.getName());
-        System.out.println("gameId:"+gameID);
-        assertEquals(true, result);
+    void quitGame() {
+        assertTrue(game.quitGame("meetkumar"));
     }
 
     @Test
-    void testQuitGame() {
-        boolean result = game.quitGame(user.getName());
-        assertEquals(true, result);
+    void createGame() {
+        assertTrue(game.createGame("meetkuamr")>0);
     }
 
     @Test
-    void testCreateGame() {
-        System.out.println("gameM:"+game.getGameID()+" tG:"+gameID);
-        assertEquals(game.getGameID(), gameID);
+    void getStartTime() {
+        assertTrue(game.getStartTime()!=null);
     }
 
     @Test
-    void testGetStartTime() {
-
-        SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-        Date date = new Date();
-
-        //System.out.println(strDate);
-
-        String startTime = sdFormat.format(date).toString();
-        String tTime = game.getStartTime().toString();
-        System.out.println(startTime);
-        assertEquals(startTime, game.getStartTime());
+    void getEndTime() {
+        assertTrue(game.getEndTime()==null);
     }
 
     @Test
-    void testGetEndTime() {
-
+    void setEndTime() {
+        game.setEndTime("dec-09");
+        assertTrue(game.getEndTime()!=null);
     }
 
     @Test
-    void testSetEndTime() {
-        //fail("Not yet implemented");
+    void getGameID() {
+        assertTrue(game.getGameID()>0);
     }
 
     @Test
-    void testGetGameID() {
+    void setGameID() {
+        game.setGameID(id);
+        assertTrue(game.getGameID()==id);
     }
 
     @Test
-    void testSetGameID() {
-        testCreateGame();
-        assertEquals(game.createGame("sunny")-1, gameID);
+    void getHost() {
+        assertTrue(game.getHost().equalsIgnoreCase("meetkumar"));
     }
 
     @Test
-    void testGetHost() {
-        assertEquals(host,user.getName());
+    void getInvitee() {
+        assertTrue(game.getInvitee().equalsIgnoreCase("chris"));
     }
 
     @Test
-    void testGetInvitee() {
-        user = new User("sunny1", "sunny1@yahoo.com");
-        game = new Game(user.getName());
-        User.registerUser("sunny1","sunny1@yahoo.com","1234567");
-        assertEquals(invitee,this.user.getName());
+    void getResult() {
+        assertTrue(game.getResult()==null);
     }
 
     @Test
-    void testGetResult() {
+    void getBoard() {
+        ChessBoard board=game.getBoard();
+        assertTrue(board!=null);
     }
 
     @Test
-    void testGetBoard() {
+    void getValidMoves() {
+
+        HashSet<String> legalmoves=game.getValidMoves("c1","meetkumar");
+        assertTrue(!legalmoves.isEmpty());
     }
 
     @Test
-    void testUpdateDBGameState() {
+    void getType() {
+        String piece=game.getType("c2");
+        assertTrue(piece!=null);
+    }
 
+
+    @Test
+    void updateDBGameState() {
+
+        game.updateDBGameState();
     }
 
     @Test
-    void testGetUpdatedGameState() {
-
+    void getUpdatedGameState() {
+        Game g=game.getUpdatedGameState();
+        assertTrue(g!=null);
     }
 
     @Test
-    void testCheckGameStateUpdated() {
-
+    void checkGameStateUpdated() {
+        assertTrue(game.checkGameStateUpdated());
     }
 
+    @Test
+    void promote() {
+    }
 }
