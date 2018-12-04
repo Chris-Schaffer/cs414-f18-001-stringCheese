@@ -90,7 +90,7 @@ public class User {
             numRecordsAffected = stmt.executeUpdate(query);
         }catch(SQLException se){
             se.printStackTrace();
-            System.exit(1);
+           // System.exit(1);
         }
         return numRecordsAffected==1;
     }
@@ -179,7 +179,7 @@ public class User {
             //DBConnection.close(conn);
         }catch(SQLException se){
             se.printStackTrace();
-            System.exit(1);
+           // System.exit(1);
         }
         return rs;
     }

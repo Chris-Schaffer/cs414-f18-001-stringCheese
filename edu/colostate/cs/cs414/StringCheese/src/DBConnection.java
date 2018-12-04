@@ -23,8 +23,9 @@ public class DBConnection {
             con.close();
             */
         }catch(Exception e){
-            System.out.println(e);
-            System.exit(1);
+           // System.out.println(e);
+            //System.exit(1);
+            e.printStackTrace();
         }
         return con;
     }

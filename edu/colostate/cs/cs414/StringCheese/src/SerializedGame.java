@@ -47,6 +47,7 @@ public class SerializedGame {
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(e);
         }
 

@@ -375,8 +375,7 @@ public class Rook extends ChessPiece {
                 return legalMoves;
             } else {
                 System.out.println("Rook is not on board at position " + position + " something went wrong");
-                System.exit(1);
-
+               // System.exit(1);
                 return legalMoves;
 
             }
