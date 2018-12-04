@@ -14,9 +14,9 @@ CREATE TABLE user (
 /* FIXME need to check all classes for anywhere that used result='UNFINISHED' and change it to result=null.  */
 drop table if exists game;
 CREATE TABLE game ( 
-	game_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	/*host_id SMALLINT UNSIGNED,*/
-	host VARCHAR(20) NOT NULL,
+	  game_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	  /*host_id SMALLINT UNSIGNED,*/
+	  host VARCHAR(20) NOT NULL,
     /*invitee_id SMALLINT UNSIGNED DEFAULT 0,*/
     invitee VARCHAR(20) DEFAULT NULL,
     start_time TIMESTAMP,
@@ -24,9 +24,9 @@ CREATE TABLE game (
     result VARCHAR(20) DEFAULT NULL,/*WINNER NAME*/
     abandon BOOLEAN DEFAULT FALSE,
     next_turn VARCHAR(20),
-	PRIMARY KEY (game_id)
-	/*FOREIGN KEY (host_id) REFERENCES user(user_id),
-	FOREIGN KEY (invitee_id) REFERENCES user(user_id)*/
+	  PRIMARY KEY (game_id)
+	  /*FOREIGN KEY (host_id) REFERENCES user(user_id),
+	  FOREIGN KEY (invitee_id) REFERENCES user(user_id)*/
 );
 
 drop table if exists gameserialized;
@@ -43,11 +43,22 @@ Create table gameserialized (
  ('john', 'john@bing.com', null, null),
  ('jane', 'jane@aol.com', null, null);
 
-
-INSERT INTO game (host, invitee, start_time, next_turn) VALUES
-('chris','john',current_timestamp,'chris'),
-('john','chris',current_timestamp,'john'),
-('zaira','jane',current_timestamp,'jane');
+/* Dummy Finished games  */
+INSERT INTO game (host, invitee, start_time, end_time, result) VALUES
+('chris','john',current_timestamp, current_timestamp, 'chris'),
+('john','chris',current_timestamp, current_timestamp, 'john'),
+('john','jane',current_timestamp, current_timestamp, 'jane'),
+('chris','john',current_timestamp, current_timestamp, 'chris'),
+('chris','john',current_timestamp, current_timestamp, 'john'),
+('chris','john',current_timestamp, current_timestamp, 'chris'),
+('chris','john',current_timestamp, current_timestamp, 'chris'),
+('chris','jane',current_timestamp, current_timestamp, 'jane'),
+('john','chris',current_timestamp, current_timestamp, 'john'),
+('john','jane',current_timestamp, current_timestamp, 'jane'),
+('chris','john',current_timestamp, current_timestamp, 'chris'),
+('chris','john',current_timestamp, current_timestamp, 'john'),
+('chris','john',current_timestamp, current_timestamp, 'chris'),
+('chris','john',current_timestamp, current_timestamp, 'chris');
 
 
 

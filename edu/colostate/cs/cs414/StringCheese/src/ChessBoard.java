@@ -183,7 +183,6 @@ public class ChessBoard implements Serializable {
         return kingPos;
     }
 
-    //FIXME  needs isCheck() method
     //returns Promotion, Winner, or empty String indicating nothing special happened
     public String move(String fromPosition, String toPosition) {
         if(selectedPiece.getPosition().equals(fromPosition) && selectedPieceMoves.contains(toPosition)) {
@@ -198,6 +197,7 @@ public class ChessBoard implements Serializable {
 
     //checks if there should be a special message returned after a move is made
     private String getMessage() {
+        //"Checkmate" means you won by checkmate
         if(isCheckmate()){return "Checkmate";}
         //if in a location that white can get a promotion
         if (whitePromotion.contains(selectedPiece.getPosition()) && selectedPiece.getColor() == ChessPiece.Color.White) {
@@ -232,7 +232,6 @@ public class ChessBoard implements Serializable {
     }
     // returns false if any piece of the opposite color has at least one legal move
     // returns true otherwise
-    //fixme DOESNT WORK. legalMoves() does not see if it removes opponent from check
     private boolean hasNoValidMoves(){
         for(int row = 0; row < 7; ++row) {
             for (int col = 0; col < 7; ++col) {
@@ -268,8 +267,6 @@ public class ChessBoard implements Serializable {
         if(position.length() != 2 ||
                 position.charAt(0) < 'a' || position.charAt(0) > 'g' ||
                 position.charAt(1) < '1' || position.charAt(1) > '7'){
-
-
         }
     }
 

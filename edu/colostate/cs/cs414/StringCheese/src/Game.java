@@ -32,7 +32,7 @@ public class Game implements Serializable {
     //then game object is changed to a game chosen from listActiveGames()
     public Game(String name){
         this.name = name;
-        gameID = -1;//changed for testing to 5;
+        gameID = -1;
         //host = "chris2";
         board = new ChessBoard();
         board.initialize();
@@ -261,8 +261,27 @@ public class Game implements Serializable {
     public String move(String from, String to) {
         String message = board.move(from,to);
         updateDBGameState();
+        //game is over
+        if(message.equalsIgnoreCase("Checkmate") || message.equalsIgnoreCase("Winner")){
+            //if white won then host is winner
+            if(board.getPiece(to).getColor() == ChessPiece.Color.White){
+                result = host;
+            }
+            //else winner was invitee
+            else{
+                result = invitee;
+            }
+            endGame();
+        }
         return message;
     }
+
+    private boolean endGame(){
+        String query = "UPDATE game SET result='"+result+"', end_time= CURRENT_TIMESTAMP() WHERE game_id="+gameID;
+        return updateDatabase(query);
+    }
+
+
     public void updateDBGameState() {
         SerializedGame sg = new SerializedGame();
         sg.write(new DBConnection(),this);
@@ -292,9 +311,21 @@ public class Game implements Serializable {
         return !time.equals(lastUpdated);
     }
 
+    public void promote(String position, String choice) {
+       ChessPiece.Color color = board.getPiece(position).getColor();
+        if(choice.equalsIgnoreCase("rook")){
+            board.placePiece(new Rook(board,color),position);
+        }
+        else{
+            board.placePiece(new Bishop(board,color),position);
+        }
+    }
+
+
+
     public static void main(String args[]){
         //test checkGameStateUpdated()
-        //fixme putme as in testing 
+        //fixme putme as in testing
         User user = new User("chris2","soccer.schaffer@yahoo.com");
         Game game = new Game(user.getName());
         /*
@@ -322,15 +353,5 @@ public class Game implements Serializable {
         game1.getValidMoves("e6","chris3");
         game1.move("e6","f6");
         System.out.println(game1.board);
-    }
-
-    public void promote(String position, String choice) {
-       ChessPiece.Color color = board.getPiece(position).getColor();
-        if(choice.equalsIgnoreCase("rook")){
-            board.placePiece(new Rook(board,color),position);
-        }
-        else{
-            board.placePiece(new Bishop(board,color),position);
-        }
     }
 }
