@@ -99,19 +99,7 @@ public class ChessBoard implements Serializable {
         //fixme THEN MOVE NEW PIECE TO THAT LOCATION, CHECK IF KING UNDER ATTACK THEN MOVE BACK
         return newSet;
     }
-    //find same color king position
-    private String getSameColorKingPosition() {
-        String kingPos = "";
-        for(int row = 0; row < 7; ++row){
-            for(int col = 0; col < 7; ++col){
-                if( (board[row][col] instanceof King) && (board[row][col].getColor()==selectedPiece.getColor()) ){
-                    kingPos = board[row][col].getPosition();
-                    break;
-                }
-            }
-        }
-        return kingPos;
-    }
+
     //checks that moving selectedPiece to newPosition does not put your own king into check
     private boolean isMoveLegal(String kingPosition, String newPosition){
         //fixme NEVER USING NEWPOSITION
@@ -129,8 +117,19 @@ public class ChessBoard implements Serializable {
         return true;
     }
 
-
-
+    //find same color king position
+    private String getSameColorKingPosition() {
+        String kingPos = "";
+        for(int row = 0; row < 7; ++row){
+            for(int col = 0; col < 7; ++col){
+                if( (board[row][col] instanceof King) && (board[row][col].getColor()==selectedPiece.getColor()) ){
+                    kingPos = board[row][col].getPosition();
+                    break;
+                }
+            }
+        }
+        return kingPos;
+    }
 
     // This method tries to place the given piece at a given position, and returns true if successful, and false if
     // the position was illegal.
@@ -149,10 +148,15 @@ public class ChessBoard implements Serializable {
             return true;
         }
         else{//pseudo move piece
+            String oldPosition = piece.getPosition();
             piece.setPosition(newPosition);
             int row = getRow(newPosition);
             int col = getCol(newPosition);
+            int oldRow = getRow(oldPosition);
+            int oldCol = getCol(oldPosition);
+            //board[oldRow][oldCol] = null;
             board[row][col] = piece;
+
         }
         return false;
     }

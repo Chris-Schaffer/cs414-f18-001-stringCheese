@@ -79,10 +79,12 @@ public class InvitationPanelController implements ActionListener, ItemListener {
     }
 
     public void showSuccessMsg(){
-        MainWindow.infoBox("Invitation Sent!\n", "");
+        MainWindow.infoBox("A game was created and invitations were emailed to the user(s).\n" +
+                "When the invitation is accepted the game will be displayed on the game page.", "");
     }
 
     public void showFailureMsg(){
-        MainWindow.infoBox("Error Sending Invitation","");
+        MainWindow.infoBox("Error Sending Invitation.\n" +
+                "No game was created. Check your network connection and try again.","");
     }
 }

@@ -250,6 +250,7 @@ public abstract class ChessPiece implements Serializable {
         return removePositionsWithSameColorPiece(legalMoves, color);
     }
     //package private
+    //FIXME ChessBoard's board incorrectly shows pieces at positions when they don't exist
     HashSet<String> removePositionsWithSameColorPiece(HashSet<String> legalMoves, Color origionalColor) {
         HashSet<String> newSet = new HashSet<>();
          for(String move: legalMoves) {
