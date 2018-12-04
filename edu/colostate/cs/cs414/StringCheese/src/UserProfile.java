@@ -11,6 +11,7 @@ public class UserProfile {
     private String userName;
     private int gamesPlayed, gamesWon, gamesLost;
     private double winPercentage;
+
     //stats
     public UserProfile(String userName){
         this.userName =userName;
@@ -67,7 +68,7 @@ public class UserProfile {
         gamesWon = getResult(query);
     }
     private void setTotalGamesLost(){ gamesLost = gamesPlayed - gamesWon; }
-    private void setWinPercentage(){ winPercentage = gamesWon/gamesPlayed * 100; }
+    private void setWinPercentage(){ winPercentage = (double)gamesWon/ (double) gamesPlayed * 100; }
     private ResultSet queryDatabase(String query){
         ResultSet rs = null;
         try{

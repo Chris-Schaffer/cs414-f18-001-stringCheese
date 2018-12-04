@@ -1,17 +1,13 @@
 package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 
-import edu.colostate.cs.cs414.StringCheese.src.Game;
 import edu.colostate.cs.cs414.StringCheese.src.GameFacade;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Arrays;
 import java.util.HashSet;
 
 public class UIController implements ActionListener, MouseListener {
@@ -103,6 +99,8 @@ public class UIController implements ActionListener, MouseListener {
 
 	private void profile() {
 	    window.getContentPane().removeAll();
+		gameFacade.resetUserProfile();
+	    profilePanel.setUpProfile();
 	    window.add(profilePanel);
         window.revalidate();
         window.repaint();

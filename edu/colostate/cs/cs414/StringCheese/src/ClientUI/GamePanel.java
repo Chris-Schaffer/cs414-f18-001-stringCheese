@@ -50,6 +50,15 @@ public class GamePanel extends MainPanel{
 	}
 
     public void addJoinGame(JoinGameController joinGameController){
+		Component[] comps = this.getComponents();
+		for(Component comp : comps){
+			if(comp == joinGameId){
+				this.remove(activeGames);
+			}
+			if(comp == joinGameButton){
+				this.remove(joinGameButton);
+			}
+		}
 		this.joinGameController = joinGameController;
 		joinGameId = new JTextField("Game ID:",10);
 		this.add(joinGameId,BorderLayout.PAGE_END);
