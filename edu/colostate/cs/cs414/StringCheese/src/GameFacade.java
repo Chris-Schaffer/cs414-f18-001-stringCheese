@@ -75,6 +75,10 @@ public class GameFacade {
         return game.move(from,to);
         //game.updateDBGameState();
     }
+    public void updateDBGameState()
+    {
+        game.updateDBGameState();
+    }
 
 
     public User getUser(){

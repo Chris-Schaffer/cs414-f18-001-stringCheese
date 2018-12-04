@@ -64,7 +64,7 @@ public class ChessBoard implements Serializable {
         if(piece.getColor() == turn){
             moves = piece.legalMoves();
             selectedPiece = piece;
-            moves = removeKingUnderAttack(moves);
+           // moves = removeKingUnderAttack(moves);
             selectedPieceMoves = moves;
         }
         //if whites turn then call legalMoves() on all black pieces and see if they contain the square that white king is on

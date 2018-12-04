@@ -250,6 +250,10 @@ public class UIController implements ActionListener, MouseListener {
 					choice = "Rook";
 				}
 				gameFacade.promote(position,choice);
+				String str=gameFacade.getType(position);
+				gamePanel.drawPiece(position,str);
+				gameFacade.updateDBGameState();
+
 			}
 
 		}
