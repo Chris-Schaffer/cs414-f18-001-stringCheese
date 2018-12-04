@@ -86,11 +86,11 @@ public class User {
         try {
             conn = DBConnection.open();
             stmt = conn.createStatement();
-            String query = "UPDATE user SET is_active=0 WHERE name='"+name+"'";
+            String query = "DELETE from user WHERE name='"+name+"'";
             numRecordsAffected = stmt.executeUpdate(query);
         }catch(SQLException se){
             se.printStackTrace();
-            System.exit(1);
+           // System.exit(1);
         }
         return numRecordsAffected==1;
     }
@@ -179,7 +179,7 @@ public class User {
             //DBConnection.close(conn);
         }catch(SQLException se){
             se.printStackTrace();
-            System.exit(1);
+           // System.exit(1);
         }
         return rs;
     }
@@ -222,7 +222,7 @@ public class User {
         }
         return new byte[0];
     }
-    private static byte[] generateSalt()  {
+    public static byte[] generateSalt()  {
         // VERY important to use SecureRandom instead of just Random
         SecureRandom random = null;
         try {

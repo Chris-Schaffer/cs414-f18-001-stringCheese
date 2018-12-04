@@ -269,8 +269,7 @@ public class ChessBoard implements Serializable {
                 position.charAt(0) < 'a' || position.charAt(0) > 'g' ||
                 position.charAt(1) < '1' || position.charAt(1) > '7'){
 
-            System.out.println("Position " + position + " is invalid in checkValidPosition()");
-            System.exit(1);
+
         }
     }
 

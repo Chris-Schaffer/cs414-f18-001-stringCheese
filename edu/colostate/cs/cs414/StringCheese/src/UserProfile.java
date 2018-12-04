@@ -77,7 +77,7 @@ public class UserProfile {
             DBConnection.close(conn);
         }catch(SQLException se){
             se.printStackTrace();
-            System.exit(1);
+          //  System.exit(1);
         }
         return rs;
     }

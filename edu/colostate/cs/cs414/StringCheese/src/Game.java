@@ -65,7 +65,7 @@ public class Game implements Serializable {
     public boolean joinGame(int gameID, String invitee){
         //check if game has invitee before joining
         if(isGameStarted(gameID)){
-            System.out.println("This game has already started");
+           System.out.println("This game has already started");
             return false;
         }
         boolean isUpdated =  updateDatabase("UPDATE game SET invitee='"+ invitee +"' WHERE game_id="+gameID);
@@ -103,7 +103,9 @@ public class Game implements Serializable {
                 return invitee != null;
             }else{
                 System.out.println("Something went wrong, resultSet is empty");
-                System.exit(1);
+                return false;
+                //System.exit(1);
+
             }
         }catch(SQLException se){
             se.printStackTrace();
@@ -150,7 +152,8 @@ public class Game implements Serializable {
             setGameID(playerOne);
         }else{
             System.out.println("Something went wrong in creating game");
-            System.exit(1);
+           // System.exit(1);
+            return -1;
         }
         return gameID;
 
@@ -167,10 +170,10 @@ public class Game implements Serializable {
             }else{
                 //result set was null or empty
                 System.out.println("Query failed in setGameID");
-                System.exit(1);
+               // System.exit(1);
             }
         }catch(SQLException se){
-            System.out.println("Error in query");
+           // System.out.println("Error in query");
             se.printStackTrace();
         }
     }
@@ -291,6 +294,7 @@ public class Game implements Serializable {
 
     public static void main(String args[]){
         //test checkGameStateUpdated()
+        //fixme putme as in testing 
         User user = new User("chris2","soccer.schaffer@yahoo.com");
         Game game = new Game(user.getName());
         /*

@@ -50,6 +50,11 @@ public class GameFacade {
     public boolean sendInvitation(ArrayList<User> users){
         //first creates a game with host as user then creates invitation
         //then sends invitation
+        int id=createGame(user.getName());
+        if(id<0)
+        {
+            return false;
+        }
         invitation = new Invitation(user.getName(),createGame(user.getName()));
         return invitation.sendInvitation(users);
     }
@@ -69,6 +74,10 @@ public class GameFacade {
     public String move(String from, String to) {
         return game.move(from,to);
         //game.updateDBGameState();
+    }
+    public void updateDBGameState()
+    {
+        game.updateDBGameState();
     }
 
 

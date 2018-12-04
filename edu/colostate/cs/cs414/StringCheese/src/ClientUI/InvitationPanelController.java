@@ -68,13 +68,13 @@ public class InvitationPanelController implements ActionListener, ItemListener {
         JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
         if(e.getStateChange() == ItemEvent.SELECTED){
             addedUsernameInvites.add(item.getName());
-            System.out.println(item.getName());
-            System.out.println(addedUsernameInvites.size());
+          //  System.out.println(item.getName());
+            //System.out.println(addedUsernameInvites.size());
         }
         else if(e.getStateChange() == ItemEvent.DESELECTED){
             addedUsernameInvites.remove(item.getName());
-            System.out.println(item.getName());
-            System.out.println(addedUsernameInvites.size());
+           // System.out.println(item.getName());
+            //System.out.println(addedUsernameInvites.size());
         }
     }
 

@@ -7,7 +7,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,17 +59,12 @@ class UserTest {
     }
 
     @Test
-    void deactivate() {
+    void deactivate() throws SQLException, IOException {
         //fixme required testing
-      /*  ArrayList<User> users=U.listRegisteredUsers();
+        ArrayList<User> users=U.listRegisteredUsers();
         U=new User("zaira");
-        ArrayList<String> uname=new ArrayList<>();
-        for(User U:users)
-        {
-            uname.add(U.getName());
-        }
-        assertTrue(uname.contains(U.getName()));
-        assertTrue(U.deactivate());*/
+        assertTrue(U.deactivate());
+      assertTrue( User.registerUser("zaira","zaira@google.com","zaira123"));
 
     }
 
@@ -78,7 +79,8 @@ class UserTest {
     @Test
     void registerUser() {
         //fixme need to trst this
-    //    assertTrue(User.registerUser("meetkumar","meet@yahoo.com","meet123"));
+
+       assertTrue(User.registerUser("meetsavaliya","meet@ymail.com","meet123"));
 
 
 

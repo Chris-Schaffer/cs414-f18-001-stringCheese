@@ -100,7 +100,7 @@ public class GamePanel extends MainPanel{
 		}
 	}
 
-	private void drawPiece(String position, String type) {
+	public void drawPiece(String position, String type) {
 		JPanel tile = gameTiles[getRow(position)][getCol(position)];
 		JLabel imageLabel = new JLabel();
 		ImageIcon piece = null;

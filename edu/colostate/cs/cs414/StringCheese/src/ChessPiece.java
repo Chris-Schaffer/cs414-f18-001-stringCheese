@@ -28,8 +28,8 @@ public abstract class ChessPiece implements Serializable {
         if(position.charAt(0) < 'a' || position.charAt(0) > 'h' ||
            position.charAt(1) < '1' || position.charAt(1) > '8' ||
                 position.length() != 2){
-            System.out.println("Position " + position + " is not a valid position in setPosition()");
-            System.exit(1);
+           // System.out.println("Position " + position + " is not a valid position in setPosition()");
+         //   System.exit(1);
             //throw new IllegalPositionException("");
         }
         //row = position.charAt(0) - 'a';
@@ -60,8 +60,8 @@ public abstract class ChessPiece implements Serializable {
                 newPos = outerRing.get(index + 1);
             }
         }else {
-            System.out.println("Position " + position + " not valid. getNextForward()");
-            System.exit(1);
+          //  System.out.println("Position " + position + " not valid. getNextForward()");
+            //System.exit(1);
         }
         moves.add(newPos);
         return removePositionsWithSameColorPiece(moves, color);
@@ -92,8 +92,8 @@ public abstract class ChessPiece implements Serializable {
             }
         }else {
             //throw new IllegalPositionException("Position given not valid");
-            System.out.println("Position " + position + " is invalid in getPrevBackward()");
-            System.exit(1);
+         //   System.out.println("Position " + position + " is invalid in getPrevBackward()");
+           // System.exit(1);
         }
         legalMoves.add(newPos);
         return removePositionsWithSameColorPiece(legalMoves, color);
@@ -224,8 +224,8 @@ public abstract class ChessPiece implements Serializable {
             return removePositionsWithSameColorPiece(legalMoves,color);
         }
         else{
-            System.out.println("Position " + position + " is invalid in getSideways()");
-            System.exit(1);
+          //  System.out.println("Position " + position + " is invalid in getSideways()");
+            //System.exit(1);
             return legalMoves;
         }
     }
