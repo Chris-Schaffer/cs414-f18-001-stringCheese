@@ -243,11 +243,11 @@ public class Game implements Serializable {
     public ChessBoard getBoard(){return board;}
 
     public HashSet<String> getValidMoves(String position, String name) {
+        if(board.getPiece(position) == null){ return new HashSet<>(); }
+
         ChessPiece.Color myColor;
         if(name.equals(host)) { myColor= ChessPiece.Color.White; }
         else { myColor= ChessPiece.Color.Black; }
-
-        if(board.getPiece(position) == null){ return new HashSet<>(); }
 
         if(myColor.equals(board.getPiece(position).getColor())){
             return board.selectPiece(position);
