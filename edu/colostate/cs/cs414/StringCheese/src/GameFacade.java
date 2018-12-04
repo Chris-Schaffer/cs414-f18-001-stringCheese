@@ -101,4 +101,8 @@ public class GameFacade {
         return game.checkGameStateUpdated();
 
     }
+
+    public void promote(String position, String choice) {
+        game.promote(position,choice);
+    }
 }
