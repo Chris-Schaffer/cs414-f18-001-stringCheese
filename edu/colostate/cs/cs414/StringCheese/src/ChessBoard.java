@@ -80,8 +80,10 @@ public class ChessBoard implements Serializable {
         HashSet<String> newSet = new HashSet<>();
         String currentPos = selectedPiece.getPosition();
         String kingPos = getSameColorKingPosition();
+        ChessPiece king = getPiece(kingPos);
         ChessPiece removedPiece;
-
+        //if king is not under attack don't bother checking if a move removes it from check
+        if(!((King) king).isUnderAttack()){return moves;}
         //loop through legal moves and remove any that put the king into check
         for(String newPos: moves) {
             //fixme NEED TO CHANGE FROM SETPOSITION TO PLACEPIECE(). FIRST NEED TO SAVE the piece at the new Location
@@ -154,9 +156,7 @@ public class ChessBoard implements Serializable {
             int col = getCol(newPosition);
             int oldRow = getRow(oldPosition);
             int oldCol = getCol(oldPosition);
-            //board[oldRow][oldCol] = null;
             board[row][col] = piece;
-
         }
         return false;
     }
