@@ -16,7 +16,7 @@ public class LoginPanel extends JPanel{
 		title.setFont(new Font(Font.SANS_SERIF, Font.BOLD,50));
 		this.add(title,BorderLayout.PAGE_START);
 
-		JLabel loginInfo = new JLabel("Enter Your email and password below and click login",JLabel.CENTER);
+		JLabel loginInfo = new JLabel("Enter your name and password below and click login",JLabel.CENTER);
 		loginInfo.setPreferredSize(new Dimension(2000,200));
 		loginInfo.setFont(new Font(Font.SANS_SERIF, Font.BOLD,20));
 		this.add(loginInfo,BorderLayout.LINE_START);

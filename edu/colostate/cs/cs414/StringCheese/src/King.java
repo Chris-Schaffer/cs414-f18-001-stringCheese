@@ -29,7 +29,7 @@ public class King extends ChessPiece implements Serializable {
         //Check if the king is under attack
 
         /*
-        if (isUnderAttack()) {
+        if (isInCheck()) {
             //If so, choose king to move or move another piece to let King not be attacked, otherwise it is checkmate.
             // (The same logic as below, find a movable point, so that the moved king is not attacked. Another piece moves beyond the scope of this function)
 
@@ -39,7 +39,7 @@ public class King extends ChessPiece implements Serializable {
             for (String move : legalMoves) {
                 //pseudo move king then see if in check
                 setPosition(move);
-                if (!isUnderAttack()) {
+                if (!isInCheck()) {
                     res.add(move);
                 }
             }
@@ -69,7 +69,7 @@ public class King extends ChessPiece implements Serializable {
         return legalMoves;
     }
 
-    public boolean isUnderAttack(){
+    public boolean isInCheck(){
         String position = getPosition();
         for(String pos: board.innerRing){
             ChessPiece p = board.getPiece(pos);
