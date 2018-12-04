@@ -9,6 +9,7 @@ public class GameFacade {
     private User user;
     private Game game;
     private Invitation invitation;
+    private UserProfile userProfile;
 
     public GameFacade(){
         //remove these as board is set upon login()
@@ -21,6 +22,7 @@ public class GameFacade {
         if(User.login(name,password)){
             user = new User(name);
             game = new Game(user.getName());
+            userProfile = new UserProfile(user.getName());
             //board = game.getBoard();
             return true;
         }
@@ -113,5 +115,37 @@ public class GameFacade {
 
     public void promote(String position, String choice) {
         game.promote(position,choice);
+    }
+
+    public String getUserName() {
+        return user.getName();
+    }
+
+    public String getGamesPlayed() {
+        int played = userProfile.getGamesPlayed();
+        return "Played: " + played + "\n";
+    }
+
+    public String getGamesWon() {
+        int won = userProfile.getGamesWon();
+        return "won: " + won + "\n";
+    }
+
+    public String getGamesLost() {
+        int lost = userProfile.getGamesLost();
+        return "lost: " + lost + "\n";
+    }
+
+    public String getWinPercentage() {
+        double percentage = userProfile.getWinPercentage();
+        return "Win Percentage: %" + percentage + "\n";
+    }
+
+    public void resetUserProfile() {
+        this.userProfile = new UserProfile(user.getName());
+    }
+
+    public void setUserProfile(String userName) {
+        userProfile = new UserProfile(userName);
     }
 }

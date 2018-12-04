@@ -3,45 +3,53 @@ package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class ProfilePanel extends MainPanel {
     GridLayout layout = new GridLayout(3,4);
-    ProfileController profileController;
-    UIController controller;
+    private ProfileController profileController;
+   private UIController controller;
+   private String userName;
+   private JLabel profileName;
+   private JPanel winData;
+   private JComboBox<String> listActiveUsers;
 
     public ProfilePanel(ProfileController profileController,UIController controller){
         super(controller);
-        this.setLayout(new BorderLayout());
         this.profileController = profileController;
         this.controller = controller;
-        /*
-        JPanel menuArea = new JPanel(new GridLayout(4,1));
-        menuArea.setSize(200,90);
-        menuArea.setMaximumSize(new Dimension(200,300));
 
-        JButton profile = new JButton("Profile");
-        profile.setMaximumSize(new Dimension(200,40));
-        profile.addActionListener(controller);
-        menuArea.add(profile);
+    }
 
-        JButton game = new JButton("Games");
-        game.setMaximumSize(new Dimension(200,30));
-        game.addActionListener(controller);
-        menuArea.add(game);
+    public void setUpProfile(){
+        Component[] comps = this.getComponents();
+        for(Component comp : comps){
+            if(comp == profileName){
+                this.remove(profileName);
+            }
+            else if(comp == listActiveUsers){
+                this.remove(listActiveUsers);
+            }
+            else if(comp == winData){
+                winData.removeAll();
+                this.remove(winData);
+            }
+        }
+        userName = profileController.getUserName();
+        profileName = new JLabel("Profile: " + userName);
+        profileName.setFont(new Font(Font.SANS_SERIF,Font.BOLD,75));
+        this.add(profileName);
 
-        JButton invitation = new JButton("Send Invitation/Create Game");
-        invitation.setMaximumSize(new Dimension(200,30));
-        invitation.addActionListener(controller);
-        menuArea.add(invitation);
+        winData = new JPanel(new GridLayout(5,1));
+        winData.add(new JLabel("GameData: "));
+        winData.add(new JLabel(profileController.getGamesPlayed()));
+        winData.add(new JLabel(profileController.getGamesWon()));
+        winData.add(new JLabel(profileController.getGamesLost()));
+        winData.add(new JLabel(profileController.getWinPercentage()));
+        this.add(winData);
 
-
-        JButton logout = new JButton("Log Out");
-        logout.setMaximumSize(new Dimension(200,30));
-        logout.addActionListener(this.controller);
-        menuArea.add(logout);
-
-        this.add(menuArea,BorderLayout.LINE_START);
-        */
-
+        listActiveUsers = new JComboBox<>(profileController.getRegisteredUsers());
+        listActiveUsers.addItemListener(profileController);
+        this.add(listActiveUsers);
     }
 }
