@@ -264,13 +264,8 @@ public class Game implements Serializable {
         //game is over
         if(message.equalsIgnoreCase("Checkmate") || message.equalsIgnoreCase("Winner")){
             //if white won then host is winner
-            if(board.getPiece(to).getColor() == ChessPiece.Color.White){
-                result = host;
-            }
-            //else winner was invitee
-            else{
-                result = invitee;
-            }
+            if(board.getPiece(to).getColor() == ChessPiece.Color.White){ result = host; }
+            else{ result = invitee; }
             endGame();
         }
         return message;

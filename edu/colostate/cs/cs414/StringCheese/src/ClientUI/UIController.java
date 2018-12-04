@@ -255,6 +255,11 @@ public class UIController implements ActionListener, MouseListener {
 				gameFacade.updateDBGameState();
 
 			}
+			else if(specialMove.equalsIgnoreCase("winner") || specialMove.equalsIgnoreCase("checkmate")){
+				MainWindow.infoBox("Congratulations, You Won!\n" +
+						"Head over to your profile page to see your latest results.\n" +
+						"You can create a new game to the left or click the games button to play any remaining games.",specialMove);
+			}
 
 		}
 	}
