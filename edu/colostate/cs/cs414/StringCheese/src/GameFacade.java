@@ -5,17 +5,13 @@ import java.util.HashSet;
 
 public class GameFacade {
 
-    //private ChessBoard board;   //should access board in the game object, not create a new one
     private User user;
     private Game game;
     private Invitation invitation;
     private UserProfile userProfile;
 
     public GameFacade(){
-        //remove these as board is set upon login()
-        //currently needed when skipping login i.e. debugging
-        //board = new ChessBoard();
-        //board.initialize();
+
     }
 
     public boolean login(String name, String password){
@@ -23,7 +19,6 @@ public class GameFacade {
             user = new User(name);
             game = new Game(user.getName());
             userProfile = new UserProfile(user.getName());
-            //board = game.getBoard();
             return true;
         }
         return false;
@@ -53,10 +48,7 @@ public class GameFacade {
         //first creates a game with host as user then creates invitation
         //then sends invitation
         int id=createGame(user.getName());
-        if(id<0)
-        {
-            return false;
-        }
+        if(id<0) { return false; }
         invitation = new Invitation(user.getName(),createGame(user.getName()));
         return invitation.sendInvitation(users);
     }
@@ -86,7 +78,7 @@ public class GameFacade {
     public User getUser(){
         return user;
     }
-    //fixme test
+
     /*
     at the end of a move the method updateDBGameState() is called
     this serializes the game object and adds it along w/ current timestamp to DB
@@ -98,7 +90,6 @@ public class GameFacade {
             return true;
         }
         return false;
-        //repaint board
     }
 
     public void setGame(Game game){
