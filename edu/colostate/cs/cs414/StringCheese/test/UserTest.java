@@ -3,6 +3,7 @@ package edu.colostate.cs.cs414.StringCheese.test;
 import edu.colostate.cs.cs414.StringCheese.src.DBConnection;
 import edu.colostate.cs.cs414.StringCheese.src.Game;
 import edu.colostate.cs.cs414.StringCheese.src.User;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,10 +25,6 @@ class UserTest {
     @BeforeEach
     void setUp() {
         U=new User("meetkumar");
-    }
-
-    @AfterEach
-    void tearDown() {
     }
 
     @Test
@@ -63,15 +60,17 @@ class UserTest {
         //fixme required testing
         ArrayList<User> users=U.listRegisteredUsers();
         U=new User("zaira");
+        try {
+            User.registerUser("zaira", "zaira@google.com", "zaira123");
+        }catch (Exception e){}
         assertTrue(U.deactivate());
-      assertTrue( User.registerUser("zaira","zaira@google.com","zaira123"));
 
     }
 
     @Test
     void login() {
-        String uname="meetkumar";
-        String upass="meet@12345";
+        String uname="chris";
+        String upass="123456";
         assertTrue(User.login(uname,upass));
 
     }
@@ -79,14 +78,12 @@ class UserTest {
     @Test
     void registerUser() {
         //fixme need to trst this
-
-       assertTrue(User.registerUser("meetsavaliya","meet@ymail.com","meet123"));
-
-
-
+        User user = new User("meetsavaliya2");
+        try{
+            user.deactivate();
+        }catch(Exception e){}
+        assertTrue(User.registerUser("meetsavaliya2","meet2@ymail.com","meet123"));
+        U.deactivate();
     }
 
-    @Test
-    void main() {
-    }
 }

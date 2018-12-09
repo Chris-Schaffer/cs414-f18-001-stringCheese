@@ -11,8 +11,7 @@ import java.util.HashSet;
 
 import static edu.colostate.cs.cs414.StringCheese.src.ChessPiece.Color.Black;
 import static edu.colostate.cs.cs414.StringCheese.src.ChessPiece.Color.White;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ChessBoardTest extends ChessSuite {
 
@@ -91,21 +90,21 @@ class ChessBoardTest extends ChessSuite {
         board.initialize();
         board.selectPiece("c1");
         board.move("c1","b1");
-        board.selectPiece("c2");
-        board.move("c2","b2");
+        board.selectPiece("e6");
+        board.move("e6","f5");
         board.selectPiece("e1");
         board.move("e1","f1");
-        board.selectPiece("d1");
-        board.move("d1","b3");
+        board.selectPiece("e7");
+        board.move("e7","f7");
         board.selectPiece("d2");
         board.move("d2","d1");
-        ArrayList<String> position=new ArrayList<>(Arrays.asList("b1","b2","f1","b3","d1"));
-        //System.out.println(board);
+        ArrayList<String> position=new ArrayList<>(Arrays.asList("b1","f5","f1","f7","d1"));
+        System.out.println(board);
         ChessPiece piece;
         for(String pos:position)
         {
             piece=board.getPiece(pos);
-            assertTrue(piece!=null);
+            assertNotNull(piece);
         }
 
     }

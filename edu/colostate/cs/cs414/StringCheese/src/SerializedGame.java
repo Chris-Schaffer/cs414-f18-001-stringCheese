@@ -26,8 +26,6 @@ public class SerializedGame {
                 ResultSet rs = ptst.executeQuery();
                 //if game not already in DB insert it
                 if (!rs.next()) {
-                    //fixme when inserting/updating add the current timestamp
-                    //fixme need to test
                     ptst = con.prepareStatement("insert into gameserialized values(?,?,?)");
                     ptst.setInt(1, tmp.getGameID());
                     ptst.setBytes(2, data);

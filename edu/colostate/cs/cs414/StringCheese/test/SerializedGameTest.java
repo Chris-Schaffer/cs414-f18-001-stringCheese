@@ -11,20 +11,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SerializedGameTest {
 
-    Game g=new Game(100,"meet","chris",new Timestamp(System.currentTimeMillis()));
-
+    Game g=new Game(3,"meet","chris",new Timestamp(System.currentTimeMillis()));
+    DBConnection connection = new DBConnection();
     SerializedGame sg=new SerializedGame();
     @Test
     void write() throws SQLException {
-        g.createGame("chris");
-      //  String str=g.move("c1","b1");
-        sg.write(new DBConnection(),g);
-
+        sg.write(connection,g);
     }
 
     @Test
     void read() {
-        Game g=sg.read(new DBConnection(),100);
-        assertTrue(g!=null);
+        g=sg.read(connection,3);
+        assertNotNull(g);
     }
 }
