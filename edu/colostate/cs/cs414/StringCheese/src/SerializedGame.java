@@ -85,19 +85,5 @@ public class SerializedGame {
         }
         return meet;
     }
-
-    public static void main(String args[]) throws IOException, SQLException {
-        SerializedGame sg = new SerializedGame();
-        DBConnection connection = new DBConnection();
-        //Game game = sg.read(connection,1);
-        //game.board = new ChessBoard();
-       // game.board.initialize();
-       // game.board.selectPiece("c2");
-      //  game.board.move("c2","b2");
-     //   sg.write(connection,game);
-      //  Game game1 = sg.read(connection,1);
-        //System.out.println(game.board);
-
-    }
 }
 

@@ -33,7 +33,6 @@ public class Game implements Serializable {
     public Game(String name){
         this.name = name;
         gameID = -1;
-        //host = "chris2";
         board = new ChessBoard();
         board.initialize();
         this.lastUpdated = new Timestamp(System.currentTimeMillis());
@@ -50,18 +49,8 @@ public class Game implements Serializable {
         board.setWhitePlayer(host);
         this.whitePlayer = host;
         this.lastUpdated = startTime;
-
-
     }
 
-
-    //FIXME NEED TO TEST
-    //NOTE: flow of joinGame()
-    //GameFacade
-    //ArrayList<Game> games = new ArrayList<>();
-    //Game game = new Game(user);
-    //game.listActiveGames();
-    //game.joinGame(gameID);
     public boolean joinGame(int gameID, String invitee){
         //check if game has invitee before joining
         if(isGameStarted(gameID)){
@@ -74,7 +63,6 @@ public class Game implements Serializable {
     }
 
     private void createSerializesGameObject(int gameID, String invitee) {
-
         String query = "select * from game where game_id=" + gameID;
         ResultSet rs = queryDatabase(query);
         String host;
@@ -87,9 +75,7 @@ public class Game implements Serializable {
                 SerializedGame sg = new SerializedGame();
                 sg.write(new DBConnection(),game);
             }
-
         }catch (SQLException e){
-
         }
     }
 
@@ -104,12 +90,9 @@ public class Game implements Serializable {
             }else{
                 System.out.println("Something went wrong, resultSet is empty");
                 return false;
-                //System.exit(1);
-
             }
         }catch(SQLException se){
             se.printStackTrace();
-            System.exit(1);
         }
         return true;
     }
@@ -121,6 +104,7 @@ public class Game implements Serializable {
                 +opponent+"' WHERE game_id='"+gameID+"'";
         return updateDatabase(query);
     }
+
     //quitGame() helper
     private String getOpponent(String username){
         String query = "SELECT host, invitee FROM game WHERE game_id='"+gameID+"'";
@@ -139,7 +123,6 @@ public class Game implements Serializable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.exit(1);
         }
         return opponent;
     }
@@ -152,12 +135,12 @@ public class Game implements Serializable {
             setGameID(playerOne);
         }else{
             System.out.println("Something went wrong in creating game");
-           // System.exit(1);
             return -1;
         }
         return gameID;
 
     }
+
     //createGame() helper function
     private void setGameID(String playerOne) {
         //get gameID of newest game started by playerOne - called from createGame()
@@ -170,14 +153,12 @@ public class Game implements Serializable {
             }else{
                 //result set was null or empty
                 System.out.println("Query failed in setGameID");
-               // System.exit(1);
             }
         }catch(SQLException se){
-           // System.out.println("Error in query");
+            System.out.println("Error in query");
             se.printStackTrace();
         }
     }
-
 
     //query DB with a query that does not require a
     //returned result. method returns true if the
@@ -190,7 +171,6 @@ public class Game implements Serializable {
             numRecordsAffected = stmt.executeUpdate(query);
         }catch(SQLException se){
             se.printStackTrace();
-            System.exit(1);
         }
         return numRecordsAffected>=1;
     }
@@ -209,7 +189,6 @@ public class Game implements Serializable {
         return rs;
     }
 
-
     public Timestamp getStartTime() {
         return startTime;
     }
@@ -223,7 +202,6 @@ public class Game implements Serializable {
     }
 
     public int  getGameID() {
-        //FIXME only works if createGame was called otherwise returns -1.
         return gameID;
     }
 
@@ -231,9 +209,7 @@ public class Game implements Serializable {
         this.gameID = gameID;
     }
 
-    public String getHost() {
-        return host;
-    }
+    public String getHost() { return host; }
 
     public String getInvitee() {
         return invitee;
@@ -276,7 +252,6 @@ public class Game implements Serializable {
         return updateDatabase(query);
     }
 
-
     public void updateDBGameState() {
         SerializedGame sg = new SerializedGame();
         sg.write(new DBConnection(),this);
@@ -290,8 +265,6 @@ public class Game implements Serializable {
 
     //checks DB to see if last time serialized object was updated is after this object was created
     //returns true if DB has newer version of game object
-    //fixme NOTE: CHANGED FROM TIME.AFTER(LASTUPDATED). NOT SURE IF THIS COULD CAUSE BUGS
-    //.AFTER() DID NOT CORRECTLY RETURN TRUE
     public boolean checkGameStateUpdated(){
         String query = "SELECT last_updated FROM gameserialized WHERE game_id="+gameID;
         ResultSet rs = queryDatabase(query);
@@ -314,39 +287,5 @@ public class Game implements Serializable {
         else{
             board.placePiece(new Bishop(board,color),position);
         }
-    }
-
-
-
-    public static void main(String args[]){
-        //test checkGameStateUpdated()
-        //fixme putme as in testing
-        User user = new User("chris2","soccer.schaffer@yahoo.com");
-        Game game = new Game(user.getName());
-        /*
-        int gameId= game.createGame(user.getName());
-        ArrayList<User> users = new ArrayList<>();
-        users.add(user);
-        User.registerUser("chris3","soccer.schaffer@yahoo.com","123456");
-
-        Invitation invitation = new Invitation("chris2",gameId);
-        invitation.sendInvitation(users);
-           */
-        game.getValidMoves("c2","chris2");
-        game.move("c2","b3");
-        System.out.println(game.getBoard().toString());
-
-        User user1 = new User("chris3");
-        Game game1 = new Game(user1.getName());
-        System.out.println(game1.getBoard().toString());
-
-        boolean isUpdated = game1.checkGameStateUpdated();
-        System.out.println(isUpdated);
-        if(isUpdated){
-            game1 = game.getUpdatedGameState();
-        }
-        game1.getValidMoves("e6","chris3");
-        game1.move("e6","f6");
-        System.out.println(game1.board);
     }
 }

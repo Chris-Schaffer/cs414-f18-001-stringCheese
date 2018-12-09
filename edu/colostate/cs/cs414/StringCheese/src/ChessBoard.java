@@ -116,8 +116,6 @@ public class ChessBoard implements Serializable {
         return newSet;
     }
 
-
-
     //returns true if your king is in check
     private boolean kingInCheck() {
         String kingPos = getSameColorKingPosition();
