@@ -96,12 +96,9 @@ public class GameFacade {
         this.game = game;
     }
 
-
-
-    //returns true if DB has newer version of gamestate
+    //returns true if DB has newer version of game state
     private boolean checkGameStateUpdated(){
         return game.checkGameStateUpdated();
-
     }
 
     public void promote(String position, String choice) {
