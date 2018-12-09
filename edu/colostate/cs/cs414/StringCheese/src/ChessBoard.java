@@ -46,14 +46,11 @@ public class ChessBoard implements Serializable {
 		placePiece( new Pawn(this, ChessPiece.Color.Black),"e6");
 		placePiece( new Pawn(this, ChessPiece.Color.Black),"e7");
 
-        //placePiece( new Pawn(this, ChessPiece.Color.Black),"e1");
-        //placePiece( new Pawn(this, ChessPiece.Color.White),"c7");
     }
 
     //This method is used to select a piece on the board and returns valid moves for that piece
     // The position is represented as a two-character string (e.g., e8). The first letter is in lowercase (a..h) and the second letter is a
     // digit (1..8).
-    //FIXME CURRENTLY HAS BUG WHEN SWITCHING PIECES MULTIPLE TIMES THE KING NO LONGER SHOWS ALL POSSIBLE MOVES
     public HashSet<String> selectPiece(String position){
         HashSet<String> moves = new HashSet<>();
         ChessPiece piece = getPiece(position);
@@ -64,7 +61,7 @@ public class ChessBoard implements Serializable {
             //if selected piece instanceof King you need to check that moving the king
             //does not put the king into check
             if(kingInCheck() || selectedPiece instanceof King) {
-                moves = removeKingInCheck(moves, selectedPiece);
+                moves = removeIllegalMoves(moves, selectedPiece);
             }
             selectedPieceMoves = moves;
         }
@@ -95,37 +92,21 @@ public class ChessBoard implements Serializable {
 
     //checks that moving a piece does not put your own king into check
     //if your king is in check then will only return moves that remove it from check
-    private HashSet<String> removeKingInCheck(HashSet<String> moves, ChessPiece piece) {
+    private HashSet<String> removeIllegalMoves(HashSet<String> moves, ChessPiece piece) {
         HashSet<String> newSet = new HashSet<>();
         String currentPos = piece.getPosition();
         ChessPiece removedPiece;
+        String kingPos = getKingPosition(piece);
 
-        if(piece instanceof King){
-            for(String newPos: moves) {
-                removedPiece = getPiece(newPos);
-                placePiece(piece,newPos);
-                placePiece(null,currentPos);
-                if( !(((King)piece).isInCheck()) ) { newSet.add(newPos); }
-                //move pieces back to original positions
-                placePiece(removedPiece,newPos);
-                placePiece(piece,currentPos);
-            }
-            return newSet;
-        }
-
-        String kingPos;
-        if(piece.getColor() == selectedPiece.getColor()) {
-            kingPos = getSameColorKingPosition();
-        }else{
-            kingPos = getOppositeColorKingPosition();
-        }
         //loop through legal moves and remove any that put the king into check
         for(String newPos: moves) {
             //pseudo place piece then check if opposite color pieces can attack it
             removedPiece = getPiece(newPos);
             placePiece(piece,newPos);
             placePiece(null,currentPos);
-            if (isMoveLegal(kingPos, piece.getColor())) {
+            if(piece instanceof King && !(((King) piece).isInCheck())) {
+                newSet.add(newPos);
+            }else if(isMoveLegal(kingPos, piece.getColor())){
                 newSet.add(newPos);
             }
             //move pieces back to original positions
@@ -134,6 +115,8 @@ public class ChessBoard implements Serializable {
         }
         return newSet;
     }
+
+
 
     //returns true if your king is in check
     private boolean kingInCheck() {
@@ -156,6 +139,16 @@ public class ChessBoard implements Serializable {
         return true;
     }
 
+    private String getKingPosition(ChessPiece piece) {
+        String kingPos;
+        if(piece.getColor() == selectedPiece.getColor()) {
+            kingPos = getSameColorKingPosition();
+        }else{
+            kingPos = getOppositeColorKingPosition();
+        }
+        return kingPos;
+    }
+
     //find king position of same color as selectedPiece
     private String getSameColorKingPosition() {
         String kingPos = "";
@@ -169,6 +162,7 @@ public class ChessBoard implements Serializable {
         }
         return kingPos;
     }
+
     //find king position of opposite color as selectedPiece
     private String getOppositeColorKingPosition(){
         String kingPos = "";
@@ -230,6 +224,7 @@ public class ChessBoard implements Serializable {
         King king = (King) getPiece(getOppositeColorKingPosition());
         return ( king.isInCheck() && hasNoValidMoves() );
     }
+
     // returns false if any piece of the opposite color has at least one legal move
     // returns true otherwise
     private boolean hasNoValidMoves(){
@@ -237,7 +232,7 @@ public class ChessBoard implements Serializable {
             for (int col = 0; col < 7; ++col) {
                 if (board[row][col] != null && board[row][col].getColor() != selectedPiece.getColor()) {
                     //sees if moving any piece of opposite color can get them out of check
-                    if (removeKingInCheck(board[row][col].legalMoves(), board[row][col]).size()>0) {
+                    if (removeIllegalMoves(board[row][col].legalMoves(), board[row][col]).size()>0) {
                         return false;
                     }
                 }
@@ -258,10 +253,9 @@ public class ChessBoard implements Serializable {
 
     public ArrayList<String> getOuterRing() { return outerRing; }
 
-    private int getRow(String position) {
-        return board[0].length - Character.getNumericValue(position.charAt(1));
-    }
+    private int getRow(String position) { return board[0].length - Character.getNumericValue(position.charAt(1)); }
     private int getCol(String position){ return position.charAt(0) - 'a'; }
+
     //Checks that position is a location on the board
     private void checkValidPosition(String position) {
         if(position.length() != 2 ||
