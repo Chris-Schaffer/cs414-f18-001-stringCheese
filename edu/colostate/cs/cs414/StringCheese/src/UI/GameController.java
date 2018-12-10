@@ -23,16 +23,21 @@ public class GameController implements ActionListener {
             String joinGameId = gamePanel.getJoinGameId().getText();
             //if(joinGameId.isEmpty()){return;}
             boolean gameJoined = gameFacade.joinGame(Integer.parseInt(joinGameId));
-            if(gameJoined){gamePanel.showSuccessMsg();}
-            else{gamePanel.showFailureMsg();}
+            if(gameJoined){gamePanel.showSuccessMsgJoinGame();}
+            else{gamePanel.showFailureMsgJoinGame();}
         }else if(e.getActionCommand().equalsIgnoreCase("Refresh")){
             gameFacade.loadGame();
             GamePanel gamePanel = (GamePanel) ((JButton)e.getSource()).getParent();
             gamePanel.displayState();
+        }else if(e.getActionCommand().equalsIgnoreCase("Quit Game")){
+            gameFacade.quitGame(gameFacade.getUserName());
+            gamePanel.showSuccessMsgQuitGame();
         }
     }
 
     public void setGamePanel(GamePanel panel){
         this.gamePanel =panel;
     }
+
+
 }

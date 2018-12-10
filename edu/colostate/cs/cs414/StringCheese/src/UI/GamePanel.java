@@ -14,7 +14,7 @@ public class GamePanel extends MainPanel{
 	private ActiveGamesController activeGamesController;
 	private GameController gameController;
 	private JTextField joinGameId;
-	private JButton joinGameButton, refreshButton;
+	private JButton joinGameButton, refreshButton, quitGameButton;
 	JPanel gameBoard;
 	JComboBox<String> activeGames;
 	private static final Color lightBrown = new Color(210,180,140);
@@ -73,9 +73,13 @@ public class GamePanel extends MainPanel{
         refreshButton = new JButton("Refresh");
         refreshButton.addActionListener(gameController);
         this.add(refreshButton,BorderLayout.SOUTH);
-
-
 	}
+
+	public void addQuitGameBtn(GameController gameController){
+	    quitGameButton = new JButton("Quit Game");
+	    quitGameButton.addActionListener(gameController);
+	    this.add(quitGameButton,BorderLayout.SOUTH);
+    }
 
     private void colorBoard() {
         for(int row = 0; row < 7;row++){
@@ -223,14 +227,19 @@ public class GamePanel extends MainPanel{
 
 	}
 
-	public void showSuccessMsg(){
+	public void showSuccessMsgJoinGame(){
 		MainWindow.infoBox("Joined Game!\n" +
 				"Press the game button to the left to reload page.", "");
 	}
 
-	public void showFailureMsg(){
+	public void showFailureMsgJoinGame(){
 		MainWindow.infoBox("Failure.\n" +
 				"It looks like someone else is playing this game.\n" +
 				"To create a game choose create game to the left.\n","");
 	}
+
+    public void showSuccessMsgQuitGame(){
+        MainWindow.infoBox("You have successfully quit the game.\n" +
+                "This game will be removed from you active games after clicking the game button to the left.","");
+    }
 }

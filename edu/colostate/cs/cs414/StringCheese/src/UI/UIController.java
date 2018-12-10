@@ -193,6 +193,7 @@ public class UIController implements ActionListener, MouseListener {
 		gamePanel.addActiveGames();
 		gamePanel.addJoinGame(gameController);
 		gamePanel.addRefreshBtn(gameController);
+		gamePanel.addQuitGameBtn(gameController);
 		invitationPanel.initializeMenu();
 		menuPanel = new MenuPanel(this);
 		if(panelType.equalsIgnoreCase("login")){
