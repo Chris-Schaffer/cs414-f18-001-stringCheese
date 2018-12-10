@@ -19,31 +19,33 @@ public class ActiveGamesController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-            JComboBox comboBox = (JComboBox) e.getSource();
-            String event = e.getActionCommand();
+        JComboBox comboBox = (JComboBox) e.getSource();
+        String event = e.getActionCommand();
 
-            if(event.equalsIgnoreCase("comboBoxChanged")){
-                String selected = (String) comboBox.getSelectedItem();
-                if(selected != null){
-                    int gameID = Integer.parseInt(selected);
+        if(event.equalsIgnoreCase("comboBoxChanged")){
+            String selected = (String) comboBox.getSelectedItem();
+            if(selected != null){
+                //int gameID = Integer.parseInt(selected);
 
-                    for(Game game: activeGames){
-                        if(game == null){
+                for(Game game: activeGames){
+                    if(game == null){
 
-                        }
-                        else{
-                            if(game.getGameID() == gameID){
-                                gameFacade.setGame(game);
-                                gameFacade.loadGame();
-                                GamePanel gamePanel = (GamePanel) comboBox.getParent();
-                                gamePanel.displayState();
-                            }
-
+                    }
+                    else{
+                        String identifier = game.getHost() + " vs " + game.getInvitee();
+                        if(identifier.equalsIgnoreCase(selected)){
+                            gameFacade.setGame(game);
+                            gameFacade.loadGame();
+                            GamePanel gamePanel = (GamePanel) comboBox.getParent();
+                            gamePanel.displayState();
                         }
                     }
+
                 }
             }
+        }
     }
+
 
     public ArrayList<String> populateActiveGames(){
          activeGames  =  gameFacade.listActiveGames();
