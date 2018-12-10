@@ -223,6 +223,7 @@ public class Game implements Serializable {
         if(myColor.equals(board.getPiece(position).getColor())){
             return board.selectPiece(position);
         }
+
         return new HashSet<String>();
     }
     public String getType(String position) { return board.getPieceType(position); }

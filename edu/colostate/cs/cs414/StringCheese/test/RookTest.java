@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 class RookTest extends ChessSuite {
     
@@ -76,6 +77,28 @@ class RookTest extends ChessSuite {
         HashSet<String> move= new HashSet<>();
         move=rook.legalMoves();
         assertTrue(move.contains("a7"));
+        assertTrue(move.contains("d7"));
+        assertTrue(move.contains("g7"));
+        assertFalse(move.contains("g6"));
+        //----------------
+        rook.setPosition("a4");
+
+        move= new HashSet<>();
+        move=rook.legalMoves();
+        assertTrue(move.contains("a7"));
+        assertTrue(move.contains("d7"));
+        assertTrue(move.contains("g7"));
+        assertFalse(move.contains("g6"));
+        //----------------
+        rook.setPosition("g7");
+
+        move= new HashSet<>();
+        move=rook.legalMoves();
+        assertTrue(move.contains("g1"));
+        assertTrue(move.contains("g3"));
+        assertTrue(move.contains("f1"));
+        assertTrue(move.contains("a1"));
+        assertFalse(move.contains("a2"));
 
     }
     @org.junit.jupiter.api.Test
