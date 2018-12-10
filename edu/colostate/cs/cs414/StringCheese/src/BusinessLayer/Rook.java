@@ -7,6 +7,10 @@ import java.util.Iterator;
 public class Rook extends ChessPiece {
 
     private HashSet<String> legalMoves;
+    HashSet<String> nextmove = new HashSet<String>();
+    HashSet<String> sidemove = new HashSet<String>();
+    HashSet<String> prevmove = new HashSet<String>();
+    String nxtpos="";
 
     public Rook(ChessBoard board, Color color) {
         super(board, color);
@@ -17,14 +21,12 @@ public class Rook extends ChessPiece {
         legalMoves.clear();
         String position = getPosition();
 
-        HashSet<String> nextmove = new HashSet<String>();
-        HashSet<String> sidemove = new HashSet<String>();
-        HashSet<String> prevmove = new HashSet<String>();
+
 
 
         if (board.outerRing.contains(position)) {
             int index = board.outerRing.indexOf(position);
-            String nxtpos = position;
+            nxtpos = position;
             // String sidepos=position;
             //try {
             prevmove = getPrevBackward(position, this.getColor());
@@ -42,20 +44,9 @@ public class Rook extends ChessPiece {
                     temp.add("e6");
                     temp.add("f6");
                     temp.add("g6");
-                    for(String moves:temp)
-                    {
-                        if(board.getPiece(moves)==null)
-                            sidemove.add(moves);
-                        else if(board.getPiece(moves).getColor()!=this.getColor())
-                        {
-                            sidemove.add(moves);
-                            break;
-                        }
-                        else
-                            break;
-                    }
-                  //  sidemove.addAll(temp);
 
+                  //  sidemove.addAll(temp);
+                    sidemove=outerRingValidSideMoves(temp);
                     legalMoves.addAll(sidemove);
                 } else {
                     //try {
@@ -68,7 +59,8 @@ public class Rook extends ChessPiece {
                     //}
                 }
                 int i = index;
-                while (i < 12) {
+                outterRingValidNextMoves(index,12);
+               /* while (i < 12) {
                     //try {
                     nextmove = getNextForward(nxtpos, this.getColor());
                     if (nextmove.isEmpty()) break;
@@ -81,7 +73,7 @@ public class Rook extends ChessPiece {
                     //    Logger. getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
                     //}
                     i++;
-                }
+                }*/
 
             }
             if (index >= 6 && index < 12) {
@@ -95,7 +87,8 @@ public class Rook extends ChessPiece {
                     temp.add("f2");
                     temp.add("f1");
                    // sidemove.addAll(temp);
-                    for(String moves:temp)
+                    //fixme I am in sideMoves down Method
+                   /* for(String moves:temp)
                     {
                         if(board.getPiece(moves)==null)
                             sidemove.add(moves);
@@ -106,7 +99,8 @@ public class Rook extends ChessPiece {
                         }
                         else
                             break;
-                    }
+                    }*/
+                    sidemove=outerRingValidSideMoves(temp);
                     legalMoves.addAll(sidemove);
                 } else {
                     //try {
@@ -119,7 +113,8 @@ public class Rook extends ChessPiece {
                     //    }
                 }
                 int i = index;
-                while (i < 18) {
+                outterRingValidNextMoves(index,18);
+              /*  while (i < 18) {
                     //try {
                     nextmove = getNextForward(nxtpos, this.getColor());
                     if (nextmove.isEmpty()) break;
@@ -132,7 +127,7 @@ public class Rook extends ChessPiece {
                     //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
                     //}
                     i++;
-                }
+                }*/
 
             }
             if (index >= 12 && index < 18) {
@@ -146,7 +141,8 @@ public class Rook extends ChessPiece {
                     temp.add("b2");
                     temp.add("a2");
                  //   sidemove.addAll(temp);
-                    for(String moves:temp)
+                    //fixme I am in sideMoves down Method
+                 /*   for(String moves:temp)
                     {
                         if(board.getPiece(moves)==null)
                             sidemove.add(moves);
@@ -157,7 +153,8 @@ public class Rook extends ChessPiece {
                         }
                         else
                             break;
-                    }
+                    }*/
+                    sidemove=outerRingValidSideMoves(temp);
                     legalMoves.addAll(sidemove);
                 } else {
                     //try {
@@ -174,7 +171,8 @@ public class Rook extends ChessPiece {
                     */
                 }
                 int i = index;
-                while (i < 24) {
+                outterRingValidNextMoves(index,24);
+              /*  while (i < 24) {
                     //try {
 
                     nextmove = getNextForward(nxtpos, this.getColor());
@@ -188,7 +186,7 @@ public class Rook extends ChessPiece {
                     //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
                     //}
                     i++;
-                }
+                }*/
 
             }
             if (index >= 18 && index < 24) {
@@ -202,7 +200,8 @@ public class Rook extends ChessPiece {
                     temp.add("b6");
                     temp.add("b7");
                    // sidemove.addAll(temp);
-                    for(String moves:temp)
+                    //fixme I am in sideMoves down Method
+                  /*  for(String moves:temp)
                     {
                         if(board.getPiece(moves)==null)
                             sidemove.add(moves);
@@ -213,7 +212,8 @@ public class Rook extends ChessPiece {
                         }
                         else
                             break;
-                    }
+                    }*/
+                    sidemove=outerRingValidSideMoves(temp);
 
                     legalMoves.addAll(sidemove);
                 } else {
@@ -227,7 +227,8 @@ public class Rook extends ChessPiece {
                     //}
                 }
                 int i = index;
-                while (i < 30) {
+                outterRingValidNextMoves(index,30);
+               /* while (i < 30) {
                     //try {
                     nextmove = getNextForward(nxtpos, this.getColor());
                     if (nextmove.isEmpty())
@@ -241,14 +242,14 @@ public class Rook extends ChessPiece {
                     //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
                     //}
                     i++;
-                }
+                }*/
 
             }
 
             return legalMoves;
         } else if (board.innerRing.contains(position))
         {
-            String nxtpos = position;
+            nxtpos = position;
             String sidepos = position;
             int index = board.innerRing.indexOf(position);
             //try {
@@ -265,7 +266,8 @@ public class Rook extends ChessPiece {
             //   }
             if (index >= 0 && index < 4) {
                 int j = index;
-                while (j < 4) {
+                outterRingValidNextMoves(index,4);
+                /*while (j < 4) {
                     //try {
                     nextmove = getNextForward(nxtpos, this.getColor());
                     if (nextmove.isEmpty()) break;
@@ -280,8 +282,8 @@ public class Rook extends ChessPiece {
                     //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
                     //}
                     j++;
-                }
-                if(nxtpos=="b6" && board.getPiece(nxtpos)==null)
+                }*/
+                if(legalMoves.contains("b6") && board.getPiece(nxtpos)==null)
                 {
                     if(board.getPiece("b7")==null || board.getPiece("b7").getColor()!=this.getColor()) {
                         legalMoves.add("b7");
@@ -291,7 +293,8 @@ public class Rook extends ChessPiece {
             }
             if (index >= 4 && index < 8) {
                 int j = index;
-                while (j < 8)
+                outterRingValidNextMoves(index,8);
+              /*  while (j < 8)
                 {
                     //try {
                     nextmove = getNextForward(nxtpos, this.getColor());
@@ -306,8 +309,8 @@ public class Rook extends ChessPiece {
                     //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
                     //}
                     j++;
-                }
-                if(nxtpos=="f6" &&  board.getPiece(nxtpos)==null)
+                }*/
+                if(legalMoves.contains("f6") &&  board.getPiece(nxtpos)==null)
                 {
                     if(board.getPiece("g6")==null || board.getPiece("g6").getColor()!=this.getColor()) {
                         legalMoves.add("g6");
@@ -317,7 +320,8 @@ public class Rook extends ChessPiece {
             }
             if (index >= 8 && index < 12) {
                 int j = index;
-                while (j < 12) {
+                outterRingValidNextMoves(index,12);
+                /*while (j < 12) {
                     //try {
                     nextmove = getNextForward(nxtpos, this.getColor());
                     if (nextmove.isEmpty()) break;
@@ -332,8 +336,8 @@ public class Rook extends ChessPiece {
                     //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
                     //}
                     j++;
-                }
-                if(nxtpos=="f2" &&  board.getPiece(nxtpos)==null)
+                }*/
+                if(legalMoves.contains("f2") &&  board.getPiece(nxtpos)==null)
                 {
                     if(board.getPiece("f1")==null || board.getPiece("f1").getColor()!=this.getColor()) {
                         legalMoves.add("f1");
@@ -343,7 +347,15 @@ public class Rook extends ChessPiece {
             }
             if (index >= 12 && index <= 15) {
                 int j = index;
-                while (j < 16) {
+                String str=nxtpos;
+                outterRingValidNextMoves(index,16);
+
+
+
+
+
+
+               /* while (j < 16) {
                     //try {
                     //  System.out.println(nxtpos);
                     nextmove = getNextForward(nxtpos, this.getColor());
@@ -360,8 +372,8 @@ public class Rook extends ChessPiece {
                     //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
                     //}
                     j++;
-                }
-                if(nxtpos=="b2" &&  board.getPiece(nxtpos)==null)
+                }*/
+                if(legalMoves.contains("b2") &&  board.getPiece(nxtpos)==null)
                 {
                     if(board.getPiece("a2")==null || board.getPiece("a2").getColor()!=this.getColor()) {
                         legalMoves.add("a2");
@@ -375,6 +387,63 @@ public class Rook extends ChessPiece {
                 return legalMoves;
 
             }
+
+    }
+    /*
+    HashSet<String> getNextValid(String nxtpos,HashSet<String> nextmove,Color color)
+    {
+        HashSet<String> validMoves = null;
+        nextmove = getNextForward(nxtpos, this.getColor());
+        if (nextmove.isEmpty())
+        {
+            return validMoves;
+        }
+        Iterator itr = nextmove.iterator();
+        nxtpos = itr.next().toString();
+
+    }*/
+    HashSet<String> outerRingValidSideMoves(LinkedHashSet<String> temp)
+    {
+        HashSet<String> sides=new HashSet<>();
+        for(String moves:temp)
+        {
+            if(board.getPiece(moves)==null) {
+                sides.add(moves);
+            }
+            else if(board.getPiece(moves).getColor()!=this.getColor())
+            {
+                sides.add(moves);
+                break;
+            }
+            else
+                break;
+        }
+        return sides;
+
+    }
+    void outterRingValidNextMoves(int start,int end)
+    {
+        nxtpos=getPosition();
+        while (start < end) {
+            //try {
+            //  System.out.println(nxtpos);
+
+            nextmove = getNextForward(nxtpos, this.getColor());
+            if (nextmove.isEmpty()) break;
+            Iterator itr = nextmove.iterator();
+            nxtpos = itr.next().toString();
+
+            //  System.out.println(nxtpos);
+            legalMoves.addAll(nextmove);
+            if (board.getPiece(nxtpos) != null)
+                break;
+
+            //} catch (IllegalPositionException ex) {
+            //    Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
+            //}
+            start++;
+        }
+
 
     }
 
