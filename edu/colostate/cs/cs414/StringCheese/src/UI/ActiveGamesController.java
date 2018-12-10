@@ -53,7 +53,8 @@ public class ActiveGamesController implements ActionListener {
 
             }
             else{
-                String identifier = "" + game.getGameID();
+                String identifier = game.getHost() + " vs " + game.getInvitee();
+                //String identifier = "" + game.getGameID();
                 gameIdentifiers.add(identifier);
             }
 
