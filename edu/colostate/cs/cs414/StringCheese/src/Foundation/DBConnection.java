@@ -1,4 +1,6 @@
-package edu.colostate.cs.cs414.StringCheese.src;
+package edu.colostate.cs.cs414.StringCheese.src.Foundation;
+
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.User;
 
 import java.sql.*;
 import java.util.*;

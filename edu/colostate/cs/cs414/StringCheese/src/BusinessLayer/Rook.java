@@ -14,7 +14,7 @@ public class Rook extends ChessPiece {
     }
 
     public HashSet<String> legalMoves(){
-       legalMoves.clear();
+        legalMoves.clear();
         String position = getPosition();
 
         HashSet<String> nextmove = new HashSet<String>();
@@ -31,9 +31,7 @@ public class Rook extends ChessPiece {
             if (!prevmove.isEmpty()) {
                 legalMoves.addAll(prevmove);
             }
-            // } catch (IllegalPositionException ex) {
-            //     Logger.getLogger(Rook.class.getName()).log(Level.SEVERE, null, ex);
-            //}
+
 
             if (index >= 0 && index < 6) {
                 if (index == 5) {

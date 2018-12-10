@@ -1,6 +1,6 @@
 package edu.colostate.cs.cs414.StringCheese.test;
 
-import edu.colostate.cs.cs414.StringCheese.src.EmailValidator;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.EmailValidator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

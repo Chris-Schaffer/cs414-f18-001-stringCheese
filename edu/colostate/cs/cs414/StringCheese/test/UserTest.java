@@ -1,17 +1,11 @@
 package edu.colostate.cs.cs414.StringCheese.test;
 
-import edu.colostate.cs.cs414.StringCheese.src.DBConnection;
-import edu.colostate.cs.cs414.StringCheese.src.Game;
-import edu.colostate.cs.cs414.StringCheese.src.User;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.Game;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 

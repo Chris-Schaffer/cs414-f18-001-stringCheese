@@ -1,6 +1,6 @@
 package edu.colostate.cs.cs414.StringCheese.test;
 
-import edu.colostate.cs.cs414.StringCheese.src.*;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 

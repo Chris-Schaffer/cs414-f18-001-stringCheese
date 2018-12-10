@@ -1,8 +1,8 @@
 package edu.colostate.cs.cs414.StringCheese.test;
 
-import edu.colostate.cs.cs414.StringCheese.src.ChessBoard;
-import edu.colostate.cs.cs414.StringCheese.src.ChessPiece;
-import edu.colostate.cs.cs414.StringCheese.src.Pawn;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.ChessBoard;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.ChessPiece;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.Pawn;
 
 import java.util.Arrays;
 import java.util.HashSet;

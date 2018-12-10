@@ -1,10 +1,9 @@
 package edu.colostate.cs.cs414.StringCheese.test;
 
-import edu.colostate.cs.cs414.StringCheese.src.ChessBoard;
-import edu.colostate.cs.cs414.StringCheese.src.ChessPiece;
-import edu.colostate.cs.cs414.StringCheese.src.Bishop;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.ChessBoard;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.ChessPiece;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.Bishop;
 
-import java.util.Arrays;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,8 +29,7 @@ class BishopTest extends ChessSuite {
         assertTrue(move.contains("c2"));
         assertTrue(move.contains("b3"));
         assertTrue(move.contains("a4"));
-        System.out.println("bishop:"+bishop.getPosition());
-        System.out.println("bishop:"+bishop.legalMoves());
+
         
         
     }
@@ -44,8 +42,6 @@ class BishopTest extends ChessSuite {
         HashSet<String> move= new HashSet<>();
         move=bishop.legalMoves();
         
-        System.out.println("bishop:"+bishop.getPosition());
         assertTrue(move.contains("f5"));
-        System.out.println("bishop:"+bishop.legalMoves());
     }
 }

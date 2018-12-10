@@ -1,7 +1,6 @@
-package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
+package edu.colostate.cs.cs414.StringCheese.src.UI;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class LoginPanel extends JPanel{

@@ -1,12 +1,11 @@
 package edu.colostate.cs.cs414.StringCheese.test;
 
-import edu.colostate.cs.cs414.StringCheese.src.ChessBoard;
-import edu.colostate.cs.cs414.StringCheese.src.ChessPiece;
-import edu.colostate.cs.cs414.StringCheese.src.Rook;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.ChessBoard;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.ChessPiece;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.Rook;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.HashSet;
-import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

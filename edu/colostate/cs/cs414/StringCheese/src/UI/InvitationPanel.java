@@ -1,9 +1,8 @@
-package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
+package edu.colostate.cs.cs414.StringCheese.src.UI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class InvitationPanel extends MainPanel {
     private InvitationPanelController invitationPanelController;

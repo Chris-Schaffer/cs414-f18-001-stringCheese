@@ -1,9 +1,8 @@
-package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
+package edu.colostate.cs.cs414.StringCheese.src.UI;
 
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class ProfilePanel extends MainPanel {
     GridLayout layout = new GridLayout(3,4);

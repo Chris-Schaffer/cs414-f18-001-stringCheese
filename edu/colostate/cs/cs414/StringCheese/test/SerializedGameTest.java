@@ -1,8 +1,8 @@
 package edu.colostate.cs.cs414.StringCheese.test;
 
-import edu.colostate.cs.cs414.StringCheese.src.DBConnection;
-import edu.colostate.cs.cs414.StringCheese.src.Game;
-import edu.colostate.cs.cs414.StringCheese.src.SerializedGame;
+import edu.colostate.cs.cs414.StringCheese.src.Foundation.DBConnection;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.Game;
+import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.SerializedGame;
 import org.junit.jupiter.api.Test;
 
 import java.sql.*;

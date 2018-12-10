@@ -1,4 +1,4 @@
-package edu.colostate.cs.cs414.StringCheese.src.ClientUI;
+package edu.colostate.cs.cs414.StringCheese.src.UI;
 
 import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.GameFacade;
 
