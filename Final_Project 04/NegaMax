@@ -1,0 +1,15 @@
+int NegaMax(int depth) {
+　int best = -INFINITY;
+　if (depth <= 0) {
+　　return Evaluate();
+　}
+　GenerateLegalMoves();
+　while (MovesLeft()) {
+　　MakeNextMove();
+　　val = -NegaMax(depth - 1); // Note that there is a negative sign here.
+　　UnmakeMove();
+　　if (val > best) {            //Always optimal
+　　　best = val;
+　　}
+　}
+　return best;

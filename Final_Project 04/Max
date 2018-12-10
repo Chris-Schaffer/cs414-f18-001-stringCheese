@@ -1,0 +1,37 @@
+int Max(int depth) {
+　int best = -INFINITY;
+　if (depth <= 0) {
+　　return Evaluate();
+　}
+　GenerateLegalMoves();       //Generate all reasonable moves
+　while (MovesLeft()) { 
+　　MakeNextMove();                   
+　　val = Min(depth - 1);       //Accept a relative minimum
+　　UnmakeMove();
+　　if (val > best) {
+　　　best = val;
+　　}
+　}
+　return best;                 //Return a relatively large rating (the best way AI thinks)
+}
+　
+int Min(int depth) {
+　int best = INFINITY;　// Note that this is different from the "maximum" algorithm.
+　if (depth <= 0) {
+　　return Evaluate();
+　}
+　GenerateLegalMoves();
+　while (MovesLeft()) {
+　　MakeNextMove();
+　　val = Max(depth - 1);   //Accept a relative maximum
+　　UnmakeMove();
+　　if (val < best) { 　// Note that this is different from the "maximum" algorithm.
+　　　best = val;
+　　}
+　}
+　return best;            //Return a relatively minimal evaluation (the other party, the worst move the person thinks)
+　
+　　
+The above code can be called like this:
+　
+val = MinMax(5);
