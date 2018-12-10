@@ -40,12 +40,14 @@ public class UserProfile {
     //Each Map<String,Object> is a row in table
     //Each <String,Object> is a coloumn in that row
     //String = Column Name, Object = Value
-    public List<Map<String,Object>> getHistory(){
+    //public List<Map<String,Object>> getHistory(){
+        public ResultSet getHistory(){
         String query = "SELECT host as PlayerOne,invitee as PlayerTwo,start_time,end_time,result as Winner FROM game WHERE host='"+userName+"' OR invitee='"+userName+"' AND result is not null ORDER BY end_time DESC";
         ResultSet rs = queryDatabase(query);
         try {
-            return DBConnection.map(rs);
-        } catch (SQLException e) {
+            return rs;
+            //return DBConnection.map(rs);
+        } catch (Exception e) {
             return null;
         }
     }

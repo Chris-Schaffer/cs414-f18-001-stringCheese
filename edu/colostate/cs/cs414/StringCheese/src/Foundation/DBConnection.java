@@ -32,46 +32,6 @@ public class DBConnection {
         return con;
     }
 
-
-    public static List<Map<String, Object>> map(ResultSet rs) throws SQLException {
-        List<Map<String, Object>> results = new ArrayList<Map<String, Object>>();
-        try {
-            if (rs != null) {
-                ResultSetMetaData meta = rs.getMetaData();
-                int numColumns = meta.getColumnCount();
-                while (rs.next()) {
-                    Map<String, Object> row = new HashMap<String, Object>();
-                    for (int i = 1; i <= numColumns; ++i) {
-                        String name = meta.getColumnName(i);
-                        Object value = rs.getObject(i);
-                        row.put(name, value);
-                    }
-                    results.add(row);
-                }
-            }
-        } finally {
-            close(rs);
-        }
-        return results;
-    }
-
-    public static int update(Connection connection, String sql, List<Object> parameters) throws SQLException {
-        int numRowsUpdated = 0;
-        PreparedStatement ps = null;
-        try {
-            ps = connection.prepareStatement(sql);
-
-            int i = 0;
-            for (Object parameter : parameters) {
-                ps.setObject(++i, parameter);
-            }
-            numRowsUpdated = ps.executeUpdate();
-        } finally {
-            close(ps);
-        }
-        return numRowsUpdated;
-    }
-
     public static boolean close(Connection connection){
         try {
             if (connection != null) {
@@ -83,53 +43,6 @@ public class DBConnection {
         }
         return false;
     }
-
-
-    public static void close(Statement st) {
-        try {
-            if (st != null) {
-                st.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void close(ResultSet rs) {
-        try {
-            if (rs != null) {
-                rs.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void rollback(Connection connection) {
-        try {
-            if (connection != null) {
-                connection.rollback();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public static void main(String args[]){
-        //Connection connection = DBConnection.open();
-        //connection.createStatement();
-        //System.out.println("Authenticate is "+ User.authenticate("Chris",null));
-
-        System.out.println(User.registerUser("joey123","joey123@yahoo.com","123456"));
-        //System.out.println(User.authenticate("chris","12345"));
-
-        //User user = new User("zaira");
-        //System.out.println("deactivated is " + user.deactivate());
-        //System.out.println(user.listRegisteredUsers());
-
-    }
-
 
 }
 
