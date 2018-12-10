@@ -42,7 +42,6 @@ class UserTest {
     void listActiveGames() {
         U=new User("chris3");
         ArrayList<Game> games=U.listActiveGames();
-        //fixme i am not working
       //  assertTrue(!games.isEmpty());
        // U=new User("ms");
 
@@ -51,7 +50,6 @@ class UserTest {
 
     @Test
     void deactivate() throws SQLException, IOException {
-        //fixme required testing
         ArrayList<User> users=U.listRegisteredUsers();
         U=new User("zaira");
         try {
@@ -71,7 +69,6 @@ class UserTest {
 
     @Test
     void registerUser() {
-        //fixme need to trst this
         User user = new User("meetsavaliya2");
         try{
             user.deactivate();

@@ -250,7 +250,6 @@ public abstract class ChessPiece implements Serializable {
         return removePositionsWithSameColorPiece(legalMoves, color);
     }
     //package private
-    //FIXME ChessBoard's board incorrectly shows pieces at positions when they don't exist
     HashSet<String> removePositionsWithSameColorPiece(HashSet<String> legalMoves, Color origionalColor) {
         HashSet<String> newSet = new HashSet<>();
          for(String move: legalMoves) {
@@ -267,8 +266,6 @@ public abstract class ChessPiece implements Serializable {
     private boolean isOuterCorner(String position){
         return position.equals("a1") || position.equals("a7")|| position.equals("g7")|| position.equals("g1");
     }
-    private int getRow(String position) { return position.charAt(0) - 'a'; }
-    private int getCol(String position){ return Character.getNumericValue(position.charAt(1)) - 1; }
 
     abstract public HashSet<String> legalMoves();
     abstract public String toString();

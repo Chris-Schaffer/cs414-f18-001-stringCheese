@@ -36,13 +36,6 @@ public class UserProfile {
     //totalGamesPlayed
     //totalGamesAbandoned fixme need to implement
 
-    /*
-    FIXME need to check all classes for anywhere that used result='UNFINISHED' and change it to result=null.
-
-
-     */
-
-
 
     //Each Map<String,Object> is a row in table
     //Each <String,Object> is a coloumn in that row

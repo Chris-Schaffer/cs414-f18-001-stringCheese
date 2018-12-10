@@ -73,7 +73,6 @@ public class User {
                 }
                 rs.close();
                 for(int i: gameids){
-                    System.out.println("Game Id: " +i);
                     game = sg.read(new DBConnection(),i);
                     games.add(game);
                 }
@@ -99,7 +98,6 @@ public class User {
     public static boolean login(String name, String password){
         return authenticate(name,password);
     }
-    //fixme remove null values after testing
     private static boolean authenticate(String name, String password){
         if(name ==null || password==null || name.length()<5 || password.length()<5 ){
             System.out.println("Check username and password and try again.");
@@ -113,8 +111,6 @@ public class User {
             if(rs.next()) {
                 byte[] hashedPass = rs.getBytes("password");
                 byte[] salt = rs.getBytes("salt");
-                //fixme should never be null, .sql should have constraint not null, only for testing
-                if(hashedPass==null || salt==null){return true;}
                 byte[] encryptedAttemptedPassword = getEncryptedPassword(password, salt);
                 boolean isEqual = Arrays.equals(encryptedAttemptedPassword, hashedPass);
                 DBConnection.close(conn);
@@ -186,23 +182,7 @@ public class User {
         return rs;
     }
     //validate database has new user
-    //FIXME: has bugs BUT NOT SURE IF WE EVEN NEED THIS METHOD
-    private static boolean isInDatabase(String name) {
-        try {
-            conn = DBConnection.open();
-            stmt = conn.createStatement();
-            String query = "SELECT COUNT(*) FROM (SELECT * FROM user WHERE name='"+name.toLowerCase()+"') AS T";
-            ResultSet rs = stmt.executeQuery(query);
-            int size = rs.getInt(1);
-            DBConnection.close(conn);
-            return size==1;
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            System.exit(1);
-        }
-        return false;
-    }
+
     private static byte[] getEncryptedPassword(String password, byte[] salt) {
         // PBKDF2 with SHA-1 as the hashing algorithm. Note that the NIST
         // specifically names SHA-1 as an acceptable hashing algorithm for PBKDF2
