@@ -270,7 +270,11 @@ public class Game implements Serializable {
         }catch(SQLException se){
             se.printStackTrace();
         }
-        return !time.equals(lastUpdated);
+        if (time != null) {
+            return !time.equals(lastUpdated);
+        }else{
+            return true;
+        }
     }
 
     public void promote(String position, String choice) {

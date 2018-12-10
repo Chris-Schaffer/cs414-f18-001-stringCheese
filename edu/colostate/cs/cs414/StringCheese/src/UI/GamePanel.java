@@ -72,7 +72,9 @@ public class GamePanel extends MainPanel{
 	public void addRefreshBtn(GameController gameController){
         refreshButton = new JButton("Refresh");
         refreshButton.addActionListener(gameController);
-        this.add(refreshButton,BorderLayout.PAGE_END);
+        this.add(refreshButton,BorderLayout.SOUTH);
+
+
 	}
 
     private void colorBoard() {

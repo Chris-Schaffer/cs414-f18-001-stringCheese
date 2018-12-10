@@ -3,6 +3,7 @@ package edu.colostate.cs.cs414.StringCheese.src.UI;
 
 import edu.colostate.cs.cs414.StringCheese.src.BusinessLayer.GameFacade;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //This class listens to the Join game button and attempts to join the game, if successful user is added to the gamm
@@ -26,6 +27,8 @@ public class GameController implements ActionListener {
             else{gamePanel.showFailureMsg();}
         }else if(e.getActionCommand().equalsIgnoreCase("Refresh")){
             gameFacade.loadGame();
+            GamePanel gamePanel = (GamePanel) ((JButton)e.getSource()).getParent();
+            gamePanel.displayState();
         }
     }
 
