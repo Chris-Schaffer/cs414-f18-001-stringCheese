@@ -25,8 +25,6 @@ public class ActiveGamesController implements ActionListener {
         if(event.equalsIgnoreCase("comboBoxChanged")){
             String selected = (String) comboBox.getSelectedItem();
             if(selected != null){
-                //int gameID = Integer.parseInt(selected);
-
                 for(Game game: activeGames){
                     if(game == null){
 
@@ -40,7 +38,6 @@ public class ActiveGamesController implements ActionListener {
                             gamePanel.displayState();
                         }
                     }
-
                 }
             }
         }

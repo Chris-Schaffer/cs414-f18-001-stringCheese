@@ -7,12 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //This class listens to the Join game button and attempts to join the game, if successful user is added to the gamm
 //if not then there is a message that displays the game is not able to be joined
-public class JoinGameController implements ActionListener {
+public class GameController implements ActionListener {
 
     private GameFacade gameFacade;
     private GamePanel gamePanel;
 
-    public JoinGameController(GameFacade gameFacade){
+    public GameController(GameFacade gameFacade){
         this.gameFacade = gameFacade;
     }
 
@@ -24,6 +24,8 @@ public class JoinGameController implements ActionListener {
             boolean gameJoined = gameFacade.joinGame(Integer.parseInt(joinGameId));
             if(gameJoined){gamePanel.showSuccessMsg();}
             else{gamePanel.showFailureMsg();}
+        }else if(e.getActionCommand().equalsIgnoreCase("Refresh")){
+            gameFacade.loadGame();
         }
     }
 

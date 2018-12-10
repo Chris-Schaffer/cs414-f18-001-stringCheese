@@ -23,7 +23,7 @@ public class UIController implements ActionListener, MouseListener {
 	private GameFacade gameFacade;
 	private String selectedPosition;
 	private ActiveGamesController activeGamesController;
-	private JoinGameController joinGameController;
+	private GameController gameController;
 	private InvitationPanel invitationPanel;
 	private InvitationPanelController invitationPanelController;
 
@@ -31,9 +31,9 @@ public class UIController implements ActionListener, MouseListener {
 		this.window = window;
 		gameFacade = new GameFacade();
 		this.activeGamesController = new ActiveGamesController(gameFacade);
-		this.joinGameController = new JoinGameController(gameFacade);
+		this.gameController = new GameController(gameFacade);
 		this.gamePanel = new GamePanel(this);
-		joinGameController.setGamePanel(gamePanel);
+		gameController.setGamePanel(gamePanel);
 		gamePanel.setUIController();
 		gamePanel.setActiveGamesController(activeGamesController);
 		profileController = new ProfileController(gameFacade);
@@ -191,7 +191,8 @@ public class UIController implements ActionListener, MouseListener {
 
 	private void goToMenu(String panelType){
 		gamePanel.addActiveGames();
-		gamePanel.addJoinGame(joinGameController);
+		gamePanel.addJoinGame(gameController);
+		gamePanel.addRefreshBtn(gameController);
 		invitationPanel.initializeMenu();
 		menuPanel = new MenuPanel(this);
 		if(panelType.equalsIgnoreCase("login")){

@@ -12,9 +12,9 @@ public class GamePanel extends MainPanel{
 	private GameTile[][] gameTiles;
 	private UIController controller;
 	private ActiveGamesController activeGamesController;
-	private JoinGameController joinGameController;
+	private GameController gameController;
 	private JTextField joinGameId;
-	private JButton joinGameButton;
+	private JButton joinGameButton, refreshButton;
 	JPanel gameBoard;
 	JComboBox<String> activeGames;
 	private static final Color lightBrown = new Color(210,180,140);
@@ -50,7 +50,7 @@ public class GamePanel extends MainPanel{
 		activeGames.repaint();
 	}
 
-    public void addJoinGame(JoinGameController joinGameController){
+    public void addJoinGame(GameController gameController){
 		Component[] comps = this.getComponents();
 		for(Component comp : comps){
 			if(comp == joinGameId){
@@ -60,17 +60,19 @@ public class GamePanel extends MainPanel{
 				this.remove(joinGameButton);
 			}
 		}
-		this.joinGameController = joinGameController;
+		this.gameController = gameController;
 		joinGameId = new JTextField("Game ID:",10);
 		this.add(joinGameId,BorderLayout.PAGE_END);
 
 		joinGameButton = new JButton("Join Game");
-		joinGameButton.addActionListener(joinGameController);
+		joinGameButton.addActionListener(gameController);
 		this.add(joinGameButton,BorderLayout.PAGE_END);
 	}
 
-	public void addRefreshBtn(JoinGameController joinGameController){
-
+	public void addRefreshBtn(GameController gameController){
+        refreshButton = new JButton("Refresh");
+        refreshButton.addActionListener(gameController);
+        this.add(refreshButton,BorderLayout.PAGE_END);
 	}
 
     private void colorBoard() {
