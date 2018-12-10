@@ -14,7 +14,6 @@ public class ChessBoard implements Serializable {
     private ChessPiece.Color turn; //who's turn is it next
     private String whitePlayer;
     private static final long serialVersionUID = 919633265167419667L;
-    //private boolean whiteTurn = true;
 
     public ChessBoard() {
         board = new ChessPiece[7][7];

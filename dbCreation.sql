@@ -11,7 +11,6 @@ CREATE TABLE user (
 	is_active BOOLEAN DEFAULT 1,  /* alias of tinyInt(1); 0 for false, nonzero for true */
 	PRIMARY KEY (user_id)
 );
-/* FIXME need to check all classes for anywhere that used result='UNFINISHED' and change it to result=null.  */
 drop table if exists game;
 CREATE TABLE game ( 
 	  game_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
