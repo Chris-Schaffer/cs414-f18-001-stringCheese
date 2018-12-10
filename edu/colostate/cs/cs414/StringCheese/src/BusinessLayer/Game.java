@@ -7,16 +7,6 @@ import java.io.Serializable;
 import java.sql.*;
 import java.util.HashSet;
 
-/*
-NOTE: flow of creating a game
-GameFacade
- -> Game game = new Game(user);
- -> ArrayList<Game> games = game.listActiveGames();//seems like listActiveGames should be in User class
- -> Display on UI - ArrayList<Pair<OpponentName,StartTime>>
- -> Pair<String,String> pair = new Pair<>();
- -> UI -> pair = User chosen pair
- -> game = game associated with pair
- */
 public class Game implements Serializable {
 
     private Statement stmt;
@@ -236,9 +226,10 @@ public class Game implements Serializable {
         return new HashSet<String>();
     }
     public String getType(String position) { return board.getPieceType(position); }
+
     public String move(String from, String to) {
         String message = board.move(from,to);
-        updateDBGameState();
+        updateGameState();
         //game is over
         if(message.equalsIgnoreCase("Checkmate") || message.equalsIgnoreCase("Winner")){
             //if white won then host is winner
@@ -254,7 +245,7 @@ public class Game implements Serializable {
         return updateDatabase(query);
     }
 
-    public void updateDBGameState() {
+    public void updateGameState() {
         SerializedGame sg = new SerializedGame();
         sg.write(new DBConnection(),this);
     }
@@ -267,7 +258,7 @@ public class Game implements Serializable {
 
     //checks DB to see if last time serialized object was updated is after this object was created
     //returns true if DB has newer version of game object
-    public boolean checkGameStateUpdated(){
+    public boolean isGameStateUpdated(){
         String query = "SELECT last_updated FROM gameserialized WHERE game_id="+gameID;
         ResultSet rs = queryDatabase(query);
         Timestamp time = null;

@@ -113,7 +113,7 @@ class GameTest {
     @Test
     void updateDBGameState() {
 
-        game.updateDBGameState();
+        game.updateGameState();
     }
 
     @Test
@@ -124,7 +124,7 @@ class GameTest {
 
     @Test
     void checkGameStateUpdated() {
-        assertTrue(game.checkGameStateUpdated());
+        assertTrue(game.isGameStateUpdated());
     }
 
     @Test

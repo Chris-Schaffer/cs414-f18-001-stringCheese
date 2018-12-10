@@ -67,11 +67,11 @@ public class GameFacade {
 
     public String move(String from, String to) {
         return game.move(from,to);
-        //game.updateDBGameState();
+        //game.updateGameState();
     }
     public void updateDBGameState()
     {
-        game.updateDBGameState();
+        game.updateGameState();
     }
 
 
@@ -80,12 +80,12 @@ public class GameFacade {
     }
 
     /*
-    at the end of a move the method updateDBGameState() is called
+    at the end of a move the method updateGameState() is called
     this serializes the game object and adds it along w/ current timestamp to DB
-    if checkGameStateUpdated() then replace the current game object with the newer version
+    if isGameStateUpdated() then replace the current game object with the newer version
      */
     public boolean loadGame(){
-        if(checkGameStateUpdated()){
+        if(isGameStateUpdated()){
             game = game.getUpdatedGameState();
             return true;
         }
@@ -97,8 +97,8 @@ public class GameFacade {
     }
 
     //returns true if DB has newer version of game state
-    private boolean checkGameStateUpdated(){
-        return game.checkGameStateUpdated();
+    private boolean isGameStateUpdated(){
+        return game.isGameStateUpdated();
     }
 
     public void promote(String position, String choice) {
