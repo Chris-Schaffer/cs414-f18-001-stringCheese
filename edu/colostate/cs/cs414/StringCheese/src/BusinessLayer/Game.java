@@ -31,7 +31,7 @@ public class Game implements Serializable {
 
 
     //used to initially create a game in GameFacade
-    //then game object is changed to a game chosen from listActiveGames()
+    //then game object is changed to a game chosen from User.listActiveGames()
     public Game(String name){
         this.name = name;
         gameID = -1;
