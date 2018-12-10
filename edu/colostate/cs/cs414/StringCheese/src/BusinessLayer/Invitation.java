@@ -19,7 +19,6 @@ public class Invitation {
         this.senderName = senderName;
     }
 
-    //working
     private boolean sendEmail(String[] recipientEmailAddresses) {
         //String to = "chris@yahoo.com";
         //Recipient's email
@@ -83,25 +82,5 @@ public class Invitation {
         }
         return sendEmail(emails);
     }
-
-    public static void main(String args[]){
-        User user = new User("chris","soccer.schaffer@yahoo.com");
-        Game game = new Game(user.getName());
-        Invitation invitation = new Invitation(user.getName(), game.createGame(user.getName()));
-        ArrayList<User> users = new ArrayList<>();
-        users.add(user);
-        invitation.sendInvitation(users);
-
-
-/*
-        public boolean sendInvitation(ArrayList<User> users){
-            //first creates a game with host as user then creates invitation
-            //then sends invitation
-            invitation = new Invitation(user.getName(),createGame(user.getName()));
-            return invitation.sendInvitation(users);
-        }
-        */
-    }
-
 }
 
