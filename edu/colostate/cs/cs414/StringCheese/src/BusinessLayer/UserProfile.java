@@ -83,7 +83,7 @@ public class UserProfile {
             rs.next();
             return rs.getInt(1);
         }catch(SQLException se){
-            se.printStackTrace();
+            //se.printStackTrace();
         }
         return -1;
     }
