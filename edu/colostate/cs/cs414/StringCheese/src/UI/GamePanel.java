@@ -1,6 +1,7 @@
 package edu.colostate.cs.cs414.StringCheese.src.UI;
 
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,8 +15,7 @@ public class GamePanel extends MainPanel{
 	private JoinGameController joinGameController;
 	private JTextField joinGameId;
 	private JButton joinGameButton;
-	private GameTile selectedTile;
-	JPanel gameBoard, games;
+	JPanel gameBoard;
 	JComboBox<String> activeGames;
 	private static final Color lightBrown = new Color(210,180,140);
 	private static final Color darkBrown = new Color(139,69,19);
@@ -32,6 +32,7 @@ public class GamePanel extends MainPanel{
 	}
 
 	public void addActiveGames(){
+
 		activeGames = new JComboBox(activeGamesController.populateActiveGames().toArray());
 		activeGames.setVisible(true);
 		activeGames.addActionListener(activeGamesController);
@@ -66,6 +67,10 @@ public class GamePanel extends MainPanel{
 		joinGameButton = new JButton("Join Game");
 		joinGameButton.addActionListener(joinGameController);
 		this.add(joinGameButton,BorderLayout.PAGE_END);
+	}
+
+	public void addRefreshBtn(JoinGameController joinGameController){
+
 	}
 
     private void colorBoard() {
