@@ -1,4 +1,6 @@
-package edu.colostate.cs.cs414.StringCheese.src;
+package edu.colostate.cs.cs414.StringCheese.src.BusinessLayer;
+
+import edu.colostate.cs.cs414.StringCheese.src.Foundation.DBConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

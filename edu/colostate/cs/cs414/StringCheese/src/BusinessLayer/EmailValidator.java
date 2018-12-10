@@ -1,4 +1,4 @@
-package edu.colostate.cs.cs414.StringCheese.src;
+package edu.colostate.cs.cs414.StringCheese.src.BusinessLayer;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

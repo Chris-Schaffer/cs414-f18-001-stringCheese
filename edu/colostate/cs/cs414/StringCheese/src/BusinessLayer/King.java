@@ -1,7 +1,6 @@
-package edu.colostate.cs.cs414.StringCheese.src;
+package edu.colostate.cs.cs414.StringCheese.src.BusinessLayer;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.HashSet;
 
 public class King extends ChessPiece implements Serializable {

@@ -1,10 +1,8 @@
-package edu.colostate.cs.cs414.StringCheese.src;
+package edu.colostate.cs.cs414.StringCheese.src.BusinessLayer;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Rook extends ChessPiece {
 

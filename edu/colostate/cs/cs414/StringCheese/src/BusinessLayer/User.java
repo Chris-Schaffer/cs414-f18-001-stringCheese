@@ -1,5 +1,7 @@
-package edu.colostate.cs.cs414.StringCheese.src;
+package edu.colostate.cs.cs414.StringCheese.src.BusinessLayer;
 
+
+import edu.colostate.cs.cs414.StringCheese.src.Foundation.DBConnection;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
